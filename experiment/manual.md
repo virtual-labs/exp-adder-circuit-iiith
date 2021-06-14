@@ -1,8 +1,8 @@
-This lab allows you to design and simulate any digital combinational or sequential circuit. Following instruction help you build the circuit. A Java-based basic tool and simulation enigne is at the hear of this laboratory. You can create many circuits and test them with fixed or time-varying input signals. You can also see the outputs as values or time-varying waveforms.
+This lab allows you to design and simulate any digital combinational or sequential circuit. Following instruction help you build the circuit. A Java-based basic tool and simulation enigne is at the hear of this laboratory. You can create many circuits and test them with fixed or time-varying input signals. You can also see the outputs as values or time-varying waveforms.  
 
-The tool consist of mainly four pannels: Left Pannel, Mid Pannel, Right Pannel, and Top Pannel.
+The tool consist of mainly four pannels: Left Pannel, Mid Pannel, Right Pannel, and Top Pannel.  
 
-**1. Left Pannel**
+**1. Left Pannel**  
    1. **Gate Buttons**: These buttons are used to draw basic gates like AND, OR, XOR, NOT, NOR, NAND,XNOR andCONNECTOR . Click on these by drop down menu then select the proper number of inputs . Once You have finalized the gate & number of inputs then click on SELECT Button and place the gate where you want to in the mid pannel drawing area.  
    2. **Probe**: Output at each terminal is shown by default against it. Iif you want explicitly to watch another node, you can probe it using a feature from the left panel.  
    3. **None**: It is used to get default cursor option back, so that you can do basic operation like drag and drop.  
@@ -10,8 +10,9 @@ The tool consist of mainly four pannels: Left Pannel, Mid Pannel, Right Pannel, 
    5. **Connect/Disconnect**: This mode allows establishing and removing connection between various points. Connection can be established only from output to input. You have to first click to the output node then to the input node (consisting of red square box). For disconnection, you can start by clicking either the input or the output node.  
    6. **Naming**: This is used to give a user-selected name to an input or output node. Click on the node and give the name into the input box that pops up.  
    7. **Output**: This is used to define an output node. See the explanation of import button to learn why this may be necessary.  
-   8. **Time Pulse**: Enter the time pulse pattern separated by commas. For example: 0,10,10,10,10 defines a clock that is 0 for 10 units and 1 for 10 units. Press enter or click on the new timepulse to create it. It will be available as input in list box. 
-   9. Binary One And Zero: These can be used to give fixed values to terminals. **2. Top Pannel**  
+   8. **Time Pulse**: Enter the time pulse pattern separated by commas. For example: 0,10,10,10,10 defines a clock that is 0 for 10 units and 1 for 10 units. Press enter or click on the new timepulse to create it. It will be available as input in list box.  
+   9. Binary One And Zero: These can be used to give fixed values to terminals    
+**2. Top Pannel**  
    1. **Clear**: Use this to clear every element on the circuit. Caution: Everything on the design panel will be lost; there is no undo!  
    2. **Save**: Use this to save the designed circuit as a file on your machine. This file can be loaded and imported later.  
    3. **Load**: A circuit saved on your machine can be loaded onto the mid panel to as a fresh circuit that can be further edited.  
