@@ -49,6 +49,3 @@ Multiple full adders can be used to create adders of greater bit lengths. Each f
 
 
 
-
-
-Source: Wikipedia
