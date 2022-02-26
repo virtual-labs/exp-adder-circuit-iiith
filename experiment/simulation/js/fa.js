@@ -32,11 +32,13 @@ class FullAdder {
         var el = document.getElementById(this.id);
         el.addEventListener('contextmenu', function (ev) {
             ev.preventDefault();
-            const origin = {
-                left: ev.pageX,
-                top: ev.pageY
-            };
-            setPosition(origin);
+                var left = ev.pageX - document.getScroll()[0];
+                var top = ev.pageY - document.getScroll()[1];
+                const origin = {
+                    left: left,
+                    top: top
+                };
+                setPosition(origin);
             window.selectedComponent = this.id;
             window.componentType = "fullAdder";
             // deleteElement(this.id);
@@ -44,7 +46,7 @@ class FullAdder {
         }, false);
 
         fullAdder[this.id] = this;
-        registerGate(this.id,this);
+        registerGate(this.id, this);
     }
 
     setA0(A0) {
@@ -81,12 +83,12 @@ class FullAdder {
         this.sum = (getOutputFA(this.Cin[0], this.Cin[1]) && !aXorb) || (!(getOutputFA(this.Cin[0], this.Cin[1])) && aXorb);
     }
 
-    setConnected(val,pos) {
-        console.log(val,pos);
-        if(pos == "Carry"){
+    setConnected(val, pos) {
+        console.log(val, pos);
+        if (pos == "Carry") {
             this.CoutIsConnected = val;
         }
-        else if(pos == "Sum"){
+        else if (pos == "Sum") {
             this.sumIsConnected = val;
         }
     }
@@ -115,17 +117,22 @@ function getOutputFA(gate, pos) {
 
 
 function getResultFA(fa) {
+// check if fa type is Gate object
+    if (fa.constructor.name == "Gate") {
+        return;
+    }
+
     if (fa.Cout != null && fa.sum != null) {
         return;
     }
 
-    if (getOutputFA(fa.a0[0], fa.a0[1]) != null) {
+    if (getOutputFA(fa.a0[0], fa.a0[1]) == null) {
         getResultFA(fa.a0[0]);
     }
-    if (getOutputFA(fa.b0[0], fa.b0[1]) != null) {
+    if (getOutputFA(fa.b0[0], fa.b0[1]) == null) {
         getResultFA(fa.b0[0]);
     }
-    if (getOutputFA(fa.Cin[0], fa.Cin[1]) != null) {
+    if (getOutputFA(fa.Cin[0], fa.Cin[1]) == null) {
         getResultFA(fa.Cin[0]);
     }
 
@@ -201,8 +208,9 @@ function simulateFA() {
         fullAdder[faID].sum = null;
     }
     for (var gateId in gates) {
+        var gate = gates[gateId];
         if (gate.isOutput == true) {
-            gates[gateId].output = null;
+            gates[gateId].output = null;    
         }
     }
 
@@ -210,16 +218,16 @@ function simulateFA() {
     // for (var faID in fullAdder) {
     //     getResultFA(fullAdder[faID]);
     // }
-    for(var gateId in gates){
-        if(gates[gateId].isOutput == true){
+    for (var gateId in gates) {
+        if (gates[gateId].isOutput == true) {
             getResultFA(gates[gateId].inputs[0]);
         }
     }
 
-    for(key in finalOutputs){
+    for (key in finalOutputs) {
         var element = document.getElementById(key);
         gates[key].output = getOutputFA(finalOutputs[key][0], finalOutputs[key][1]);
-        if (gate.output == true) {
+        if (gates[key].output == true) {
             element.className = "HIGH";
             element.childNodes[0].innerHTML = "1";
         }
@@ -228,4 +236,54 @@ function simulateFA() {
             element.childNodes[0].innerHTML = "0";
         }
     }
+}
+
+function testSimulationFA(FA,GATES) {
+    if (!checkConnectionsFA()) {
+        return;
+    }
+
+     // reset output in gate
+    for (var faID in FA) {
+        FA[faID].Cout = null;
+        FA[faID].sum = null;
+    }
+    for (var gateId in GATES) {
+        var gate = GATES[gateId]
+        if (gate.isOutput == true) {
+            GATES[gateId].output = null;
+        }
+    }
+
+    for(var gateId in GATES){
+        if(GATES[gateId].isOutput == true){
+            getResultFA(GATES[gateId].inputs[0]);
+        }
+    }
+
+    for(key in finalOutputs){
+        GATES[key].output = getOutputFA(finalOutputs[key][0], finalOutputs[key][1]);
+    }
+    
+   
+}
+
+function deleteFA(id) {
+    var fa = fullAdder[id];
+    instance.removeAllEndpoints(document.getElementById(fa.id));
+    instance._removeElement(document.getElementById(fa.id));
+
+    for (key in fullAdder) {
+        if(fullAdder[key].a0[0] == fa) {
+            fullAdder[key].a0 = null;
+        }
+        if(fullAdder[key].b0[0] == fa) {
+            fullAdder[key].b0 = null;
+        }
+        if(fullAdder[key].Cin[0] == fa) {
+            fullAdder[key].Cin = null;
+        }
+    }
+
+    delete fullAdder[id];
 }

@@ -100,20 +100,20 @@ const bindEvent2 = function () {
                 } else if (end_uuid == "output") {
                     var input = gates[dropEndpoint.elementId];
                     var pos = "";
-                    if (Object.keys(dropEndpoint.overlays)[0].includes("Sum")) {
+                    if (Object.keys(dropEndpoint.overlays)[0].includes("sum")) {
                         pos = "Sum";
                     }
-                    else if (Object.keys(dropEndpoint.overlays)[0].includes("Carry")) {
+                    else if (Object.keys(dropEndpoint.overlays)[0].includes("cout")) {
                         pos = "Carry";
                     }
                     input.setConnected(true, pos);
-                    if (Object.keys(endpoint.overlays)[0].includes("A")) {
+                    if (Object.keys(endpoint.overlays)[0].includes("a")) {
                         gates[endpoint.elementId].setA0([input, pos]);
                     }
-                    else if (Object.keys(endpoint.overlays)[0].includes("B")) {
+                    else if (Object.keys(endpoint.overlays)[0].includes("b")) {
                         gates[endpoint.elementId].setB0([input, pos]);
                     }
-                    else if (Object.keys(endpoint.overlays)[0].includes("CarryIn")) {
+                    else if (Object.keys(endpoint.overlays)[0].includes("cin")) {
                         gates[endpoint.elementId].setCin([input, pos]);
                     }
                 }
@@ -123,13 +123,13 @@ const bindEvent2 = function () {
                     var input = gates[dropEndpoint.elementId];
                     input.setConnected(true);
                     var pos = "";
-                    if (Object.keys(endpoint.overlays)[0].includes("A")) {
+                    if (Object.keys(endpoint.overlays)[0].includes("a")) {
                         fullAdder[endpoint.elementId].setA0([input, pos]);
                     }
-                    else if (Object.keys(endpoint.overlays)[0].includes("B")) {
+                    else if (Object.keys(endpoint.overlays)[0].includes("b")) {
                         fullAdder[endpoint.elementId].setB0([input, pos]);
                     }
-                    else if (Object.keys(endpoint.overlays)[0].includes("CarryIn")) {
+                    else if (Object.keys(endpoint.overlays)[0].includes("cin")) {
                         fullAdder[endpoint.elementId].setCin([input, pos]);
                     }
                 }
@@ -139,13 +139,13 @@ const bindEvent2 = function () {
                     var input = gates[endpoint.elementId];
                     input.setConnected(true);
                     var pos = "";
-                    if (Object.keys(dropEndpoint.overlays)[0].includes("A")) {
+                    if (Object.keys(dropEndpoint.overlays)[0].includes("a")) {
                         fullAdder[dropEndpoint.elementId].setA0([input, pos]);
                     }
-                    else if (Object.keys(dropEndpoint.overlays)[0].includes("B")) {
+                    else if (Object.keys(dropEndpoint.overlays)[0].includes("b")) {
                         fullAdder[dropEndpoint.elementId].setB0([input, pos]);
                     }
-                    else if (Object.keys(dropEndpoint.overlays)[0].includes("CarryIn")) {
+                    else if (Object.keys(dropEndpoint.overlays)[0].includes("cin")) {
                         fullAdder[dropEndpoint.elementId].setCin([input, pos]);
                     }
                 }
@@ -153,40 +153,48 @@ const bindEvent2 = function () {
             else if (start_type == "FullAdder" && end_type == "Output") {
                 if (start_uuid == "output") {
                     var input = fullAdder[endpoint.elementId];
-                    if (Object.keys(endpoint.overlays)[0].includes("Sum")) {
+                    var output = gates[dropEndpoint.elementId];
+                    if (Object.keys(endpoint.overlays)[0].includes("sum")) {
                         pos = "Sum";
                     }
-                    else if (Object.keys(endpoint.overlays)[0].includes("Carry")) {
+                    else if (Object.keys(endpoint.overlays)[0].includes("cout")) {
                         pos = "Carry";
                     }
                     input.setConnected(true, pos);
+                    output.addInput(input);
                     finalOutputs[dropEndpoint.elementId] = [input, pos];
                 }
             }
             else if (start_type == "Output" && end_type == "FullAdder") {
                 if (start_uuid == "input") {
                     var input = fullAdder[dropEndpoint.elementId];
-                    if (Object.keys(dropEndpoint.overlays)[0].includes("Sum")) {
+                    var output = gates[endpoint.elementId];
+                    if (Object.keys(dropEndpoint.overlays)[0].includes("sum")) {
                         pos = "Sum";
                     }
-                    else if (Object.keys(dropEndpoint.overlays)[0].includes("Carry")) {
+                    else if (Object.keys(dropEndpoint.overlays)[0].includes("carry")) {
                         pos = "Carry";
                     }
                     input.setConnected(true, pos);
+                    output.addInput(input);
                     finalOutputs[endpoint.elementId] = [input, pos];
                 }
             }
             else if (start_type == "Input" && end_type == "Output") {
                 if (start_uuid == "output") {
                     var input = gates[endpoint.elementId];
+                    var output = gates[dropEndpoint.elementId];
                     input.setConnected(true);
+                    output.addInput(input);
                     finalOutputs[dropEndpoint.elementId] = [input, ""];
                 }
             }
             else if (start_type == "Output" && end_type == "Input") {
                 if (start_uuid == "input") {
                     var input = gates[dropEndpoint.elementId];
+                    var output = gates[endpoint.elementId];
                     input.setConnected(true);
+                    output.addInput(input);
                     finalOutputs[endpoint.elementId] = [input, ""];
                 }
             }
@@ -389,20 +397,20 @@ function initRippleAdder() {
     let types = ["Input", "Input", "Output", "Input", "Input", "Output", "Input", "Input", "Output", "Input", "Input", "Output", "Output", "Input"]
     let names = ["A0", "B0", "Sum0", "A1", "B1", "Sum1", "A2", "B2", "Sum2", "A3", "B3", "Sum3", "CarryOut", "CarryIn"]
     let positions = [
+        { x: 40, y: 125 },
         { x: 40, y: 200 },
+        { x: 820, y: 125 },
+        { x: 40, y: 300 },
+        { x: 40, y: 375 },
+        { x: 820, y: 250 },
+        { x: 40, y: 475 },
         { x: 40, y: 550 },
-        { x: 820, y: 200 },
-        { x: 40, y: 200 },
-        { x: 40, y: 550 },
-        { x: 820, y: 200 },
-        { x: 40, y: 200 },
-        { x: 40, y: 550 },
-        { x: 820, y: 200 },
-        { x: 40, y: 200 },
-        { x: 40, y: 550 },
-        { x: 820, y: 200 },
-        { x: 820, y: 550 },
-        { x: 820, y: 550 },
+        { x: 820, y: 375 },
+        { x: 40, y: 650 },
+        { x: 40, y: 725 },
+        { x: 820, y: 500 },
+        { x: 820, y: 625 },
+        { x: 40, y: 50 },
     ];
     for (var i = 0; i < ids.length; i++) {
         var gate = new Gate(types[i]);

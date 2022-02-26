@@ -160,16 +160,11 @@
 }
 
 .components-list {
-  margin-top: 2rem;
   padding: 7% 15%;
   text-align: center;
-  border: 1px solid #ccc;
   height: 100%;
 }
 
-.component-button {
-  margin: 1rem;
-}
 
 .components-list-items {
   display: flex;
@@ -235,10 +230,15 @@ svg.wire path {
 }
 
 .component-button{
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 0.75em;
   border: 0.2rem solid rgb(98, 178, 235);
+  margin: 1rem 0;
+  font-weight: bold;
+  font-size: 0.8rem;
+  text-align: center;
+  color: black;
 }
 
 .component-button::after {

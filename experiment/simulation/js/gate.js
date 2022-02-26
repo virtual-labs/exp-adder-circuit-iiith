@@ -93,18 +93,16 @@ class Gate {
         parent.insertAdjacentHTML('beforeend', component);
         // get width of working area
         var width = document.getElementById("working-area").offsetWidth;
-        var scale = 930;
-        x = x / scale * width;
+        var scale = 900;
+        x = (x / scale) * width;
         document.getElementById(this.id).style.left = x + "px";
         document.getElementById(this.id).style.top = y + "px";
         if (this.type != "Input" && this.type != "Output") {
             var el = document.getElementById(this.id);
             el.addEventListener('contextmenu', function (ev) {
                 ev.preventDefault();
-                console.log(ev.target);
                 var left = ev.pageX - document.getScroll()[0];
                 var top = ev.pageY - document.getScroll()[1];
-                console.log(left, top);
                 const origin = {
                     left: left,
                     top: top
@@ -291,27 +289,25 @@ function submitCircuit() {
         fullAdderTest("Input-0", "Input-1", "Input-2", "Output-4", "Output-3");
     }
     else if (window.currentTab == "Task3") {
-        rippleAdder("Input-0", "Input-1", "Input-2", "Input-3", "Output-5", "Output-4", "Output-3", "Output-2");
+        rippleAdderTest("Input-0", "Input-1", "Input-3", "Input-4", "Input-6", "Input-7", "Input-9", "Input-10","Input-13","Output-12","Output-2","Output-5","Output-8","Output-11");
     }
 }
 
 
 function deleteElement(gateid) {
-    for (var i in gates) {
-        var gate = gates[i];
-        if (gate.id == gateid) {
-            // instance.selectEndpoints().detachAll();
-            instance.removeAllEndpoints(document.getElementById(gate.id));
-            // instance.detach(gate.id); // <--
-            instance._removeElement(document.getElementById(gate.id));
-            for (elem in gates) {
-                if (gates[elem].inputs.includes(gate)) {
-                    gates[elem].removeInput(gate);
-                }
-            }
-            delete gates[gateid];
-            // instance.repaintEverything();
+
+    var gate = gates[gateid];
+    // instance.selectEndpoints().detachAll();
+    instance.removeAllEndpoints(document.getElementById(gate.id));
+    // instance.detach(gate.id); // <--
+    instance._removeElement(document.getElementById(gate.id));
+    for (elem in gates) {
+        if (gates[elem].inputs.includes(gate)) {
+            gates[elem].removeInput(gate);
         }
     }
+    delete gates[gateid];
+    // instance.repaintEverything();
 }
+
 
