@@ -74,14 +74,14 @@ export const bindEvent2 = function () {
             return false;
         } else {
             jsPlumbInstance.connect({ uuids: [endpoint.uuid, dropEndpoint.uuid] });
-            var start_type = endpoint.elementId.split("-")[0];
-            var end_type = dropEndpoint.elementId.split("-")[0];
+            const start_type = endpoint.elementId.split("-")[0];
+            const end_type = dropEndpoint.elementId.split("-")[0];
             if (start_type == "FullAdder" && end_type == "FullAdder") {
                 if (start_uuid == "output") {
                     
-                    var input = fajs.fullAdder[endpoint.elementId];
+                    let input = fajs.fullAdder[endpoint.elementId];
                     console.log(endpoint.overlays);
-                    var pos = "";
+                    let pos = "";
                     if (Object.keys(endpoint.overlays)[0].includes("sum")) {
                         pos = "Sum";
                     }
@@ -100,8 +100,8 @@ export const bindEvent2 = function () {
                         fajs.fullAdder[dropEndpoint.elementId].setCin([input, pos]);
                     }
                 } else if (end_uuid == "output") {
-                    var input = fajs.fullAdder[dropEndpoint.elementId];
-                    var pos = "";
+                    let input = fajs.fullAdder[dropEndpoint.elementId];
+                    let pos = "";
                     if (Object.keys(dropEndpoint.overlays)[0].includes("sum")) {
                         pos = "Sum";
                     }
@@ -122,9 +122,9 @@ export const bindEvent2 = function () {
             }
             else if (start_type == "FullAdder" && end_type == "Input") {
                 if (end_uuid == "output") {
-                    var input = gatejs.gates[dropEndpoint.elementId];
+                    let input = gatejs.gates[dropEndpoint.elementId];
                     input.setConnected(true);
-                    var pos = "";
+                    let pos = "";
                     if (Object.keys(endpoint.overlays)[0].includes("a")) {
                         fajs.fullAdder[endpoint.elementId].setA0([input, pos]);
                     }
@@ -138,9 +138,9 @@ export const bindEvent2 = function () {
             }
             else if (start_type == "Input" && end_type == "FullAdder") {
                 if (start_uuid == "output") {
-                    var input = gatejs.gates[endpoint.elementId];
+                    let input = gatejs.gates[endpoint.elementId];
                     input.setConnected(true);
-                    var pos = "";
+                    let pos = "";
                     if (Object.keys(dropEndpoint.overlays)[0].includes("a")) {
                         fajs.fullAdder[dropEndpoint.elementId].setA0([input, pos]);
                     }
@@ -154,8 +154,8 @@ export const bindEvent2 = function () {
             }
             else if (start_type == "FullAdder" && end_type == "Output") {
                 if (start_uuid == "output") {
-                    var input = fajs.fullAdder[endpoint.elementId];
-                    var output = gatejs.gates[dropEndpoint.elementId];
+                    let input = fajs.fullAdder[endpoint.elementId];
+                    let output = gatejs.gates[dropEndpoint.elementId];
                     if (Object.keys(endpoint.overlays)[0].includes("sum")) {
                         pos = "Sum";
                     }
@@ -169,8 +169,8 @@ export const bindEvent2 = function () {
             }
             else if (start_type == "Output" && end_type == "FullAdder") {
                 if (start_uuid == "input") {
-                    var input = fajs.fullAdder[dropEndpoint.elementId];
-                    var output = gatejs.gates[endpoint.elementId];
+                    let input = fajs.fullAdder[dropEndpoint.elementId];
+                    let output = gatejs.gates[endpoint.elementId];
                     if (Object.keys(dropEndpoint.overlays)[0].includes("sum")) {
                         pos = "Sum";
                     }
@@ -184,8 +184,8 @@ export const bindEvent2 = function () {
             }
             else if (start_type == "Input" && end_type == "Output") {
                 if (start_uuid == "output") {
-                    var input = gatejs.gates[endpoint.elementId];
-                    var output = gatejs.gates[dropEndpoint.elementId];
+                    let input = gatejs.gates[endpoint.elementId];
+                    let output = gatejs.gates[dropEndpoint.elementId];
                     input.setConnected(true);
                     output.addInput(input);
                     fajs.finalOutputs[dropEndpoint.elementId] = [input, ""];
@@ -193,8 +193,8 @@ export const bindEvent2 = function () {
             }
             else if (start_type == "Output" && end_type == "Input") {
                 if (start_uuid == "input") {
-                    var input = gatejs.gates[dropEndpoint.elementId];
-                    var output = gatejs.gates[endpoint.elementId];
+                    let input = gatejs.gates[dropEndpoint.elementId];
+                    let output = gatejs.gates[endpoint.elementId];
                     input.setConnected(true);
                     output.addInput(input);
                     fajs.finalOutputs[endpoint.elementId] = [input, ""];
@@ -211,8 +211,8 @@ export const unbindEvent = () => {
 
 
 export function registerGate(id, gate) {
-    var Element = document.getElementById(id);
-    var gateType = id.split("-")[0];
+    const element = document.getElementById(id);
+    const gateType = id.split("-")[0];
 
     if (
         gateType == "AND" ||
@@ -223,7 +223,7 @@ export function registerGate(id, gate) {
         gateType == "NOR"
     ) {
         gate.addInputPoints(
-            jsPlumbInstance.addEndpoint(Element, {
+            jsPlumbInstance.addEndpoint(element, {
                 anchor: [0, 0.5, -1, 0, -7, -9],
                 source: true,
                 target: true,
@@ -232,7 +232,7 @@ export function registerGate(id, gate) {
             })
         );
         gate.addInputPoints(
-            jsPlumbInstance.addEndpoint(Element, {
+            jsPlumbInstance.addEndpoint(element, {
                 anchor: [0, 0.5, -1, 0, -7, 10],
                 source: true,
                 target: true,
@@ -241,7 +241,7 @@ export function registerGate(id, gate) {
             })
         );
         gate.addOutputPoints(
-            jsPlumbInstance.addEndpoint(Element, {
+            jsPlumbInstance.addEndpoint(element, {
                 anchor: [1, 0.5, 1, 0, 7, 0],
                 source: true,
                 target: true,
@@ -251,7 +251,7 @@ export function registerGate(id, gate) {
         );
     } else if (gateType == "NOT") {
         gate.addInputPoints(
-            jsPlumbInstance.addEndpoint(Element, {
+            jsPlumbInstance.addEndpoint(element, {
                 anchor: [0, 0.5, -1, 0, -7, 0],
                 source: true,
                 target: true,
@@ -260,7 +260,7 @@ export function registerGate(id, gate) {
             })
         );
         gate.addOutputPoints(
-            jsPlumbInstance.addEndpoint(Element, {
+            jsPlumbInstance.addEndpoint(element, {
                 anchor: [1, 0.5, 1, 0, 7, 0],
                 source: true,
                 target: true,
@@ -270,7 +270,7 @@ export function registerGate(id, gate) {
         );
     } else if (gateType == "Input") {
         gate.addOutputPoints(
-            jsPlumbInstance.addEndpoint(Element, {
+            jsPlumbInstance.addEndpoint(element, {
                 anchor: [1, 0.5, 1, 0, 7, 0],
                 source: true,
                 target: true,
@@ -280,7 +280,7 @@ export function registerGate(id, gate) {
         );
     } else if (gateType == "Output") {
         gate.addInputPoints(
-            jsPlumbInstance.addEndpoint(Element, {
+            jsPlumbInstance.addEndpoint(element, {
                 anchor: [0, 0.5, -1, 0, -7, 0],
                 source: true,
                 target: true,
@@ -292,7 +292,7 @@ export function registerGate(id, gate) {
     else if (gateType == "FullAdder") {
         // carry output
         gate.addOutputPoints(
-            jsPlumbInstance.addEndpoint(Element, {
+            jsPlumbInstance.addEndpoint(element, {
                 anchor: [0, 0.5, -1, 0, -7, 0],
                 source: true,
                 target: true,
@@ -305,7 +305,7 @@ export function registerGate(id, gate) {
         );
         // sum output
         gate.addOutputPoints(
-            jsPlumbInstance.addEndpoint(Element, {
+            jsPlumbInstance.addEndpoint(element, {
                 anchor: [0.5, 1, 0, 1, 0, 7],
                 source: true,
                 target: true,
@@ -318,7 +318,7 @@ export function registerGate(id, gate) {
         );
         // input A0
         gate.addInputPoints(
-            jsPlumbInstance.addEndpoint(Element, {
+            jsPlumbInstance.addEndpoint(element, {
                 anchor: [0.5, 0, 0, -1, -25, -7],
                 source: true,
                 target: true,
@@ -331,7 +331,7 @@ export function registerGate(id, gate) {
         );
         // input B0
         gate.addInputPoints(
-            jsPlumbInstance.addEndpoint(Element, {
+            jsPlumbInstance.addEndpoint(element, {
                 anchor: [0.5, 0, 0, -1, 25, -7],
                 source: true,
                 target: true,
@@ -344,7 +344,7 @@ export function registerGate(id, gate) {
         );
         // carry input
         gate.addInputPoints(
-            jsPlumbInstance.addEndpoint(Element, {
+            jsPlumbInstance.addEndpoint(element, {
                 anchor: [1, 0.5, 1, 0, 7, 0],
                 source: true,
                 target: true,
@@ -367,8 +367,8 @@ export function initHalfAdder() {
         { x: 820, y: 200 },
         { x: 820, y: 550 },
     ];
-    for (var i = 0; i < ids.length; i++) {
-        var gate = new gatejs.Gate(types[i]);
+    for (let i = 0; i < ids.length; i++) {
+        let gate = new gatejs.Gate(types[i]);
         gate.setId(ids[i]);
         gate.setName(names[i]);
         const component = gate.generateComponent();
@@ -389,8 +389,8 @@ export function initFullAdder() {
         { x: 820, y: 262.5 },
         { x: 820, y: 487.5 },
     ];
-    for (var i = 0; i < ids.length; i++) {
-        var gate = new gatejs.Gate(types[i]);
+    for (let i = 0; i < ids.length; i++) {
+        let gate = new gatejs.Gate(types[i]);
         gate.setId(ids[i]);
         gate.setName(names[i]);
         const component = gate.generateComponent();
@@ -420,8 +420,8 @@ export function initRippleAdder() {
         { x: 40, y: 500 },
         { x: 820, y: 150 },
     ];
-    for (var i = 0; i < ids.length; i++) {
-        var gate = new gatejs.Gate(types[i]);
+    for (let i = 0; i < ids.length; i++) {
+        let gate = new gatejs.Gate(types[i]);
         gate.setId(ids[i]);
         gate.setName(names[i]);
         const component = gate.generateComponent();

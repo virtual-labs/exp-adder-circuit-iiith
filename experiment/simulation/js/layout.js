@@ -40,33 +40,33 @@ menuOption.addEventListener("click", e => {
 // Tabs
 
 function changeTabs(e) {
-  const Task = e.target.parentNode.id;
-  if (window.currentTab == Task) {
+  const task = e.target.parentNode.id;
+  if (window.currentTab == task) {
     return;
   }
 
   if (window.currentTab != null) {
     document.getElementById(window.currentTab).classList.remove("is-active");
   }
-  window.currentTab = Task;
-  document.getElementById(Task).classList.add("is-active");
+  window.currentTab = task;
+  document.getElementById(task).classList.add("is-active");
 
   // Half adder
-  if (Task == "Task1") {
+  if (task == "Task1") {
     unbindEvent();
     bindEvent1();
     refreshWorkingArea();
     initHalfAdder();
     window.simulate= simulate
   }
-  else if (Task == "Task2") {
+  else if (task == "Task2") {
     unbindEvent();
     bindEvent1();
     refreshWorkingArea();
     initFullAdder();
     window.simulate= simulate
   }
-  else if (Task == "Task3") {
+  else if (task == "Task3") {
     unbindEvent();
     bindEvent2();
     refreshWorkingArea();

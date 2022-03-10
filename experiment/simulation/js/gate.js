@@ -179,7 +179,7 @@ export class Gate {
 
 
 
-function Add(event) {
+function aDD(event) {
     const type = event.target.innerHTML;
     const gate = new Gate(type);
     const component = gate.generateComponent();
@@ -188,13 +188,13 @@ function Add(event) {
     gate.registerComponent("working-area");
 }
 
-window.Add = Add;
+window.Add = aDD;
 
 export function getResult(gate) {
     if (gate.output != null) {
         return;
     }
-    for (var i = 0; i < gate.inputs.length; i++) {
+    for (let i = 0; i < gate.inputs.length; i++) {
         if (gate.inputs[i].output == null) {
             getResult(gate.inputs[i]);
         }
@@ -204,10 +204,10 @@ export function getResult(gate) {
 }
 
  function setInput(event) {
-    var parentElement = event.target.parentElement;
-    var element = event.target;
-    var type = parentElement.className.split(" ")[0];
-    var gate = gates[parentElement.id];
+    let parentElement = event.target.parentElement;
+    let element = event.target;
+    let type = parentElement.className.split(" ")[0];
+    let gate = gates[parentElement.id];
     if (type == "HIGH") {
         // change class HIGH to LOW
         parentElement.classList.replace("HIGH", "LOW");
@@ -224,9 +224,9 @@ export function getResult(gate) {
 window.setInput = setInput;
 
 export function checkConnections() {
-    var flag = 0;
-    for (var gateId in gates) {
-        var gate = gates[gateId];
+    let flag = 0;
+    for (let gateId in gates) {
+        const gate = gates[gateId];
         if (gate.inputPoints.length != gate.inputs.length) {
             flag = 1;
         }
@@ -250,18 +250,18 @@ export function simulate() {
     }
 
     // reset output in gate
-    for (var gateId in gates) {
+    for (let gateId in gates) {
         if (!gates[gateId].isInput) {
             gates[gateId].output = null;
         }
     }
 
 
-    for (var gateId in gates) {
-        var gate = gates[gateId];
+    for (let gateId in gates) {
+        const gate = gates[gateId];
         if (gate.isOutput == true) {
             getResult(gate);
-            var element = document.getElementById(gate.id)
+            let element = document.getElementById(gate.id)
             if (gate.output == true) {
                 element.className = "HIGH";
                 element.childNodes[0].innerHTML = "1";
@@ -276,20 +276,20 @@ export function simulate() {
 
 window.simulate = simulate;
 
-export function testSimulation(Gates) {
+export function testSimulation(gates) {
     if (!checkConnections()) {
         return;
     }
 
     // reset output in gate
-    for (var gateId in Gates) {
-        if (!Gates[gateId].isInput) {
-            Gates[gateId].output = null;
+    for (let gateId in gates) {
+        if (!gates[gateId].isInput) {
+            gates[gateId].output = null;
         }
     }
 
-    for (var gateId in Gates) {
-        var gate = Gates[gateId];
+    for (let gateId in gates) {
+        const gate = gates[gateId];
         if (gate.isOutput == true) {
             getResult(gate);
         }
@@ -315,7 +315,7 @@ window.submitCircuit = submitCircuit;
 
 export function deleteElement(gateid) {
 
-    var gate = gates[gateid];
+    let gate = gates[gateid];
     // jsPlumbInstance.selectEndpoints().detachAll();
     jsPlumbInstance.removeAllEndpoints(document.getElementById(gate.id));
     // jsPlumbInstance.detach(gate.id); // <--

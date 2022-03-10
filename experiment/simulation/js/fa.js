@@ -106,9 +106,9 @@ class FullAdder {
 
 }
 
-function AddFA() {
-    let FA = new FullAdder();
-    FA.generateComponent();
+function addFA() {
+    let fA = new FullAdder();
+    fA.generateComponent();
 }
 
 function getOutputFA(gate, pos) {
@@ -155,7 +155,7 @@ function getResultFA(fa) {
 function checkConnectionsFA() {
     let flag = 0;
     for (let faID in fullAdder) {
-        let gate = fullAdder[faID];
+        const gate = fullAdder[faID];
         // For Full Adder objects
         // Check if all the outputs are connected
         if (gate.CoutIsConnected == false) {
@@ -182,7 +182,7 @@ function checkConnectionsFA() {
         }
     }
     for (let gateId in gates) {
-        let gate = gates[gateId];
+        const gate = gates[gateId];
         if (gate.isInput == true) {
             if (gate.isConnected == false) {
                 flag = 1;
@@ -219,7 +219,7 @@ function simulateFA() {
         fullAdder[faID].sum = null;
     }
     for (let gateId in gates) {
-        let gate = gates[gateId];
+        const gate = gates[gateId];
         if (gate.isOutput == true) {
             gates[gateId].output = null;    
         }
@@ -249,31 +249,31 @@ function simulateFA() {
     }
 }
 
-function testSimulationFA(FA,GATES) {
+function testSimulationFA(fA,gates) {
     if (!checkConnectionsFA()) {
         return;
     }
 
      // reset output in gate
-    for (let faID in FA) {
-        FA[faID].Cout = null;
-        FA[faID].sum = null;
+    for (let faID in fA) {
+        fA[faID].Cout = null;
+        fA[faID].sum = null;
     }
-    for (let gateId in GATES) {
-        let gate = GATES[gateId]
+    for (let gateId in gates) {
+        const gate = gates[gateId]
         if (gate.isOutput == true) {
-            GATES[gateId].output = null;
+            gates[gateId].output = null;
         }
     }
 
-    for(let gateId in GATES){
-        if(GATES[gateId].isOutput == true){
-            getResultFA(GATES[gateId].inputs[0]);
+    for(let gateId in gates){
+        if(gates[gateId].isOutput == true){
+            getResultFA(gates[gateId].inputs[0]);
         }
     }
 
     for(key in finalOutputs){
-        GATES[key].output = getOutputFA(finalOutputs[key][0], finalOutputs[key][1]);
+        gates[key].output = getOutputFA(finalOutputs[key][0], finalOutputs[key][1]);
     }
     
    
@@ -299,4 +299,4 @@ function deleteFA(id) {
     delete fullAdder[id];
 }
 
-export {clearFAs, AddFA, getOutputFA, getResultFA, checkConnectionsFA, simulateFA, testSimulationFA, deleteFA, fullAdder, FullAdder, finalOutputs};
+export {clearFAs, addFA, getOutputFA, getResultFA, checkConnectionsFA, simulateFA, testSimulationFA, deleteFA, fullAdder, FullAdder, finalOutputs};
