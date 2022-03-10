@@ -1,4 +1,15 @@
+import {gates} from './gate.js';
+import {jsPlumbInstance} from "./main.js";
+
 let fullAdder = {}
+
+function clearFAs() {
+
+    for (let faID in fullAdder) {
+        delete fullAdder[faID];
+    }
+    fullAdder = {};
+}
 
 // {output-id: [gate,pos]}
 let finalOutputs = {
@@ -22,18 +33,18 @@ class FullAdder {
         this.sumIsConnected = false;
     }
     generateComponent(x = 0, y = 0) {
-        var component = '';
+        let component = '';
         component += '<div class="drag-drop FullAdder" id=' + this.id + ' style="width:150px;height:150px;"></div>';
-        var parent = document.getElementById("working-area");
+        const parent = document.getElementById("working-area");
         parent.insertAdjacentHTML('beforeend', component);
         document.getElementById(this.id).style.left = x + "px";
         document.getElementById(this.id).style.top = y + "px";
 
-        var el = document.getElementById(this.id);
+        const el = document.getElementById(this.id);
         el.addEventListener('contextmenu', function (ev) {
             ev.preventDefault();
-                var left = ev.pageX - document.getScroll()[0];
-                var top = ev.pageY - document.getScroll()[1];
+                let left = ev.pageX - document.getScroll()[0];
+                let top = ev.pageY - document.getScroll()[1];
                 const origin = {
                     left: left,
                     top: top
@@ -78,7 +89,7 @@ class FullAdder {
     }
 
     generateOutput() {
-        var aXorb = (getOutputFA(this.a0[0], this.a0[1]) && !getOutputFA(this.b0[0], this.b0[1])) || (!getOutputFA(this.a0[0], this.a0[1]) && getOutputFA(this.b0[0], this.b0[1]));
+        const aXorb = (getOutputFA(this.a0[0], this.a0[1]) && !getOutputFA(this.b0[0], this.b0[1])) || (!getOutputFA(this.a0[0], this.a0[1]) && getOutputFA(this.b0[0], this.b0[1]));
         this.Cout = (getOutputFA(this.a0[0], this.a0[1]) && getOutputFA(this.b0[0], this.b0[1])) || (getOutputFA(this.Cin[0], this.Cin[1]) && aXorb);
         this.sum = (getOutputFA(this.Cin[0], this.Cin[1]) && !aXorb) || (!(getOutputFA(this.Cin[0], this.Cin[1])) && aXorb);
     }
@@ -96,7 +107,7 @@ class FullAdder {
 }
 
 function AddFA() {
-    var FA = new FullAdder();
+    let FA = new FullAdder();
     FA.generateComponent();
 }
 
@@ -142,9 +153,9 @@ function getResultFA(fa) {
 }
 
 function checkConnectionsFA() {
-    var flag = 0;
-    for (var faID in fullAdder) {
-        var gate = fullAdder[faID];
+    let flag = 0;
+    for (let faID in fullAdder) {
+        let gate = fullAdder[faID];
         // For Full Adder objects
         // Check if all the outputs are connected
         if (gate.CoutIsConnected == false) {
@@ -170,8 +181,8 @@ function checkConnectionsFA() {
             break;
         }
     }
-    for (var gateId in gates) {
-        var gate = gates[gateId];
+    for (let gateId in gates) {
+        let gate = gates[gateId];
         if (gate.isInput == true) {
             if (gate.isConnected == false) {
                 flag = 1;
@@ -203,29 +214,29 @@ function simulateFA() {
     }
 
     // reset output in gate
-    for (var faID in fullAdder) {
+    for (let faID in fullAdder) {
         fullAdder[faID].Cout = null;
         fullAdder[faID].sum = null;
     }
-    for (var gateId in gates) {
-        var gate = gates[gateId];
+    for (let gateId in gates) {
+        let gate = gates[gateId];
         if (gate.isOutput == true) {
             gates[gateId].output = null;    
         }
     }
 
 
-    // for (var faID in fullAdder) {
+    // for (let faID in fullAdder) {
     //     getResultFA(fullAdder[faID]);
     // }
-    for (var gateId in gates) {
+    for (let gateId in gates) {
         if (gates[gateId].isOutput == true) {
             getResultFA(gates[gateId].inputs[0]);
         }
     }
 
     for (key in finalOutputs) {
-        var element = document.getElementById(key);
+        let element = document.getElementById(key);
         gates[key].output = getOutputFA(finalOutputs[key][0], finalOutputs[key][1]);
         if (gates[key].output == true) {
             element.className = "HIGH";
@@ -244,18 +255,18 @@ function testSimulationFA(FA,GATES) {
     }
 
      // reset output in gate
-    for (var faID in FA) {
+    for (let faID in FA) {
         FA[faID].Cout = null;
         FA[faID].sum = null;
     }
-    for (var gateId in GATES) {
-        var gate = GATES[gateId]
+    for (let gateId in GATES) {
+        let gate = GATES[gateId]
         if (gate.isOutput == true) {
             GATES[gateId].output = null;
         }
     }
 
-    for(var gateId in GATES){
+    for(let gateId in GATES){
         if(GATES[gateId].isOutput == true){
             getResultFA(GATES[gateId].inputs[0]);
         }
@@ -269,9 +280,9 @@ function testSimulationFA(FA,GATES) {
 }
 
 function deleteFA(id) {
-    var fa = fullAdder[id];
-    instance.removeAllEndpoints(document.getElementById(fa.id));
-    instance._removeElement(document.getElementById(fa.id));
+    const fa = fullAdder[id];
+    jsPlumbInstance.removeAllEndpoints(document.getElementById(fa.id));
+    jsPlumbInstance._removeElement(document.getElementById(fa.id));
 
     for (key in fullAdder) {
         if(fullAdder[key].a0[0] == fa) {
@@ -287,3 +298,5 @@ function deleteFA(id) {
 
     delete fullAdder[id];
 }
+
+export {clearFAs, AddFA, getOutputFA, getResultFA, checkConnectionsFA, simulateFA, testSimulationFA, deleteFA, fullAdder, FullAdder, finalOutputs};

@@ -1,9 +1,21 @@
-let gates = {}; // Array of gates
+import { registerGate } from "./main.js";
+import { setPosition } from "./layout.js";
+import { halfAdder, fullAdderTest, rippleAdderTest  } from "./validator.js";
+import {jsPlumbInstance} from "./main.js";
+
+export let gates = {}; // Array of gates
 window.numComponents = 0;
 //(input0,input1,carryOut,OutputOut)
+export function clearGates() {
 
+    for (let gateId in gates) {
+        delete gates[gateId];
+    }
 
-class Gate {
+    gates = {};
+}
+
+export class Gate {
     constructor(type) {
         this.type = type;
         this.id = type + "-" + window.numComponents++;
@@ -27,7 +39,7 @@ class Gate {
         this.inputs.push(gate);
     }
     removeInput(gate) {
-        var index = this.inputs.indexOf(gate);
+        let index = this.inputs.indexOf(gate);
         if (index > -1) {
             this.inputs.splice(index, 1);
         }
@@ -41,8 +53,8 @@ class Gate {
         this.name = name;
     }
 
-    generateComponent(x = 0, y = 0) {
-        var component = '';
+    generateComponent() {
+        let component = '';
 
         if (this.type == "AND") {
 
@@ -85,24 +97,24 @@ class Gate {
             component = '<div class="Output" id=' + this.id + '><a></a><p>' + this.name + '</p></div>'
             this.isOutput = true;
         }
+        return component;
 
-        var parent = document.getElementById("working-area");
+    }
 
+    registerComponent(workingArea,x=0,y=0) {
 
-
-        parent.insertAdjacentHTML('beforeend', component);
         // get width of working area
-        var width = document.getElementById("working-area").offsetWidth;
-        var scale = 900;
+        const width = document.getElementById(workingArea).offsetWidth;
+        let scale = 900;
         x = (x / scale) * width;
         document.getElementById(this.id).style.left = x + "px";
         document.getElementById(this.id).style.top = y + "px";
         if (this.type != "Input" && this.type != "Output") {
-            var el = document.getElementById(this.id);
+            const el = document.getElementById(this.id);
             el.addEventListener('contextmenu', function (ev) {
                 ev.preventDefault();
-                var left = ev.pageX - document.getScroll()[0];
-                var top = ev.pageY - document.getScroll()[1];
+                let left = ev.pageX - document.getScroll()[0];
+                let top = ev.pageY - document.getScroll()[1];
                 const origin = {
                     left: left,
                     top: top
@@ -118,7 +130,7 @@ class Gate {
         registerGate(this.id, this);
 
         this.updatePosition(this.id);
-
+        
     }
 
     addInputPoints(input) {
@@ -168,12 +180,17 @@ class Gate {
 
 
 function Add(event) {
-    var type = event.target.innerHTML;
-    var gate = new Gate(type);
-    gate.generateComponent();
+    const type = event.target.innerHTML;
+    const gate = new Gate(type);
+    const component = gate.generateComponent();
+    const parent = document.getElementById("working-area");
+    parent.insertAdjacentHTML('beforeend', component);
+    gate.registerComponent("working-area");
 }
 
-function getResult(gate) {
+window.Add = Add;
+
+export function getResult(gate) {
     if (gate.output != null) {
         return;
     }
@@ -186,7 +203,7 @@ function getResult(gate) {
     return;
 }
 
-function setInput(event) {
+ function setInput(event) {
     var parentElement = event.target.parentElement;
     var element = event.target;
     var type = parentElement.className.split(" ")[0];
@@ -204,7 +221,9 @@ function setInput(event) {
     }
 }
 
-function checkConnections() {
+window.setInput = setInput;
+
+export function checkConnections() {
     var flag = 0;
     for (var gateId in gates) {
         var gate = gates[gateId];
@@ -224,12 +243,7 @@ function checkConnections() {
     }
 }
 
-function simulate() {
-    if (window.currentTab == "Task3") {
-        simulateFA();
-        return;
-    }
-
+export function simulate() {
 
     if (!checkConnections()) {
         return;
@@ -260,7 +274,9 @@ function simulate() {
     }
 }
 
-function testSimulation(Gates) {
+window.simulate = simulate;
+
+export function testSimulation(Gates) {
     if (!checkConnections()) {
         return;
     }
@@ -281,7 +297,7 @@ function testSimulation(Gates) {
 }
 
 // function to submit the desired circuit and get the final success or failure message
-function submitCircuit() {
+export function submitCircuit() {
 
     document.getElementById("table-body").innerHTML = "";
     if (window.currentTab == "Task1") {
@@ -294,22 +310,23 @@ function submitCircuit() {
         rippleAdderTest("Input-0", "Input-1", "Input-3", "Input-4", "Input-6", "Input-7", "Input-9", "Input-10","Input-13","Output-12","Output-2","Output-5","Output-8","Output-11");
     }
 }
+window.submitCircuit = submitCircuit;
 
 
-function deleteElement(gateid) {
+export function deleteElement(gateid) {
 
     var gate = gates[gateid];
-    // instance.selectEndpoints().detachAll();
-    instance.removeAllEndpoints(document.getElementById(gate.id));
-    // instance.detach(gate.id); // <--
-    instance._removeElement(document.getElementById(gate.id));
-    for (elem in gates) {
+    // jsPlumbInstance.selectEndpoints().detachAll();
+    jsPlumbInstance.removeAllEndpoints(document.getElementById(gate.id));
+    // jsPlumbInstance.detach(gate.id); // <--
+    jsPlumbInstance._removeElement(document.getElementById(gate.id));
+    for (let elem in gates) {
         if (gates[elem].inputs.includes(gate)) {
             gates[elem].removeInput(gate);
         }
     }
     delete gates[gateid];
-    // instance.repaintEverything();
+    // jsPlumbInstance.repaintEverything();
 }
 
 

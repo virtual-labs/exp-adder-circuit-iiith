@@ -1,32 +1,39 @@
-function halfAdder(input0,input1,carryOut,sumOut)  // This function takes 4 ids of the respective Gates
+import {gates, testSimulation} from './gate.js';
+import { testSimulationFA } from './fa.js';
+
+
+export function halfAdder(Input0,Input1,CarryOut,SumOut)  // This function takes 4 ids of the respective Gates
 {
     // Gates[input0].outputs = true;
     // Gates[input1].outputs = true;
     var Gates = gates;
 
 
-    var input0 = Gates[input0];
-    var input1 = Gates[input1];
+    let input0 = Gates[Input0];
+    let input1 = Gates[Input1];
     var flag = 0;
 
     var dataTable = ''
 
     for(var i=0; i<4;i++)
     {
-        // covert i to binary
-        var binary = i.toString(2);
-        var bit0 = binary[0] || 0;
-        var bit1 = binary[1] || 0;
+        //convert i to binary
+        let binary = i.toString(2);
+        if(binary.length < 2)
+            binary = '0' + binary;
+        
+        const bit0 = binary[1];
+        const bit1 = binary[0];
 
-        input0.setOutput(bit0 == "1");
-        input1.setOutput(bit1 == "1");
-        var calculatedSum = (input0.output && !input1.output) || (!input0.output && input1.output) ? 1 : 0;
-        var calculatedCarry = input0.output && input1.output ? 1 : 0;
+        input1.setOutput(bit0 == "1");
+        input0.setOutput(bit1 == "1");
+        const calculatedSum = (input0.output && !input1.output) || (!input0.output && input1.output) ? 1 : 0;
+        const calculatedCarry = input0.output && input1.output ? 1 : 0;
 
         // simulate the circuit
         testSimulation(Gates);
-        var sum = Gates[sumOut].output ? 1 : 0;
-        var carry = Gates[carryOut].output ? 1 : 0;
+        const sum = Gates[SumOut].output ? 1 : 0;
+        const carry = Gates[CarryOut].output ? 1 : 0;
 
         dataTable += '<tr><th>'+ bit1 +'</th><th>'+ bit0 +'</th><td>'+ calculatedSum +'</td><td>'+ calculatedCarry +'</td><td>'+ sum +'</td><td>'+ carry +'</td></tr>'
 
@@ -39,17 +46,21 @@ function halfAdder(input0,input1,carryOut,sumOut)  // This function takes 4 ids 
     var table_elem = document.getElementById('table-body');
     table_elem.insertAdjacentHTML('beforeend', dataTable);
 
+    const result = document.getElementById('result');
+
     if(flag == 0)
     {
-        alert("Success");
+        result.innerHTML = "<span>&#10003;</span> Success";
+        result.className = "success-message";
     }
     else
     {
-        alert("Fail");
+        result.innerHTML = "<span>&#10007;</span> Fail";
+        result.className = "failure-message";
     }
 }
 
-function fullAdderTest(input0,input1,carryIn,carryOut,sumOut)
+export function fullAdderTest(input0,input1,carryIn,carryOut,sumOut)
 {
     // Gates[input0].outputs = true;
     // Gates[input1].outputs = true;
@@ -64,13 +75,17 @@ function fullAdderTest(input0,input1,carryIn,carryOut,sumOut)
     {
         // covert i to binary
         var binary = i.toString(2);
-        var bit0 = binary[0] || 0;
+        if(binary.length < 2)
+            binary = '0' + binary;
+        if(binary.length < 3)
+            binary = '0' + binary;
+        var bit0 = binary[2] || 0;
         var bit1 = binary[1] || 0;
-        var bit2 = binary[2] || 0;
+        var bit2 = binary[0] || 0;
 
-        input0.setOutput(bit0 == "1");
+        input0.setOutput(bit2 == "1");
         input1.setOutput(bit1 == "1");
-        carryIn.setOutput(bit2 == "1");
+        carryIn.setOutput(bit0 == "1");
 
         var aXorb =  (input0.output && !input1.output) || (!input0.output && input1.output);
 
@@ -98,17 +113,21 @@ function fullAdderTest(input0,input1,carryIn,carryOut,sumOut)
     var table_elem = document.getElementById('table-body');
     table_elem.insertAdjacentHTML('beforeend', dataTable);
 
+    const result = document.getElementById('result');
+
     if(flag == 0)
     {
-        alert("Success");
+        result.innerHTML = "<span>&#10003;</span> Success";
+        result.className = "success-message";
     }
     else
     {
-        alert("Fail");
+        result.innerHTML = "<span>&#10007;</span> Fail";
+        result.className = "failure-message";
     }
 }
 
-function rippleAdderTest(inputA0,inputB0,inputA1,inputB1,inputA2,inputB2,inputA3,inputB3,inputCin,OutputCout,OutputS0,OutputS1,OutputS2,OutputS3)
+export function rippleAdderTest(inputA0,inputB0,inputA1,inputB1,inputA2,inputB2,inputA3,inputB3,inputCin,OutputCout,OutputS0,OutputS1,OutputS2,OutputS3)
 {
     var Gates = gates;
     var FA = fullAdder;
@@ -191,13 +210,17 @@ function rippleAdderTest(inputA0,inputB0,inputA1,inputB1,inputA2,inputB2,inputA3
         }
     }
 
+    const result = document.getElementById('result');
+
     if(flag == 0)
     {
-        alert("Success");
+        result.innerHTML = "<span>&#10003;</span> Success";
+        result.className = "success-message";
     }
     else
     {
-        alert("Fail");
+        result.innerHTML = "<span>&#10007;</span> Fail";
+        result.className = "failure-message";
     }
 
 }
