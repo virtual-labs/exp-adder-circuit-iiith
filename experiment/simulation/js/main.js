@@ -37,6 +37,10 @@ export const bindEvent1 = function () {
 
         const start_uuid = endpoint.uuid.split(":")[0];
         const end_uuid = dropEndpoint.uuid.split(":")[0];
+        
+        if (endpoint.elementId == dropEndpoint.elementId) {
+            return false;
+        }
 
         if (start_uuid == "input" && end_uuid == "input") {
             return false;
@@ -67,6 +71,10 @@ export const bindEvent2 = function () {
 
         const start_uuid = endpoint.uuid.split(":")[0];
         const end_uuid = dropEndpoint.uuid.split(":")[0];
+        
+        if (endpoint.elementId == dropEndpoint.elementId) {
+            return false;
+        }
 
         if (start_uuid == "input" && end_uuid == "input") {
             return false;
