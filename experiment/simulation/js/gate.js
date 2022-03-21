@@ -179,7 +179,7 @@ export class Gate {
 
 
 
-function aDD(event) {
+function add_gate(event) {
     const type = event.target.innerHTML;
     const gate = new Gate(type);
     const component = gate.generateComponent();
@@ -188,7 +188,7 @@ function aDD(event) {
     gate.registerComponent("working-area");
 }
 
-window.Add = aDD;
+window.Add = add_gate;
 
 export function getResult(gate) {
     if (gate.output != null) {

@@ -2,6 +2,9 @@ import { simulateFA, deleteFA } from "./fa.js";
 import { simulate, deleteElement } from "./gate.js";
 import {bindEvent1, bindEvent2, unbindEvent, initHalfAdder, initFullAdder, initRippleAdder, refreshWorkingArea} from "./main.js";
 
+// Wires
+export const wireColours = ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff", "#00ffff", "#ff8000", "#00ff80", "#80ff00", "#ff0080", "#8080ff", "#c0c0c0"];
+
 // Contextmenu
 const menu = document.querySelector(".menu");
 const menuOption = document.querySelector(".menu-option");
@@ -108,7 +111,7 @@ function updateToolbar() {
     elem = '<div class="column is-one-half"><div class="component-button AND" onclick="Add(event)">AND</div><div class="component-button OR" onclick="Add(event)">OR</div><div class="component-button NOT" onclick="Add(event)">NOT</div><div class="component-button NAND" onclick="Add(event)">NAND</div></div><div class="column is-one-half"><div class="component-button NOR" onclick="Add(event)">NOR</div><div class="component-button XOR" onclick="Add(event)">XOR</div><div class="component-button XNOR" onclick="Add(event)">XNOR</div></div>'
   }
   else if (window.currentTab == "Task3") {
-    elem = '<div class="column is-one-half"><div class="component-button FullAdder" onclick="fajs.AddFA(event)"></div></div><div class="column is-one-half"></div>'
+    elem = '<div class="column is-one-half"><div class="component-button FullAdder" onclick="AddFA(event)"></div></div><div class="column is-one-half"></div>'
   }
 
   document.getElementById("toolbar").innerHTML = elem;

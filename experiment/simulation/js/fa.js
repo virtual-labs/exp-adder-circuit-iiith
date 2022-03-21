@@ -1,3 +1,5 @@
+import { registerGate } from "./main.js";
+import { setPosition } from "./layout.js";
 import {gates} from './gate.js';
 import {jsPlumbInstance} from "./main.js";
 
@@ -31,12 +33,11 @@ class FullAdder {
         this.outputPoints = [];
         this.CoutIsConnected = false;
         this.sumIsConnected = false;
+        this.component = '<div class="drag-drop FullAdder" id=' + this.id + ' style="width:150px;height:150px;"></div>';
     }
-    generateComponent(x = 0, y = 0) {
-        let component = '';
-        component += '<div class="drag-drop FullAdder" id=' + this.id + ' style="width:150px;height:150px;"></div>';
-        const parent = document.getElementById("working-area");
-        parent.insertAdjacentHTML('beforeend', component);
+    registerComponent(workingArea,x = 0, y = 0) {
+        const parent = document.getElementById(workingArea);
+        parent.insertAdjacentHTML('beforeend', this.component);
         document.getElementById(this.id).style.left = x + "px";
         document.getElementById(this.id).style.top = y + "px";
 
@@ -108,8 +109,10 @@ class FullAdder {
 
 function addFA() {
     let fA = new FullAdder();
-    fA.generateComponent();
+    fA.registerComponent("working-area");
 }
+
+window.AddFA = addFA;
 
 function getOutputFA(gate, pos) {
     if (pos == "Carry") {
