@@ -238,7 +238,7 @@ function simulateFA() {
         }
     }
 
-    for (key in finalOutputs) {
+    for (let key in finalOutputs) {
         let element = document.getElementById(key);
         gates[key].output = getOutputFA(finalOutputs[key][0], finalOutputs[key][1]);
         if (gates[key].output == true) {
@@ -275,7 +275,7 @@ function testSimulationFA(fA,gates) {
         }
     }
 
-    for(key in finalOutputs){
+    for(let key in finalOutputs){
         gates[key].output = getOutputFA(finalOutputs[key][0], finalOutputs[key][1]);
     }
     
@@ -287,7 +287,7 @@ function deleteFA(id) {
     jsPlumbInstance.removeAllEndpoints(document.getElementById(fa.id));
     jsPlumbInstance._removeElement(document.getElementById(fa.id));
 
-    for (key in fullAdder) {
+    for (let key in fullAdder) {
         if(fullAdder[key].a0[0] == fa) {
             fullAdder[key].a0 = null;
         }
