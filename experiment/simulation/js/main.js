@@ -170,6 +170,7 @@ export const bindEvent2 = function () {
                 if (start_uuid == "output") {
                     let input = fajs.fullAdder[endpoint.elementId];
                     let output = gatejs.gates[dropEndpoint.elementId];
+                    let pos = ""
                     if (Object.keys(endpoint.overlays)[0].includes("sum")) {
                         pos = "Sum";
                     }
@@ -185,6 +186,7 @@ export const bindEvent2 = function () {
                 if (start_uuid == "input") {
                     let input = fajs.fullAdder[dropEndpoint.elementId];
                     let output = gatejs.gates[endpoint.elementId];
+                    let pos = ""
                     if (Object.keys(dropEndpoint.overlays)[0].includes("sum")) {
                         pos = "Sum";
                     }
