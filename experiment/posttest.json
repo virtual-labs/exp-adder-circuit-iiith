@@ -1,0 +1,68 @@
+{
+    "version": 2.0,
+    "questions": [
+        {
+            "question": "1. How many iterations of the outer and inner loops will it take to sort the following array using the optimized algorithm?<br>A = [-4, -9, -1, 8, -9, 4]",
+            "answers": {
+                "a": "Outer = 4, Inner = 14",
+                "b": "Outer = 3, Inner = 12",
+                "c": "Outer = 5, Inner = 25",
+                "d": "Outer = 4, Inner = 20"
+            },
+            "correctAnswer": "a",
+            "explanations": {},
+            "difficulty": "beginner"
+        },
+        {
+            "question": "2. Consider the following array:<br>A = [8, 7, -2, 4, 1]<br>Which of the following will represent the array after the 3rd iteration of the algorithm (assume ascending order sort)?",
+            "answers": {
+                "a": "[7, -2, 4, 1, 8]",
+                "b": "[-2, 4, 1, 7, 8]",
+                "c": "[-2, 1, 4, 7, 8]",
+                "d": "[8, 7, 4, 1, -2]"
+            },
+            "correctAnswer": "c",
+            "explanations": {
+                "a": "This represents the array after the 1st iteration.",
+                "b": "This represents the array after the 2nd iteration.",
+                "c": "This represents the array after the 3rd iteration. Coincidentally, the array is already completely sorted by the end of the 3rd iteration.",
+                "d": "This represents the array were it to be sorted in descending order and not ascending order."
+            },
+            "difficulty": "intermediate"
+        },
+        {
+            "question": "3. Consider the following array:<br>A = [8, 7, -2, 4, 1]<br>How many swaps occur in the 1st iteration of the outer loop?",
+            "answers": {
+                "a": "0",
+                "b": "1",
+                "c": "3",
+                "d": "4"
+            },
+            "correctAnswer": "d",
+            "explanations": {
+                "a": "The array is not sorted already and hence there will be some swaps.",
+                "b": "This is the number of swaps after the 3rd iteration and not the 1st.",
+                "c": "This is the number of swaps after the 2nd iteration and not the 1st.",
+                "d": "\u20188\u2019 will move from the beginning to the end of the array and will require 4 swaps to do so."
+            },
+            "difficulty": "intermediate"
+        },
+        {
+            "question": "4. Consider the following array:<br>A = [-10, 100, -1000, 2, 0, -1]<br>How many iterations of the outer loop will it take to sort this array as per the optimized bubble sort?",
+            "answers": {
+                "a": "2",
+                "b": "3",
+                "c": "4",
+                "d": "5"
+            },
+            "correctAnswer": "c",
+            "explanations": {
+                "a": "The array will be A = [-1000, -10, 0, -1, 2, 100] after 2 iterations. Clearly, this array is still not completely sorted.",
+                "b": "Although the array will be sorted by the end of the 3rd iteration, the optimized algorithm only stops when there have been no swaps in an iteration. There will be 1 swap during the 3rd iteration and hence the algorithm does not stop.",
+                "c": "Although the array will be sorted by the end of the 3rd iteration, the optimized algorithm does require 1 extra iteration where no swaps occur to detect that the array is sorted and hence requires 3 + 1 = 4 iterations here.",
+                "d": "The optimized algorithm stops as soon as it detects that no swaps have occurred in an iteration which indicates that the array is sorted. The given array is sorted in fewer than 5 iterations and the same is detected by the algorithm and hence the algorithm will use fewer iterations."
+            },
+            "difficulty": "advanced"
+        }
+    ]
+}
