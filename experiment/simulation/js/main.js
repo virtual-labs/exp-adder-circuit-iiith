@@ -22,7 +22,7 @@ export const jsPlumbInstance = jsPlumbBrowserUI.newInstance({
     maxConnections: -1,
     endpoint: {
         type: "Dot",
-        options: { radius: 7 },
+        options: { radius: 6 },
     },
     dragOptions: {
         containment: "parentEnclosed",

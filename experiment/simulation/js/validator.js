@@ -1,5 +1,5 @@
 import {gates, testSimulation} from './gate.js';
-import { testSimulationFA } from './fa.js';
+import {fullAdder, testSimulationFA } from './fa.js';
 
 
 export function halfAdder(Input0,Input1,CarryOut,SumOut)  // This function takes 4 ids of the respective Gates
@@ -148,25 +148,44 @@ export function rippleAdderTest(InputA0,InputB0,InputA1,InputB1,InputA2,InputB2,
     {
         // covert i to binary
         let binary = i.toString(2);
-        const bit0 = binary[0] || 0;
-        const bit1 = binary[1] || 0;
-        const bit2 = binary[2] || 0;
-        const bit3 = binary[3] || 0;
-        const bit4 = binary[4] || 0;
-        const bit5 = binary[5] || 0;
-        const bit6 = binary[6] || 0;
-        const bit7 = binary[7] || 0;
-        const bit8 = binary[8] || 0;
+        if(binary.length < 2)
+            binary = '0' + binary;
+        if(binary.length < 3)
+            binary = '0' + binary;
+        if(binary.length < 4)
+            binary = '0' + binary;
+        if(binary.length < 5)
+            binary = '0' + binary;
+        if(binary.length < 6)
+            binary = '0' + binary;
+        if(binary.length < 7)
+            binary = '0' + binary;
+        if(binary.length < 8)
+            binary = '0' + binary;
+        if(binary.length < 9)
+            binary = '0' + binary;
 
-        inputA0.setOutput(bit0 == "1");
-        inputB0.setOutput(bit1 == "1");
-        inputA1.setOutput(bit2 == "1");
-        inputB1.setOutput(bit3 == "1");
+
+
+        const bit0 = binary[8] || 0;
+        const bit1 = binary[7] || 0;
+        const bit2 = binary[6] || 0;
+        const bit3 = binary[5] || 0;
+        const bit4 = binary[4] || 0;
+        const bit5 = binary[3] || 0;
+        const bit6 = binary[2] || 0;
+        const bit7 = binary[1] || 0;
+        const bit8 = binary[0] || 0;
+
+        inputA0.setOutput(bit8 == "1");
+        inputB0.setOutput(bit7 == "1");
+        inputA1.setOutput(bit6 == "1");
+        inputB1.setOutput(bit5 == "1");
         inputA2.setOutput(bit4 == "1");
-        inputB2.setOutput(bit5 == "1");
-        inputA3.setOutput(bit6 == "1");
-        inputB3.setOutput(bit7 == "1");
-        carryIn.setOutput(bit8 == "1");
+        inputB2.setOutput(bit3 == "1");
+        inputA3.setOutput(bit2 == "1");
+        inputB3.setOutput(bit1 == "1");
+        carryIn.setOutput(bit0 == "1");
 
         // FOR FIRST ADDER
         const aXorb =  (inputA0.output && !inputB0.output) || (!inputA0.output && inputB0.output);

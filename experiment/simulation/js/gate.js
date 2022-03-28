@@ -105,8 +105,11 @@ export class Gate {
 
         // get width of working area
         const width = document.getElementById(workingArea).offsetWidth;
+        const height = document.getElementById(workingArea).offsetHeight;
         let scale = 900;
+        let yScale = 800;
         x = (x / scale) * width;
+        y = (y / yScale) * height;
         document.getElementById(this.id).style.left = x + "px";
         document.getElementById(this.id).style.top = y + "px";
         if (this.type != "Input" && this.type != "Output") {

@@ -33,7 +33,7 @@ class FullAdder {
         this.outputPoints = [];
         this.CoutIsConnected = false;
         this.sumIsConnected = false;
-        this.component = '<div class="drag-drop FullAdder" id=' + this.id + ' style="width:150px;height:150px;"></div>';
+        this.component = '<div class="drag-drop FullAdder" id=' + this.id + ' style="width:100px;height:100px;"></div>';
     }
     registerComponent(workingArea,x = 0, y = 0) {
         const parent = document.getElementById(workingArea);
@@ -171,15 +171,15 @@ function checkConnectionsFA() {
         }
 
         // Check if all the inputs are connected
-        if (gate.a0 == null) {
+        if (gate.a0 == null || gate.a0.length == 0) {
             flag = 1;
             break;
         }
-        if (gate.b0 == null) {
+        if (gate.b0 == null || gate.b0.length == 0) {
             flag = 1;
             break;
         }
-        if (gate.Cin == null) {
+        if (gate.Cin == null || gate.Cin.length == 0) {
             flag = 1;
             break;
         }
@@ -288,6 +288,10 @@ function deleteFA(id) {
     jsPlumbInstance._removeElement(document.getElementById(fa.id));
 
     for (let key in fullAdder) {
+        if(fullAdder[key].id == id){
+            delete fullAdder[key];
+            continue;
+        }
         if(fullAdder[key].a0[0] == fa) {
             fullAdder[key].a0 = null;
         }
@@ -299,7 +303,16 @@ function deleteFA(id) {
         }
     }
 
-    delete fullAdder[id];
+    for (let key in finalOutputs) {
+        if (finalOutputs[key][0] == fa) {
+            delete finalOutputs[key];
+        }
+
+        gates[key].inputs = [];
+    }
+
+
+
 }
 
 export {clearFAs, addFA, getOutputFA, getResultFA, checkConnectionsFA, simulateFA, testSimulationFA, deleteFA, fullAdder, FullAdder, finalOutputs};

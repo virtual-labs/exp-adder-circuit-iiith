@@ -13,7 +13,7 @@
 </head>
 
 <body>
-	<div class="container" style="padding-top:3%">
+	<div class="container" style="margin-top: 1%;">
 		<div class="columns is-centered">
 			<div class="column is-one-quarter v-instruction-title">
 				Tasks
@@ -53,27 +53,18 @@
 		</div>
 	</div>
 	<div class="columns is-centered">
-		<div class="column is-one-quarter" style="margin:auto;text-align:center">
-		</div>
-		<div class="column"></div>
-		<div class="column is-one-third">
-			<button class="v-button" onclick="simulate()">Simulate</button>
-			<button class="v-button" onclick="submitCircuit()">Submit</button>
-		</div>
-	</div>
-	<div class="columns is-centered">
 		<div class="column is-2-desktop is-4-tablet is-12-mobile">
 			<div class="v-datalist-container components-list">
 				<div class="v-datalist-title">Components</div>
 				<div class="v-datalist-row">
 					<div class="columns is-centered" id="toolbar">
-						<div class="column is-one-half">
+						<div class="column is-6-desktop is-6-tablet is-6-mobile">
 							<div class="component-button AND" onclick="Add(event)">AND</div>
 							<div class="component-button OR" onclick="Add(event)">OR</div>
 							<div class="component-button NOT" onclick="Add(event)">NOT</div>
 							<div class="component-button NAND" onclick="Add(event)">NAND</div>
 						</div>
-						<div class="column is-one-half">
+						<div class="column is-6-desktop is-6-tablet is-6-mobile">
 							<div class="component-button NOR" onclick="Add(event)">NOR</div>
 							<div class="component-button XOR" onclick="Add(event)">XOR</div>
 							<div class="component-button XNOR" onclick="Add(event)">XNOR</div>
@@ -115,6 +106,10 @@
 						</table>
 					</div>
 					<div id="result"></div>
+				</div>
+				<div class="v-datalist-row">
+					<button class="v-button" onclick="simulate()">Simulate</button>
+					<button class="v-button" onclick="submitCircuit()">Submit</button>
 				</div>
 
 			</div>
