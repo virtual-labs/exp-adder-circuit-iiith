@@ -306,8 +306,9 @@ function deleteFA(id) {
     for (let key in finalOutputs) {
         if (finalOutputs[key][0] == fa) {
             delete finalOutputs[key];
-            gates[key].inputs = [];
         }
+
+        gates[key].inputs = [];
     }
 
 

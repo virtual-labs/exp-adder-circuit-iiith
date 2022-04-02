@@ -1,6 +1,6 @@
 import { registerGate } from "./main.js";
 import { setPosition } from "./layout.js";
-import { twoBitMultiplexerTest, fourBitMultiplexerTest } from "./validator.js";
+import { halfAdder, fullAdderTest, rippleAdderTest  } from "./validator.js";
 import {jsPlumbInstance} from "./main.js";
 
 export let gates = {}; // Array of gates
@@ -105,8 +105,11 @@ export class Gate {
 
         // get width of working area
         const width = document.getElementById(workingArea).offsetWidth;
+        const height = document.getElementById(workingArea).offsetHeight;
         let scale = 900;
+        let yScale = 800;
         x = (x / scale) * width;
+        y = (y / yScale) * height;
         document.getElementById(this.id).style.left = x + "px";
         document.getElementById(this.id).style.top = y + "px";
         if (this.type != "Input" && this.type != "Output") {
@@ -179,7 +182,7 @@ export class Gate {
 
 
 
-function addGate(event) {
+function add_gate(event) {
     const type = event.target.innerHTML;
     const gate = new Gate(type);
     const component = gate.generateComponent();
@@ -188,7 +191,7 @@ function addGate(event) {
     gate.registerComponent("working-area");
 }
 
-window.addGate = addGate;
+window.Add = add_gate;
 
 export function getResult(gate) {
     if (gate.output != null) {
@@ -301,13 +304,13 @@ export function submitCircuit() {
 
     document.getElementById("table-body").innerHTML = "";
     if (window.currentTab == "Task1") {
-        twoBitMultiplexerTest("Input-0", "Input-1", "Input-2", "Output-3");
+        halfAdder("Input-0", "Input-1", "Output-3", "Output-2");
     }
-    // else if (window.currentTab == "Task2") {
-    //     fullAdderTest("Input-0", "Input-1", "Input-2", "Output-4", "Output-3");
-    // }
     else if (window.currentTab == "Task2") {
-        fourBitMultiplexerTest("Input-0", "Input-1", "Input-2", "Input-3", "Input-4", "Input-5","Output-8");
+        fullAdderTest("Input-0", "Input-1", "Input-2", "Output-4", "Output-3");
+    }
+    else if (window.currentTab == "Task3") {
+        rippleAdderTest("Input-0", "Input-1", "Input-3", "Input-4", "Input-6", "Input-7", "Input-9", "Input-10","Input-13","Output-12","Output-2","Output-5","Output-8","Output-11");
     }
 }
 window.submitCircuit = submitCircuit;
