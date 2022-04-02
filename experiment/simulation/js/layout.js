@@ -137,3 +137,12 @@ function clearObservations() {
   document.getElementById('result').innerHTML = "";
 
 }
+
+
+// Dimensions of working area
+let circuitBoard = document.getElementById("circuit-board");
+// Distance of working area from top
+let circuitBoardTop = circuitBoard.offsetTop;
+// Full height of window
+let windowHeight = window.innerHeight;
+circuitBoard.style.height = windowHeight - circuitBoardTop - 20 + "px";
