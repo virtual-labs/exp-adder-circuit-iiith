@@ -3,6 +3,7 @@ import { setPosition } from "./layout.js";
 import {gates} from './gate.js';
 import {jsPlumbInstance} from "./main.js";
 
+// Dictionary of all full adders in the circuit with their IDs as keys
 let fullAdder = {}
 
 function clearFAs() {
@@ -35,6 +36,8 @@ class FullAdder {
         this.sumIsConnected = false;
         this.component = '<div class="drag-drop FullAdder" id=' + this.id + ' style="width:100px;height:100px;"></div>';
     }
+
+    // Adds element to the circuit board, adds event listeners and generates its endpoints.
     registerComponent(workingArea,x = 0, y = 0) {
         const parent = document.getElementById(workingArea);
         parent.insertAdjacentHTML('beforeend', this.component);
@@ -61,6 +64,7 @@ class FullAdder {
         registerGate(this.id, this);
     }
 
+    // Sets values of the inputs and outputs of the full adder
     setA0(A0) {
         this.a0 = A0;
     }
@@ -81,20 +85,24 @@ class FullAdder {
         this.Cout = Cout;
     }
 
+    // adds input endpoints points to the list of input points
     addInputPoints(input) {
         this.inputPoints.push(input);
     }
 
+    // Adds the output endpoints to the list of output points
     addOutputPoints(output) {
         this.outputPoints.push(output);
     }
 
+    // Generates the output of the full adder
     generateOutput() {
         const aXorb = (getOutputFA(this.a0[0], this.a0[1]) && !getOutputFA(this.b0[0], this.b0[1])) || (!getOutputFA(this.a0[0], this.a0[1]) && getOutputFA(this.b0[0], this.b0[1]));
         this.Cout = (getOutputFA(this.a0[0], this.a0[1]) && getOutputFA(this.b0[0], this.b0[1])) || (getOutputFA(this.Cin[0], this.Cin[1]) && aXorb);
         this.sum = (getOutputFA(this.Cin[0], this.Cin[1]) && !aXorb) || (!(getOutputFA(this.Cin[0], this.Cin[1])) && aXorb);
     }
 
+    // Sets the output enpoint of the full adder as connected
     setConnected(val, pos) {
         console.log(val, pos);
         if (pos == "Carry") {
@@ -107,6 +115,7 @@ class FullAdder {
 
 }
 
+// Add a full adder to the circuit board
 function addFA() {
     let fA = new FullAdder();
     fA.registerComponent("working-area");
@@ -114,6 +123,7 @@ function addFA() {
 
 window.AddFA = addFA;
 
+// Used to extract output from a given gate, if pos isnt empty the gate is a full adder with the position specified
 function getOutputFA(gate, pos) {
     if (pos == "Carry") {
         return gate.Cout;
@@ -129,7 +139,7 @@ function getOutputFA(gate, pos) {
 
 
 
-
+// Recursive function that evaluates the output of the full adder
 function getResultFA(fa) {
 // check if fa type is Gate object
     if (fa.constructor.name == "Gate") {
@@ -155,6 +165,8 @@ function getResultFA(fa) {
     return;
 }
 
+
+// Checks if the connections are correct
 function checkConnectionsFA() {
     let flag = 0;
     for (let faID in fullAdder) {
@@ -211,6 +223,7 @@ function checkConnectionsFA() {
     }
 }
 
+// Simulates the circuit
 function simulateFA() {
     if (!checkConnectionsFA()) {
         return;
@@ -252,6 +265,7 @@ function simulateFA() {
     }
 }
 
+// Simulates the circuit for given fulladders and gates; Used for testing the circuit for all values
 function testSimulationFA(fA,gates) {
     if (!checkConnectionsFA()) {
         return;
@@ -282,6 +296,7 @@ function testSimulationFA(fA,gates) {
    
 }
 
+// Delete Full Adder
 function deleteFA(id) {
     const fa = fullAdder[id];
     jsPlumbInstance.removeAllEndpoints(document.getElementById(fa.id));

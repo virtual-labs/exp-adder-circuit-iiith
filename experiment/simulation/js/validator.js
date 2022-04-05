@@ -1,7 +1,7 @@
 import {gates, testSimulation} from './gate.js';
 import {fullAdder, testSimulationFA } from './fa.js';
 
-
+// Tests the circuit for all values and checks if it is a half adder
 export function halfAdder(Input0,Input1,CarryOut,SumOut)  // This function takes 4 ids of the respective Gates
 {
     // Gates[input0].outputs = true;
@@ -60,6 +60,7 @@ export function halfAdder(Input0,Input1,CarryOut,SumOut)  // This function takes
     }
 }
 
+// Tests the circuit for all values and checks if it is a full adder
 export function fullAdderTest(Input0,Input1,CarryIn,CarryOut,SumOut)
 {
     // Gates[input0].outputs = true;
@@ -127,6 +128,8 @@ export function fullAdderTest(Input0,Input1,CarryIn,CarryOut,SumOut)
     }
 }
 
+
+// Tests the circuit for all values and checks if it is a Ripple carry adder
 export function rippleAdderTest(InputA0,InputB0,InputA1,InputB1,InputA2,InputB2,InputA3,InputB3,InputCin,OutputCout,OutputS0,OutputS1,OutputS2,OutputS3)
 {
     let gates_list = gates;

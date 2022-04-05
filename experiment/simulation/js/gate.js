@@ -3,7 +3,7 @@ import { setPosition } from "./layout.js";
 import { halfAdder, fullAdderTest, rippleAdderTest  } from "./validator.js";
 import {jsPlumbInstance} from "./main.js";
 
-export let gates = {}; // Array of gates
+export let gates = {}; // Dictionary of gates with their IDs as keys
 window.numComponents = 0;
 //(input0,input1,carryOut,OutputOut)
 export function clearGates() {
@@ -18,7 +18,7 @@ export function clearGates() {
 export class Gate {
     constructor(type) {
         this.type = type;
-        this.id = type + "-" + window.numComponents++;
+        this.id = type + "-" + window.numComponents++; // Unique ID
         this.positionX = 0;
         this.positionY = 0;
         this.isConnected = false;
@@ -32,12 +32,16 @@ export class Gate {
         this.isOutput = false;
         this.name = null;
     }
+    // Sets the id of the gate
     setId(id) {
         this.id = id;
     }
+    // Adds input to the gate
     addInput(gate) {
         this.inputs.push(gate);
     }
+
+    // Removes input from the gate
     removeInput(gate) {
         let index = this.inputs.indexOf(gate);
         if (index > -1) {
@@ -52,7 +56,7 @@ export class Gate {
     setName(name) {
         this.name = name;
     }
-
+    // generate component for the gate
     generateComponent() {
         let component = '';
 
@@ -101,6 +105,7 @@ export class Gate {
 
     }
 
+    // Adds element to the circuit board, adds event listeners and generates its endpoints.
     registerComponent(workingArea,x=0,y=0) {
 
         // get width of working area
@@ -136,15 +141,17 @@ export class Gate {
         
     }
 
+    // adds input endpoints points to the list of input points
     addInputPoints(input) {
         this.inputPoints.push(input);
     }
 
+    // adds output endpoints points to the list of output points
     addOutputPoints(output) {
         this.outputPoints.push(output);
     }
 
-
+    // Generates the output of the gate
     generateOutput() {
         if (this.type == "AND") {
             this.output = this.inputs[0].output && this.inputs[1].output;
@@ -181,7 +188,7 @@ export class Gate {
 }
 
 
-
+// Adds gate to the circuit board
 function add_gate(event) {
     const type = event.target.innerHTML;
     const gate = new Gate(type);
@@ -193,6 +200,8 @@ function add_gate(event) {
 
 window.Add = add_gate;
 
+
+// Recursive function to generate the output of the circuit
 export function getResult(gate) {
     if (gate.output != null) {
         return;
@@ -206,6 +215,7 @@ export function getResult(gate) {
     return;
 }
 
+// Set the Input values of the input bits on double click
  function setInput(event) {
     let parentElement = event.target.parentElement;
     let element = event.target;
@@ -226,6 +236,8 @@ export function getResult(gate) {
 
 window.setInput = setInput;
 
+
+// Check if the connections are correct
 export function checkConnections() {
     let flag = 0;
     for (let gateId in gates) {
@@ -246,6 +258,7 @@ export function checkConnections() {
     }
 }
 
+// Simulate the circuit
 export function simulate() {
 
     if (!checkConnections()) {
@@ -279,6 +292,8 @@ export function simulate() {
 
 window.simulate = simulate;
 
+
+// Simulate the circuit for given gates; Used for testing the circuit for all possible inputss
 export function testSimulation(gates) {
     if (!checkConnections()) {
         return;
@@ -316,6 +331,7 @@ export function submitCircuit() {
 window.submitCircuit = submitCircuit;
 
 
+// Delete the selected gate
 export function deleteElement(gateid) {
 
     let gate = gates[gateid];

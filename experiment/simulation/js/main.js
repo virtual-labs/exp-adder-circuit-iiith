@@ -4,6 +4,7 @@ import {wireColours} from "./layout.js";
 
 let num_wires = 0;
 
+// Gets the coordinates of the mouse
 document.getScroll = function () {
     if (window.pageYOffset != undefined) {
         return [pageXOffset, pageYOffset];
@@ -17,6 +18,8 @@ document.getScroll = function () {
     }
 }
 const workingArea = document.getElementById("working-area");
+
+// Creating a js Plumb Instance
 export const jsPlumbInstance = jsPlumbBrowserUI.newInstance({
     container: workingArea,
     maxConnections: -1,
@@ -33,6 +36,8 @@ export const jsPlumbInstance = jsPlumbBrowserUI.newInstance({
     connectionsDetachable: false,
 });
 
+
+// This is an event listener for establishing connections between gates
 export const bindEvent1 = function () {
     jsPlumbInstance.bind("beforeDrop", function (data) {
         let endpoint = data.connection.endpoints[0];
@@ -68,6 +73,7 @@ export const bindEvent1 = function () {
     });
 }
 
+// This is an event listener for establishing connections between Full adders and input output gates
 export const bindEvent2 = function () {
     jsPlumbInstance.bind("beforeDrop", function (data) {
         let endpoint = data.connection.endpoints[0];
@@ -221,11 +227,13 @@ export const bindEvent2 = function () {
     });
 }
 
+// Unbinds the event listeners
 export const unbindEvent = () => {
     jsPlumbInstance.unbind("beforeDrop");
 }
 
 
+// Generates the endpoints for the respective gate with the help of JsPlumb
 export function registerGate(id, gate) {
     const element = document.getElementById(id);
     const gateType = id.split("-")[0];
@@ -373,6 +381,8 @@ export function registerGate(id, gate) {
         );
     }
 }
+
+// Initialise Half adder experiment by generating and adding gates and components to the circuit board at given positions
 export function initHalfAdder() {
     let ids = ["Input-0", "Input-1", "Output-2", "Output-3"]; // [A B Sum Carry Out]
     let types = ["Input", "Input", "Output", "Output"];
@@ -394,6 +404,7 @@ export function initHalfAdder() {
     }
 }
 
+// Initialise Full adder experiment by generating and adding gates and components to the circuit board at given positions
 export function initFullAdder() {
     let ids = ["Input-0", "Input-1", "Input-2", "Output-3", "Output-4"]; // [A,B,carry -input,Sum,carry-output]
     let types = ["Input", "Input", "Input", "Output", "Output"];
@@ -416,6 +427,7 @@ export function initFullAdder() {
     }
 }
 
+// Initialise Ripple carry adder experiment by generating and adding gates and components to the circuit board at given positions
 export function initRippleAdder() {
     let ids = ["Input-0", "Input-1", "Output-2", "Input-3", "Input-4", "Output-5", "Input-6", "Input-7", "Output-8", "Input-9", "Input-10", "Output-11", "Output-12", "Input-13"] // [A0,B0,Sum0,A1,B1,Sum1,A2,B2,Sum2,A3,B3,Sum3,CarryOut, CarryIn]
     let types = ["Input", "Input", "Output", "Input", "Input", "Output", "Input", "Input", "Output", "Input", "Input", "Output", "Output", "Input"]
@@ -447,6 +459,7 @@ export function initRippleAdder() {
     }
 }
 
+// Refresh the circuit board by removing all gates and components
 export function refreshWorkingArea() {
     jsPlumbInstance.reset();
     window.numComponents = 0;
@@ -456,7 +469,7 @@ export function refreshWorkingArea() {
 }
 
 
-
+// Initialise Task 1 experiment when the page loads
 window.currentTab = "Task1";
 bindEvent1();
 refreshWorkingArea();
