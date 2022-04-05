@@ -2,7 +2,7 @@ import { simulateFA, deleteFA } from "./fa.js";
 import { simulate, deleteElement } from "./gate.js";
 import {bindEvent1, bindEvent2, unbindEvent, initHalfAdder, initFullAdder, initRippleAdder, refreshWorkingArea} from "./main.js";
 
-// Wires
+// Wires Colours
 export const wireColours = ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff", "#00ffff", "#ff8000", "#00ff80", "#80ff00", "#ff0080", "#8080ff", "#c0c0c0"];
 
 // Contextmenu
