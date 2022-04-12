@@ -25,8 +25,8 @@ export function halfAdder(Input0,Input1,CarryOut,SumOut)  // This function takes
         const bit0 = binary[1];
         const bit1 = binary[0];
 
-        input1.setOutput(bit0 == "1");
-        input0.setOutput(bit1 == "1");
+        input1.setOutput(bit0 === '1');
+        input0.setOutput(bit1 === '1');
         const calculatedSum = (input0.output && !input1.output) || (!input0.output && input1.output) ? 1 : 0;
         const calculatedCarry = input0.output && input1.output ? 1 : 0;
 
@@ -48,7 +48,7 @@ export function halfAdder(Input0,Input1,CarryOut,SumOut)  // This function takes
 
     const result = document.getElementById('result');
 
-    if(flag == 0)
+    if(flag === 0)
     {
         result.innerHTML = "<span>&#10003;</span> Success";
         result.className = "success-message";
@@ -84,9 +84,9 @@ export function fullAdderTest(Input0,Input1,CarryIn,CarryOut,SumOut)
         const bit1 = binary[1] || 0;
         const bit2 = binary[0] || 0;
 
-        input0.setOutput(bit2 == "1");
-        input1.setOutput(bit1 == "1");
-        carryIn.setOutput(bit0 == "1");
+        input0.setOutput(bit2 === '1');
+        input1.setOutput(bit1 === '1');
+        carryIn.setOutput(bit0 === '1');
 
         const aXorb =  (input0.output && !input1.output) || (!input0.output && input1.output);
 
@@ -116,7 +116,7 @@ export function fullAdderTest(Input0,Input1,CarryIn,CarryOut,SumOut)
 
     const result = document.getElementById('result');
 
-    if(flag == 0)
+    if(flag === 0)
     {
         result.innerHTML = "<span>&#10003;</span> Success";
         result.className = "success-message";
@@ -180,15 +180,15 @@ export function rippleAdderTest(InputA0,InputB0,InputA1,InputB1,InputA2,InputB2,
         const bit7 = binary[1] || 0;
         const bit8 = binary[0] || 0;
 
-        inputA0.setOutput(bit8 == "1");
-        inputB0.setOutput(bit7 == "1");
-        inputA1.setOutput(bit6 == "1");
-        inputB1.setOutput(bit5 == "1");
-        inputA2.setOutput(bit4 == "1");
-        inputB2.setOutput(bit3 == "1");
-        inputA3.setOutput(bit2 == "1");
-        inputB3.setOutput(bit1 == "1");
-        carryIn.setOutput(bit0 == "1");
+        inputA0.setOutput(bit8 === '1');
+        inputB0.setOutput(bit7 === '1');
+        inputA1.setOutput(bit6 === '1');
+        inputB1.setOutput(bit5 === '1');
+        inputA2.setOutput(bit4 === '1');
+        inputB2.setOutput(bit3 === '1');
+        inputA3.setOutput(bit2 === '1');
+        inputB3.setOutput(bit1 === '1');
+        carryIn.setOutput(bit0 === '1');
 
         // FOR FIRST ADDER
         const aXorb =  (inputA0.output && !inputB0.output) || (!inputA0.output && inputB0.output);
@@ -234,7 +234,7 @@ export function rippleAdderTest(InputA0,InputB0,InputA1,InputB1,InputA2,InputB2,
 
     const result = document.getElementById('result');
 
-    if(flag == 0)
+    if(flag === 0)
     {
         result.innerHTML = "<span>&#10003;</span> Success";
         result.className = "success-message";

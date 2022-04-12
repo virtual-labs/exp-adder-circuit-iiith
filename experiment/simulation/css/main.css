@@ -20,53 +20,38 @@
   background-size: 100%;
 }
 
-.AND {
+.logic-gate{
   background-color: #29e;
-  background-image: url("../images/AND.svg");
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.AND {
+  background-image: url("../images/AND.svg");
 }
 
 .NOT {
-  background-color: #29e;
   background-image: url("../images/NOT.svg");
-  background-repeat: no-repeat;
-  background-position: center;
 }
 
 .OR {
-  background-color: #29e;
   background-image: url("../images/OR.svg");
-  background-repeat: no-repeat;
-  background-position: center;
 }
 
 .XOR {
-  background-color: #29e;
   background-image: url("../images/XOR.svg");
-  background-repeat: no-repeat;
-  background-position: center;
 }
 
 .XNOR {
-  background-color: #29e;
   background-image: url("../images/XNOR.svg");
-  background-repeat: no-repeat;
-  background-position: center;
 }
 
 .NAND {
-  background-color: #29e;
   background-image: url("../images/NAND.svg");
-  background-repeat: no-repeat;
-  background-position: center;
 }
 
 .NOR {
-  background-color: #29e;
   background-image: url("../images/NOR.svg");
-  background-repeat: no-repeat;
-  background-position: center;
 }
 
 .FullAdder {
@@ -156,24 +141,10 @@
   background-repeat: no-repeat;
   background-position: center;
 }
-
-.card {
-  width: 18rem;
-  margin: 1rem;
-  background-color: grey;
-}
-
 .components-list {
   padding: 2% 5%;
   text-align: center;
   height: 100%;
-}
-
-
-.components-list-items {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
 #circuit-board {
@@ -243,6 +214,9 @@ svg.wire path {
   font-size: 0.8rem;
   text-align: center;
   color: black;
+  background-color: #29e;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 @media screen and (max-width: 600px) {
@@ -275,4 +249,115 @@ svg.wire path {
   font-size: 1.2rem;
   color: rgb(228, 23, 23);
   font-weight: bold;
+}
+
+
+
+/* for animation */
+#zero-one {
+  position: absolute;
+  top: 0px;
+  left: 320px;
+}
+#one-zero {
+  position: absolute;
+  top: 320px;
+  left: 320px;
+}
+#one-one {
+  position: absolute;
+  top: 320px;
+  left: 0px;
+}
+#path1 {
+  position: absolute;
+  top: 50px;
+  left: 20px;
+}
+
+#path2 {
+  position: absolute;
+  top: 50px;
+  left: 20px;
+}
+
+#path3 {
+  position: absolute;
+  top: 50px;
+  left: 20px;
+}
+
+#path4 {
+  position: absolute;
+  top: 50px;
+  left: 20px;
+}
+
+.square {
+pointer-events: none;
+background-color: black;
+margin: 4px;
+display: inline-block;
+opacity: 0.6;
+border-radius: 5px;
+width: 20px;
+height: 20px;
+}
+.square.blue {
+  left: -10px;
+  top: -10px;
+  background: blue;
+  position: absolute;
+}
+.square.black.xor {
+  pointer-events: none;
+  background-color: black;
+  margin: 4px;
+  display: inline-block;
+  opacity: 1;
+  border-radius: 5px;
+  width: 30px;
+  height: 30px;
+  left: 128px;
+  top: 85px;
+  font-size: 10px;
+  color: white;
+  background: black;
+  position: absolute;
+}.square.black.and {
+  pointer-events: none;
+  background-color: black;
+  margin: 4px;
+  display: inline-block;
+  opacity: 1;
+  border-radius: 5px;
+  width: 30px;
+  height: 30px;
+  left: 128px;
+  top: 193px;
+  font-size: 10px;
+  color: white;
+  background: black;
+  position: absolute;
+}
+
+.square.red {
+  left: -10px;
+  top: -10px;
+  background: red;
+  position: absolute;
+}
+
+.square.orange {
+  left: -10px;
+  top: -10px;
+  background: orange;
+  position: absolute;
+}
+
+.square.green {
+  left: -10px;
+  top: -10px;
+  background: green;
+  position: absolute;
 }

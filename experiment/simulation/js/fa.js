@@ -105,10 +105,10 @@ class FullAdder {
     // Sets the output enpoint of the full adder as connected
     setConnected(val, pos) {
         console.log(val, pos);
-        if (pos == "Carry") {
+        if (pos === "Carry") {
             this.CoutIsConnected = val;
         }
-        else if (pos == "Sum") {
+        else if (pos === "Sum") {
             this.sumIsConnected = val;
         }
     }
@@ -125,10 +125,10 @@ window.AddFA = addFA;
 
 // Used to extract output from a given gate, if pos isnt empty the gate is a full adder with the position specified
 function getOutputFA(gate, pos) {
-    if (pos == "Carry") {
+    if (pos === "Carry") {
         return gate.Cout;
     }
-    else if (pos == "Sum") {
+    else if (pos === "Sum") {
         return gate.sum;
     }
     // But if the gate is not an FA, but an input bit, then return the value of the input
@@ -142,7 +142,7 @@ function getOutputFA(gate, pos) {
 // Recursive function that evaluates the output of the full adder
 function getResultFA(fa) {
 // check if fa type is Gate object
-    if (fa.constructor.name == "Gate") {
+    if (fa.constructor.name === "Gate") {
         return;
     }
 
@@ -173,39 +173,39 @@ function checkConnectionsFA() {
         const gate = fullAdder[faID];
         // For Full Adder objects
         // Check if all the outputs are connected
-        if (gate.CoutIsConnected == false) {
+        if (gate.CoutIsConnected === false) {
             flag = 1;
             break;
         }
-        if (gate.sumIsConnected == false) {
+        if (gate.sumIsConnected === false) {
             flag = 1;
             break;
         }
 
         // Check if all the inputs are connected
-        if (gate.a0 == null || gate.a0.length == 0) {
+        if (gate.a0 == null || gate.a0.length === 0) {
             flag = 1;
             break;
         }
-        if (gate.b0 == null || gate.b0.length == 0) {
+        if (gate.b0 == null || gate.b0.length === 0) {
             flag = 1;
             break;
         }
-        if (gate.Cin == null || gate.Cin.length == 0) {
+        if (gate.Cin == null || gate.Cin.length === 0) {
             flag = 1;
             break;
         }
     }
     for (let gateId in gates) {
         const gate = gates[gateId];
-        if (gate.isInput == true) {
-            if (gate.isConnected == false) {
+        if (gate.isInput === true) {
+            if (gate.isConnected === false) {
                 flag = 1;
                 break;
             }
         }
-        if (gate.isOutput == true) {
-            if (gate.inputs.length == 0) {
+        if (gate.isOutput === true) {
+            if (gate.inputs.length === 0) {
                 flag = 1;
                 break;
             }
@@ -214,7 +214,7 @@ function checkConnectionsFA() {
 
 
 
-    if (flag == 0) {
+    if (flag === 0) {
         return true;
     }
     else {
@@ -236,7 +236,7 @@ function simulateFA() {
     }
     for (let gateId in gates) {
         const gate = gates[gateId];
-        if (gate.isOutput == true) {
+        if (gate.isOutput === true) {
             gates[gateId].output = null;    
         }
     }
@@ -246,7 +246,7 @@ function simulateFA() {
     //     getResultFA(fullAdder[faID]);
     // }
     for (let gateId in gates) {
-        if (gates[gateId].isOutput == true) {
+        if (gates[gateId].isOutput === true) {
             getResultFA(gates[gateId].inputs[0]);
         }
     }
@@ -254,7 +254,7 @@ function simulateFA() {
     for (let key in finalOutputs) {
         let element = document.getElementById(key);
         gates[key].output = getOutputFA(finalOutputs[key][0], finalOutputs[key][1]);
-        if (gates[key].output == true) {
+        if (gates[key].output === true) {
             element.className = "HIGH";
             element.childNodes[0].innerHTML = "1";
         }
@@ -278,13 +278,13 @@ function testSimulationFA(fA,gates) {
     }
     for (let gateId in gates) {
         const gate = gates[gateId]
-        if (gate.isOutput == true) {
+        if (gate.isOutput === true) {
             gates[gateId].output = null;
         }
     }
 
     for(let gateId in gates){
-        if(gates[gateId].isOutput == true){
+        if(gates[gateId].isOutput === true){
             getResultFA(gates[gateId].inputs[0]);
         }
     }
@@ -303,23 +303,23 @@ function deleteFA(id) {
     jsPlumbInstance._removeElement(document.getElementById(fa.id));
 
     for (let key in fullAdder) {
-        if(fullAdder[key].id == id){
+        if(fullAdder[key].id === id){
             delete fullAdder[key];
             continue;
         }
-        if(fullAdder[key].a0[0] == fa) {
+        if(fullAdder[key].a0[0] === fa) {
             fullAdder[key].a0 = null;
         }
-        if(fullAdder[key].b0[0] == fa) {
+        if(fullAdder[key].b0[0] === fa) {
             fullAdder[key].b0 = null;
         }
-        if(fullAdder[key].Cin[0] == fa) {
+        if(fullAdder[key].Cin[0] === fa) {
             fullAdder[key].Cin = null;
         }
     }
 
     for (let key in finalOutputs) {
-        if (finalOutputs[key][0] == fa) {
+        if (finalOutputs[key][0] === fa) {
             delete finalOutputs[key];
         }
 

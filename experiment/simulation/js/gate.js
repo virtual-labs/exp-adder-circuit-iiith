@@ -60,46 +60,39 @@ export class Gate {
     generateComponent() {
         let component = '';
 
-        if (this.type == "AND") {
-
-            component = '<div class="drag-drop AND" id=' + this.id + '></div>'
-
-        }
-        else if (this.type == "NOT") {
-            component = '<div class="drag-drop NOT" id=' + this.id + '></div>'
-
-        }
-        else if (this.type == "OR") {
-            component = '<div class="drag-drop OR" id=' + this.id + '></div>'
-
-        }
-        else if (this.type == "XOR") {
-            component = '<div class="drag-drop XOR" id=' + this.id + '></div>'
-
-        }
-        else if (this.type == "XNOR") {
-
-            component = '<div class="drag-drop XNOR" id=' + this.id + '></div>'
-
-        }
-        else if (this.type == "NAND") {
-
-            component = '<div class="drag-drop NAND" id=' + this.id + '></div>'
-
-        }
-        else if (this.type == "NOR") {
-
-            component = '<div class="drag-drop NOR" id=' + this.id + '></div>'
-
-        }
-        else if (this.type == "Input") {
-            component = '<div class="HIGH" id=' + this.id + ' ><a ondblclick="setInput(event)">1</a><p>' + this.name + '</p></div>'
-            this.output = true;
-            this.isInput = true;
-        }
-        else if (this.type == "Output") {
-            component = '<div class="Output" id=' + this.id + '><a></a><p>' + this.name + '</p></div>'
-            this.isOutput = true;
+        switch(this.type) {
+            // case "AND":
+            //     component = '<div class="drag-drop logic-gate AND" id=' + this.id + '></div>'
+            //     break;
+            // case "OR":
+            //     component = '<div class="drag-drop logic-gate OR" id=' + this.id + '></div>'
+            //     break;
+            // case "NOT":
+            //     component = '<div class="drag-drop logic-gate NOT" id=' + this.id + '></div>'
+            //     break;
+            // case "NAND":
+            //     component = '<div class="drag-drop logic-gate NAND" id=' + this.id + '></div>'
+            //     break;
+            // case "NOR":
+            //     component = '<div class="drag-drop logic-gate NOR" id=' + this.id + '></div>'
+            //     break;
+            // case "XOR":
+            //     component = '<div class="drag-drop logic-gate XOR" id=' + this.id + '></div>'
+            //     break;
+            // case "XNOR":
+            //     component = '<div class="drag-drop logic-gate XNOR" id=' + this.id + '></div>'
+            //     break;
+            case "Input":
+                component = '<div class="HIGH" id=' + this.id + ' ><a ondblclick="setInput(event)">1</a><p>' + this.name + '</p></div>'
+                this.output = true;
+                this.isInput = true;
+                break;
+            case "Output":
+                component = '<div class="Output" id=' + this.id + '><a></a><p>' + this.name + '</p></div>'
+                this.isOutput = true;
+                break;
+            default:
+                component = '<div class="drag-drop logic-gate '+ this.type +'" id=' + this.id + '></div>'
         }
         return component;
 
@@ -153,30 +146,33 @@ export class Gate {
 
     // Generates the output of the gate
     generateOutput() {
-        if (this.type == "AND") {
-            this.output = this.inputs[0].output && this.inputs[1].output;
+        switch(this.type) {
+            case "AND":
+                this.output = this.inputs[0].output && this.inputs[1].output;
+                break;
+            case "OR":
+                this.output = this.inputs[0].output || this.inputs[1].output;
+                break;
+            case "NOT":
+                this.output = !this.inputs[0].output;
+                break;
+            case "NAND":
+                this.output = !(this.inputs[0].output && this.inputs[1].output);
+                break;
+            case "NOR":
+                this.output = !(this.inputs[0].output || this.inputs[1].output);
+                break;
+            case "XOR":
+                this.output = (this.inputs[0].output != this.inputs[1].output);
+                break;
+            case "XNOR":
+                this.output = (this.inputs[0].output == this.inputs[1].output);
+                break;
+            case "Output":
+                this.output = this.inputs[0].output;
+                break;
         }
-        else if (this.type == "OR") {
-            this.output = this.inputs[0].output || this.inputs[1].output;
-        }
-        else if (this.type == "NOT") {
-            this.output = !this.inputs[0].output;
-        }
-        else if (this.type == "XOR") {
-            this.output = (this.inputs[0].output && !this.inputs[1].output) || (!this.inputs[0].output && this.inputs[1].output);
-        }
-        else if (this.type == "XNOR") {
-            this.output = (!this.inputs[0].output || this.inputs[1].output) && (this.inputs[0].output || !this.inputs[1].output);
-        }
-        else if (this.type == "NAND") {
-            this.output = !(this.inputs[0].output && this.inputs[1].output);
-        }
-        else if (this.type == "NOR") {
-            this.output = !(this.inputs[0].output || this.inputs[1].output);
-        }
-        else if (this.type == "Output") {
-            this.output = this.inputs[0].output;
-        }
+
     }
 
     setOutput(val) {
@@ -221,13 +217,13 @@ export function getResult(gate) {
     let element = event.target;
     let type = parentElement.className.split(" ")[0];
     let gate = gates[parentElement.id];
-    if (type == "HIGH") {
+    if (type === "HIGH") {
         // change class HIGH to LOW
         parentElement.classList.replace("HIGH", "LOW");
         element.innerHTML = "0";
         gate.setOutput(false);
     }
-    else if (type == "LOW") {
+    else if (type === "LOW") {
         parentElement.classList.replace("LOW", "HIGH");
         element.innerHTML = "1";
         gate.setOutput(true);
@@ -245,11 +241,11 @@ export function checkConnections() {
         if (gate.inputPoints.length != gate.inputs.length) {
             flag = 1;
         }
-        else if (gate.isConnected == false && gate.isOutput == false) {
+        else if (gate.isConnected === false && gate.isOutput === false) {
             flag = 1;
         }
     }
-    if (flag == 0) {
+    if (flag === 0) {
         return true;
     }
     else {
@@ -275,10 +271,10 @@ export function simulate() {
 
     for (let gateId in gates) {
         const gate = gates[gateId];
-        if (gate.isOutput == true) {
+        if (gate.isOutput === true) {
             getResult(gate);
             let element = document.getElementById(gate.id)
-            if (gate.output == true) {
+            if (gate.output === true) {
                 element.className = "HIGH";
                 element.childNodes[0].innerHTML = "1";
             }
@@ -308,7 +304,7 @@ export function testSimulation(gates) {
 
     for (let gateId in gates) {
         const gate = gates[gateId];
-        if (gate.isOutput == true) {
+        if (gate.isOutput === true) {
             getResult(gate);
         }
     }
@@ -318,13 +314,13 @@ export function testSimulation(gates) {
 export function submitCircuit() {
 
     document.getElementById("table-body").innerHTML = "";
-    if (window.currentTab == "Task1") {
+    if (window.currentTab === "Task1") {
         halfAdder("Input-0", "Input-1", "Output-3", "Output-2");
     }
-    else if (window.currentTab == "Task2") {
+    else if (window.currentTab === "Task2") {
         fullAdderTest("Input-0", "Input-1", "Input-2", "Output-4", "Output-3");
     }
-    else if (window.currentTab == "Task3") {
+    else if (window.currentTab === "Task3") {
         rippleAdderTest("Input-0", "Input-1", "Input-3", "Input-4", "Input-6", "Input-7", "Input-9", "Input-10","Input-13","Output-12","Output-2","Output-5","Output-8","Output-11");
     }
 }
