@@ -2,6 +2,8 @@ import * as gatejs from "./gate.js";
 import * as fajs from "./fa.js";
 import {wireColours} from "./layout.js";
 
+'use strict';
+
 let num_wires = 0;
 
 // Gets the coordinates of the mouse
