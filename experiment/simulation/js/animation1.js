@@ -1,3 +1,17 @@
+// Dimensions of working area
+let circuitBoard = document.getElementById("circuit-board");
+let sidePanels = document.getElementsByClassName("components-list");
+// Distance of working area from top
+let circuitBoardTop = circuitBoard.offsetTop;
+// Full height of window
+let windowHeight = window.innerHeight;
+let width = window.innerWidth;
+if (width < 1024) {
+  circuitBoard.style.height = 600 + "px";
+} else {
+  circuitBoard.style.height = windowHeight - circuitBoardTop - 20 + "px";
+}
+
 const svg = document.querySelector(".svg");
 const inputpath1 = document.querySelector("#inputpath1");
 const svgns = "http://www.w3.org/2000/svg";
@@ -39,24 +53,6 @@ input1Text.textContent = 2;
 input2Text.textContent = 2;
 output1Text.textContent = 2;
 output2Text.textContent = 2;
-
-// Dimensions of working area
-let circuitBoard = document.getElementById("circuit-board");
-let sidePanels = document.getElementsByClassName("components-list");
-// Distance of working area from top
-let circuitBoardTop = circuitBoard.offsetTop;
-// Full height of window
-let windowHeight = window.innerHeight;
-let width = window.innerWidth;
-if (width < 1024) {
-  circuitBoard.style.height = 600 + "px";
-} else {
-  circuitBoard.style.height = windowHeight - circuitBoardTop - 20 + "px";
-}
-
-sidePanels[0].style.height = circuitBoard.style.height;
-sidePanels[1].style.height = circuitBoard.style.height;
-
 
 svg.appendChild(input1Dot);
 svg.appendChild(input1Dot2);
@@ -194,13 +190,9 @@ function appendInput1() {
         setter(input1Text.textContent, input1Dot);
         setter(input1Text.textContent, input2Dot1);
     }
-
-    console.log("after input1 function");
-    console.log(input1Text.textContent);
-    console.log(input2Text.textContent);
 }
 function appendInput2() {
-    console.log("here we go");
+    
     if (input2Text.textContent != 0) {
         TweenLite.to(input2Text, 0, { autoAlpha: 0 });
         input2Text.textContent = 0;
@@ -234,10 +226,6 @@ function appendInput2() {
         setter(input2Text.textContent, input2Dot2);
     }
 
-
-    console.log("after input1 function");
-    console.log(input1Text.textContent);
-    console.log(input2Text.textContent);
 }
 function outputSetter() {
     setter(output1Text.textContent, OUTPUT1);
@@ -251,7 +239,6 @@ var tl = gsap.timeline({ repeat: 0, repeatDelay: 0 });
 
 var speed_circuit = 1;
 function SetSpeed(speed) {
-    console.log(speed)
     if (speed == "1") {
         if (input1Text.textContent != 2 && input2Text.textContent != 2 && tl.progress()!=1) {
             // tl.resume();
@@ -273,7 +260,6 @@ function SetSpeed(speed) {
     if(tl.progress()==0){
         speed_circuit = speed;
     }
-    console.log("speead_circuit:"+ speed_circuit);
 
 }
 

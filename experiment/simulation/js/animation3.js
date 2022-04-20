@@ -1,7 +1,10 @@
+<<<<<<< HEAD
+=======
 const svg = document.querySelector(".svg");
 const inputpath1 = document.querySelector("#inputpath1");
 const svgns = "http://www.w3.org/2000/svg";
 gsap.registerPlugin(MotionPathPlugin);
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
 
 // Dimensions of working area
 let circuitBoard = document.getElementById("circuit-board");
@@ -17,8 +20,15 @@ if (width < 1024) {
   circuitBoard.style.height = windowHeight - circuitBoardTop - 20 + "px";
 }
 
+<<<<<<< HEAD
+const svg = document.querySelector(".svg");
+const inputpath1 = document.querySelector("#inputpath1");
+const svgns = "http://www.w3.org/2000/svg";
+gsap.registerPlugin(MotionPathPlugin);
+=======
 sidePanels[0].style.height = circuitBoard.style.height;
 sidePanels[1].style.height = circuitBoard.style.height;
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
 
 let newCircle = document.createElementNS(svgns, "circle");
 gsap.set(newCircle, {
@@ -98,6 +108,25 @@ gsap.set(newCircle16, {
 });
 
 
+<<<<<<< HEAD
+let textA0 = document.createElementNS(svgns, "text");
+let textA1 = document.createElementNS(svgns, "text");
+let textA2 = document.createElementNS(svgns, "text");
+let textA3 = document.createElementNS(svgns, "text");
+let textB0 = document.createElementNS(svgns, "text");
+let textB1 = document.createElementNS(svgns, "text");
+let textB2 = document.createElementNS(svgns, "text");
+let textB3 = document.createElementNS(svgns, "text");
+let textC0 = document.createElementNS(svgns, "text");
+let textC1 = document.createElementNS(svgns, "text");
+let textC2 = document.createElementNS(svgns, "text");
+let textC3 = document.createElementNS(svgns, "text");
+let textC4 = document.createElementNS(svgns, "text");
+let textS0 = document.createElementNS(svgns, "text");
+let textS1 = document.createElementNS(svgns, "text");
+let textS2 = document.createElementNS(svgns, "text");
+let textS3 = document.createElementNS(svgns, "text");
+=======
 var textA0 = document.createElementNS(svgns, "text");
 var textA1 = document.createElementNS(svgns, "text");
 var textA2 = document.createElementNS(svgns, "text");
@@ -116,6 +145,7 @@ var textS1 = document.createElementNS(svgns, "text");
 var textS2 = document.createElementNS(svgns, "text");
 var textS3 = document.createElementNS(svgns, "text");
 
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
 
 textA0.textContent = 2;
 textA1.textContent = 2;
@@ -228,6 +258,22 @@ svg.appendChild(textS1);
 svg.appendChild(textS2);
 svg.appendChild(textS3);
 
+<<<<<<< HEAD
+const A0 = document.getElementById("input1");
+const A1 = document.getElementById("input3");
+const A2 = document.getElementById("input5");
+const A3 = document.getElementById("input7");
+const B0 = document.getElementById("input2");
+const B1 = document.getElementById("input4");
+const B2 = document.getElementById("input6");
+const B3 = document.getElementById("input8");
+const C0 = document.getElementById("input9");
+const C4 = document.getElementById("output1");
+const S0 = document.getElementById("output2");
+const S1 = document.getElementById("output3");
+const S2 = document.getElementById("output4");
+const S3 = document.getElementById("output5");
+=======
 var A0 = document.getElementById("input1");
 var A1 = document.getElementById("input3");
 var A2 = document.getElementById("input5");
@@ -242,15 +288,26 @@ var S0 = document.getElementById("output2");
 var S1 = document.getElementById("output3");
 var S2 = document.getElementById("output4");
 var S3 = document.getElementById("output5");
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
 
 function free() {
     document.getElementById("Observations").innerHTML = "";
 }
+<<<<<<< HEAD
+function outputS(a,b,c){
+=======
 function output_S(a,b,c){
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     s=1;
     if(a==b){
         s=0;
     }
+<<<<<<< HEAD
+    s= (parseInt(s)+parseInt(c))%2;
+    return s;
+}
+function outputC(a,b,c){
+=======
     console.log("s+c = "+s+c);
     s= (parseInt(s)+parseInt(c))%2;
     console.log("s now is ");
@@ -261,6 +318,7 @@ function output_S(a,b,c){
     return s;
 }
 function output_C(a,b,c){
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     s=c;
     if(a==1 && b==1 && c==0){
         s=1;
@@ -268,6 +326,30 @@ function output_C(a,b,c){
     if(a==0 && b==0 && c==1){
         s=0;
     }
+<<<<<<< HEAD
+    return s;
+}
+function outputHandle(){
+    textS0.textContent = outputS(textA0.textContent,textB0.textContent,textC0.textContent);
+    setter(textS0.textContent,newCircle13);
+    textC1.textContent = outputC(textA0.textContent,textB0.textContent,textC0.textContent);
+    setter(textC1.textContent,newCircle9);
+    textS1.textContent = outputS(textA1.textContent,textB1.textContent,textC1.textContent);
+    setter(textS1.textContent,newCircle14);
+    textC2.textContent = outputC(textA1.textContent,textB1.textContent,textC1.textContent);
+    setter(textC2.textContent,newCircle10);
+    textS2.textContent = outputS(textA2.textContent,textB2.textContent,textC2.textContent);
+    setter(textS2.textContent,newCircle15);
+    textC3.textContent = outputC(textA2.textContent,textB2.textContent,textC2.textContent);
+    setter(textC3.textContent,newCircle11);
+    textS3.textContent = outputS(textA3.textContent,textB3.textContent,textC3.textContent);
+    setter(textS3.textContent,newCircle16);
+    textC4.textContent = outputC(textA3.textContent,textB3.textContent,textC3.textContent);
+    setter(textC4.textContent,newCircle12);
+}
+
+function allDisappear() {
+=======
     console.log("cout now:");
     console.log(s);
     return s;
@@ -293,6 +375,7 @@ function output_handle(){
 
 function All_disappear() {
     console.log("All_disappear");
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     TweenLite.to(newCircle, 0, { autoAlpha: 0 });
     TweenLite.to(newCircle1, 0, { autoAlpha: 0 });
     TweenLite.to(newCircle2, 0, { autoAlpha: 0 });
@@ -393,7 +476,11 @@ function unset(a) {
         fill: "#29e"
     });
 }//output 1
+<<<<<<< HEAD
+function setter(a, b) {
+=======
 function SETTER(a, b) {
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     if (a == 1) {
         unset(b);
     }
@@ -416,7 +503,11 @@ function input1() {
         });
         document.getElementById("Observations").innerHTML = "";
         TweenLite.to(textA0, 0, { autoAlpha: 1 });
+<<<<<<< HEAD
+        setter(textA0.textContent, newCircle);
+=======
         SETTER(textA0.textContent, newCircle);
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     }
     else if (textA0.textContent != 1) {    
         TweenLite.to(textA0, 0, { autoAlpha: 0 });
@@ -431,12 +522,19 @@ function input1() {
         });
         document.getElementById("Observations").innerHTML = "";
         TweenLite.to(textA0, 0, { autoAlpha: 1 });
+<<<<<<< HEAD
+        setter(textA0.textContent, newCircle);
+=======
         SETTER(textA0.textContent, newCircle);
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     }
 
 }
 function input3() {
+<<<<<<< HEAD
+=======
     console.log("2");
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     if (textA1.textContent != 0) {
         TweenLite.to(textA1, 0, { autoAlpha: 0 });
         textA1.textContent = 0;
@@ -450,7 +548,11 @@ function input3() {
         });
         document.getElementById("Observations").innerHTML = "";
         TweenLite.to(textA1, 0, { autoAlpha: 1 });
+<<<<<<< HEAD
+        setter(textA1.textContent, newCircle2);
+=======
         SETTER(textA1.textContent, newCircle2);
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     }
     else if (textA1.textContent != 1) {
         TweenLite.to(textA1, 0, { autoAlpha: 0 });
@@ -465,12 +567,20 @@ function input3() {
         });
         document.getElementById("Observations").innerHTML = "";
         TweenLite.to(textA1, 0, { autoAlpha: 1 });
+<<<<<<< HEAD
+        setter(textA1.textContent, newCircle2);
+=======
         SETTER(textA1.textContent, newCircle2);
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     }
 }
 
 function input5() {
+<<<<<<< HEAD
+    
+=======
     console.log("here we go");
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     if (textA2.textContent != 0) {
         TweenLite.to(textA2, 0, { autoAlpha: 0 });
         textA2.textContent = 0;
@@ -484,7 +594,11 @@ function input5() {
         });
         document.getElementById("Observations").innerHTML = "";
         TweenLite.to(textA2, 0, { autoAlpha: 1 });
+<<<<<<< HEAD
+        setter(textA2.textContent, newCircle4);
+=======
         SETTER(textA2.textContent, newCircle4);
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     }
     else if (textA2.textContent != 1) {
         TweenLite.to(textA2, 0, { autoAlpha: 0 });
@@ -499,12 +613,20 @@ function input5() {
         });
         document.getElementById("Observations").innerHTML = "";
         TweenLite.to(textA2, 0, { autoAlpha: 1 });
+<<<<<<< HEAD
+        setter(textA2.textContent, newCircle4);
+=======
         SETTER(textA2.textContent, newCircle4);
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     }
 }
 
 function input7() {
+<<<<<<< HEAD
+    
+=======
     console.log("here we go");
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     if (textA3.textContent != 0) {
         TweenLite.to(textA3, 0, { autoAlpha: 0 });
         textA3.textContent = 0;
@@ -518,7 +640,11 @@ function input7() {
         });
         document.getElementById("Observations").innerHTML = "";
         TweenLite.to(textA3, 0, { autoAlpha: 1 });
+<<<<<<< HEAD
+        setter(textA3.textContent, newCircle6);
+=======
         SETTER(textA3.textContent, newCircle6);
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     }
     else if (textA3.textContent != 1) {
         TweenLite.to(textA3, 0, { autoAlpha: 0 });
@@ -533,12 +659,20 @@ function input7() {
         });
         document.getElementById("Observations").innerHTML = "";
         TweenLite.to(textA3, 0, { autoAlpha: 1 });
+<<<<<<< HEAD
+        setter(textA3.textContent, newCircle6);
+=======
         SETTER(textA3.textContent, newCircle6);
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     }
 }
 
 function input2() {
+<<<<<<< HEAD
+    
+=======
     console.log("here we go");
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     if (textB0.textContent != 0) {
         TweenLite.to(textB0, 0, { autoAlpha: 0 });
         textB0.textContent = 0;
@@ -552,7 +686,11 @@ function input2() {
         });
         document.getElementById("Observations").innerHTML = "";
         TweenLite.to(textB0, 0, { autoAlpha: 1 });
+<<<<<<< HEAD
+        setter(textB0.textContent, newCircle1);
+=======
         SETTER(textB0.textContent, newCircle1);
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     }
     else if (textB0.textContent != 1) {
         TweenLite.to(textB0, 0, { autoAlpha: 0 });
@@ -567,12 +705,20 @@ function input2() {
         });
         document.getElementById("Observations").innerHTML = "";
         TweenLite.to(textB0, 0, { autoAlpha: 1 });
+<<<<<<< HEAD
+        setter(textB0.textContent, newCircle1);
+=======
         SETTER(textB0.textContent, newCircle1);
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     }
 }
 
 function input4() {
+<<<<<<< HEAD
+    
+=======
     console.log("here we go");
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     if (textB1.textContent != 0) {
         TweenLite.to(textB1, 0, { autoAlpha: 0 });
         textB1.textContent = 0;
@@ -586,7 +732,11 @@ function input4() {
         });
         document.getElementById("Observations").innerHTML = "";
         TweenLite.to(textB1, 0, { autoAlpha: 1 });
+<<<<<<< HEAD
+        setter(textB1.textContent, newCircle3);
+=======
         SETTER(textB1.textContent, newCircle3);
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     }
     else if (textB1.textContent != 1) {
         TweenLite.to(textB1, 0, { autoAlpha: 0 });
@@ -602,12 +752,20 @@ function input4() {
         });
         document.getElementById("Observations").innerHTML = "";
         TweenLite.to(textB1, 0, { autoAlpha: 1 });
+<<<<<<< HEAD
+        setter(textB1.textContent, newCircle3);
+=======
         SETTER(textB1.textContent, newCircle3);
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     }
 }
 
 function input6() {
+<<<<<<< HEAD
+    
+=======
     console.log("here we go");
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     if (textB2.textContent != 0) {
         TweenLite.to(textB2, 0, { autoAlpha: 0 });
         textB2.textContent = 0;
@@ -622,7 +780,11 @@ function input6() {
         });
         document.getElementById("Observations").innerHTML = "";
         TweenLite.to(textB2, 0, { autoAlpha: 1 });
+<<<<<<< HEAD
+        setter(textB2.textContent, newCircle5);
+=======
         SETTER(textB2.textContent, newCircle5);
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     }
     else if (textB2.textContent != 1) {
         TweenLite.to(textB2, 0, { autoAlpha: 0 });
@@ -638,12 +800,20 @@ function input6() {
         });
         document.getElementById("Observations").innerHTML = "";
         TweenLite.to(textB2, 0, { autoAlpha: 1 });
+<<<<<<< HEAD
+        setter(textB2.textContent, newCircle5);
+=======
         SETTER(textB2.textContent, newCircle5);
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     }
 }
 
 function input8() {
+<<<<<<< HEAD
+    
+=======
     console.log("here we go");
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     if (textB3.textContent != 0) {
         TweenLite.to(textB3, 0, { autoAlpha: 0 });
         textB3.textContent = 0;
@@ -658,7 +828,11 @@ function input8() {
         });
         document.getElementById("Observations").innerHTML = "";
         TweenLite.to(textB3, 0, { autoAlpha: 1 });
+<<<<<<< HEAD
+        setter(textB3.textContent, newCircle7);
+=======
         SETTER(textB3.textContent, newCircle7);
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     }
     else if (textB3.textContent != 1) {
         TweenLite.to(textB3, 0, { autoAlpha: 0 });
@@ -674,12 +848,20 @@ function input8() {
         });
         document.getElementById("Observations").innerHTML = "";
         TweenLite.to(textB3, 0, { autoAlpha: 1 });
+<<<<<<< HEAD
+        setter(textB3.textContent, newCircle7);
+=======
         SETTER(textB3.textContent, newCircle7);
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     }
 }
 
 function input9() {
+<<<<<<< HEAD
+    
+=======
     console.log("here we go");
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     if (textC0.textContent != 0) {
         TweenLite.to(textC0, 0, { autoAlpha: 0 });
         textC0.textContent = 0;
@@ -694,7 +876,11 @@ function input9() {
         });
         document.getElementById("Observations").innerHTML = "";
         TweenLite.to(textC0, 0, { autoAlpha: 1 });
+<<<<<<< HEAD
+        setter(textC0.textContent, newCircle8);
+=======
         SETTER(textC0.textContent, newCircle8);
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     }
     else if (textC0.textContent != 1) {
         TweenLite.to(textC0, 0, { autoAlpha: 0 });
@@ -710,6 +896,17 @@ function input9() {
         });
         document.getElementById("Observations").innerHTML = "";
         TweenLite.to(textC0, 0, { autoAlpha: 1 });
+<<<<<<< HEAD
+        setter(textC0.textContent, newCircle8);
+    }
+}
+function outputSetter() {
+    setter(textS0.textContent, S0);
+    setter(textS1.textContent, S1);
+    setter(textS2.textContent, S2);
+    setter(textS3.textContent, S3);
+    setter(textC4.textContent, C4);
+=======
         SETTER(textC0.textContent, newCircle8);
     }
 }
@@ -719,11 +916,19 @@ function output_setter() {
     SETTER(textS2.textContent, S2);
     SETTER(textS3.textContent, S3);
     SETTER(textC4.textContent, C4);
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
 }
 
 function observation() {
     document.getElementById("Observations").innerHTML = "Simulation has finished. Press Restart the simulation.";
 }
+<<<<<<< HEAD
+let tl = gsap.timeline({ repeat: 0, repeatDelay: 0 });
+let speed_circuit = 1;
+function SetSpeed(speed) {
+    if (speed == "1") {
+        if (textA0.textContent != 2 && textB0.textContent != 2 && textA1.textContent != 2 && textB1.textContent != 2 &&textA2.textContent != 2 && textB2.textContent != 2 && textA3.textContent != 2 && textB3.textContent != 2 &&  tl.progress()!=1) {
+=======
 var tl = gsap.timeline({ repeat: 0, repeatDelay: 0 });
 var speed_circuit = 1;
 function SetSpeed(speed) {
@@ -731,31 +936,45 @@ function SetSpeed(speed) {
     if (speed == "1") {
         if (textA0.textContent != 2 && textB0.textContent != 2 && textA1.textContent != 2 && textB1.textContent != 2 &&textA2.textContent != 2 && textB2.textContent != 2 && textA3.textContent != 2 && textB3.textContent != 2 &&  tl.progress()!=1) {
             // tl.resume();
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
             tl.timeScale(1);
         }
     }
     else if (speed == "2") {
         if (textA0.textContent != 2 && textB0.textContent != 2 && textA1.textContent != 2 && textB1.textContent != 2 &&textA2.textContent != 2 && textB2.textContent != 2 && textA3.textContent != 2 && textB3.textContent != 2 && tl.progress()!=1) {
+<<<<<<< HEAD
+=======
             // tl.resume();
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
             tl.timeScale(2);
         }
     }
     else if (speed == "4") {
         if (textA0.textContent != 2 && textB0.textContent != 2 && textA1.textContent != 2 && textB1.textContent != 2 &&textA2.textContent != 2 && textB2.textContent != 2 && textA3.textContent != 2 && textB3.textContent != 2 && tl.progress()!=1) {
+<<<<<<< HEAD
+=======
             // tl.resume();
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
             tl.timeScale(4);
         }
     }
     if(tl.progress()==0){
         speed_circuit = speed;
     }
+<<<<<<< HEAD
+=======
     console.log("speead_circuit:"+ speed_circuit);
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
 
 }
 
 
 function WorkCircuit() {
+<<<<<<< HEAD
+    let a = document.getElementById("currentwork").innerHTML;
+=======
     var a = document.getElementById("currentwork").innerHTML;
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     if (a == "Start") {
         StartCircuit();
     }
@@ -793,35 +1012,55 @@ function StartCircuit() {
 function free() {
     document.getElementById("Observations").innerHTML = "";
 }
+<<<<<<< HEAD
+function gate1ComponentsAppear() {
+=======
 function gate1_components_appear() {
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     TweenLite.to(newCircle, 0, { autoAlpha: 1 });
     TweenLite.to(newCircle1, 0, { autoAlpha: 1 });
     TweenLite.to(newCircle8, 0, { autoAlpha: 1 });
 }
+<<<<<<< HEAD
+function gate1ComponentsDisappear() {
+=======
 function gate1_components_disappear() {
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     TweenLite.to(newCircle, 0, { autoAlpha: 0 });
     TweenLite.to(newCircle1, 0, { autoAlpha: 0 });
     TweenLite.to(newCircle8, 0, { autoAlpha: 0 });
 }
+<<<<<<< HEAD
+function gate2ComponentsAppear() {
+=======
 function gate2_components_appear() {
     console.log("gate23_components_appear now");
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     TweenLite.to(newCircle2, 0, { autoAlpha: 1 });
     TweenLite.to(newCircle3, 0, { autoAlpha: 1 });
     TweenLite.to(newCircle9, 0, { autoAlpha: 1 });
     TweenLite.to(newCircle13, 0, { autoAlpha: 1 });
     
 }
+<<<<<<< HEAD
+function gate2ComponentsDisappear() {
+=======
 function gate2_components_disappear() {
     console.log("gate23_components_disappear now");
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     TweenLite.to(newCircle2, 0, { autoAlpha: 0 });
     TweenLite.to(newCircle3, 0, { autoAlpha: 0 });
     TweenLite.to(newCircle9, 0, { autoAlpha: 0 });
     TweenLite.to(newCircle13, 0, { autoAlpha: 0 });
 
 }
+<<<<<<< HEAD
+function gate3ComponentsAppear() {
+=======
 function gate3_components_appear() {
     console.log("gate45_components_appear now");
 
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     TweenLite.to(textS0, 0, { autoAlpha: 1 });
     TweenLite.to(newCircle4, 0, { autoAlpha: 1 });
     TweenLite.to(newCircle5, 0, { autoAlpha: 1 });
@@ -829,8 +1068,12 @@ function gate3_components_appear() {
     TweenLite.to(newCircle14, 0, { autoAlpha: 1 });
 
 }
+<<<<<<< HEAD
+function gate3ComponentsDisappear() {
+=======
 function gate3_components_disappear() {
     console.log("gate45_components_disappear now");
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     TweenLite.to(newCircle4, 0, { autoAlpha: 0 });
     TweenLite.to(newCircle5, 0, { autoAlpha: 0 });
     TweenLite.to(newCircle10, 0, { autoAlpha: 0 });
@@ -838,31 +1081,47 @@ function gate3_components_disappear() {
 
 
 }
+<<<<<<< HEAD
+function gate4ComponentsAppear() {
+=======
 function gate4_components_appear() {
     console.log("gate67_components_appear now");
 
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     TweenLite.to(textS1, 0, { autoAlpha: 1 });
     TweenLite.to(newCircle6, 0, { autoAlpha: 1 });
     TweenLite.to(newCircle7, 0, { autoAlpha: 1 });
     TweenLite.to(newCircle11, 0, { autoAlpha: 1 });
     TweenLite.to(newCircle15, 0, { autoAlpha: 1 });
 }
+<<<<<<< HEAD
+function gate4ComponentsDisappear() {
+=======
 function gate4_components_disappear() {
     console.log("gate67_components_disappear now");
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     TweenLite.to(newCircle6, 0, { autoAlpha: 0 });
     TweenLite.to(newCircle7, 0, { autoAlpha: 0 });
     TweenLite.to(newCircle11, 0, { autoAlpha: 0 });
     TweenLite.to(newCircle15, 0, { autoAlpha: 0 });
 }
+<<<<<<< HEAD
+function gate5ComponentsAppear() {
+=======
 function gate5_components_appear() {
     console.log("gate78_components_appear now");
 
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     TweenLite.to(textS2, 0, { autoAlpha: 1 });
     TweenLite.to(newCircle12, 0, { autoAlpha: 1 });
     TweenLite.to(newCircle16, 0, { autoAlpha: 1 });
 }
+<<<<<<< HEAD
+function gate5ComponentsDisappear() {
+=======
 function gate5_components_disappear() {
     console.log("gate78_components_disappear now");
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
     TweenLite.to(newCircle12, 0, { autoAlpha: 0 });
     TweenLite.to(newCircle16, 0, { autoAlpha: 0 });
     TweenLite.to(textC4, 0, { autoAlpha: 1 });
@@ -872,6 +1131,20 @@ function gate5_components_disappear() {
 
 
 
+<<<<<<< HEAD
+tl.add(gate1ComponentsAppear, 0);
+tl.add(gate1ComponentsDisappear, 2);
+tl.add(gate2ComponentsAppear, 2);
+tl.add(gate2ComponentsDisappear, 4);
+tl.add(gate3ComponentsAppear, 4);
+tl.add(gate3ComponentsDisappear, 6);
+tl.add(gate4ComponentsAppear, 6);
+tl.add(gate4ComponentsDisappear, 8);
+tl.add(gate5ComponentsAppear, 8);
+tl.add(gate5ComponentsDisappear, 10);
+tl.add(outputHandle, 0);
+tl.add(outputSetter, 10);
+=======
 tl.add(gate1_components_appear, 0);
 tl.add(gate1_components_disappear, 2);
 tl.add(gate2_components_appear, 2);
@@ -884,6 +1157,7 @@ tl.add(gate5_components_appear, 8);
 tl.add(gate5_components_disappear, 10);
 tl.add(output_handle, 0);
 tl.add(output_setter, 10);
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
 tl.eventCallback("onComplete", observation);
 tl.to(newCircle, {
     motionPath: {
@@ -1160,4 +1434,8 @@ tl.to(newCircle16, {
 
 
 tl.pause();
+<<<<<<< HEAD
+allDisappear();
+=======
 All_disappear();
+>>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
