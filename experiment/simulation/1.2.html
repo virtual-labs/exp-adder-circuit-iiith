@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/virtual-labs/virtual-style@0.0.7-b/css/style.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/MotionPathPlugin.min.js"></script>
+    <title>
+        Full adder
+    </title>
+</head>
+
+<body>
+    <div class="container" style="margin-top:1%">
+        <div class="columns is-centered">
+            <div class="column is-one-quarter v-instruction-title">
+                Tasks
+            </div>
+            <div class="column">
+                <div class="v-tabs">
+                    <ul>
+
+                        <li id="Task1" onclick="window.location.href = 'demo.html';">
+                            <a>
+                                Half adder
+                            </a>
+                        </li>
+                        <li class="is-active" id="Task2">
+                            <a>
+                                Full adder
+                            </a>
+                        </li>
+                        <li id="Task3" onclick="window.location.href = '1.3.html';">
+                            <a>
+                                Ripple carry adder
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="columns is-centered">
+            <div class="column">
+                <div class="v-instruction-container">
+                    <div class="v-instruction-title" id="TaskTitle">Full adder</div>
+                    <div class="v-instruction-text" id="TaskDescription">
+                        How a full adder works
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="columns is-centered">
+        <div class="column" style="text-align: center;">
+            <div class="v-select">
+                <select  autocomplete="off" name="speed" onchange="SetSpeed(this.value)" id="speed">
+                  <option value="1" selected="selected">1x</option>
+                  <option value="2">2x</option>
+                  <option value="4">4x</option>
+                </select>
+            </div>
+            <button class="v-button" id="currentwork" onclick="WorkCircuit()">Start</button>
+            <a href="1.2.html"><button class="v-button">Reset simulation</button></a>
+        </div>
+    </div>
+    <div class="columns is-centered is-flex is-flex-direction-row is-flex-wrap-wrap is-align-content-start">
+        <div class="column is-2-desktop is-12-tablet is-12-mobile">
+            <div class="v-datalist-container components-list">
+                <div class="v-datalist-title">Instructions</div>
+                <div class="v-datalist-row">
+                    <br>
+                    <p>Start- Starts the simulation after the inputs are properly selected. Default speed is 1x.</p>
+                    <br><p>Select the speed through dropdown menu</p>
+                    <br><p>Reset - Resets the simulation</p>
+                    <p>
+                        <br>
+                       <svg><rect x="0" y="0" width="30" height="30"
+                        style="fill:#29e;fill-opacity:1;stroke-opacity:1" />
+                        <text font-size="0.9em" x="50" y="20" fill="black">bit = 1</text>
+                        <rect x="0" y="60" width="30" height="30"
+                        style="fill:#eeeb22;fill-opacity:1;stroke-opacity:1" />
+                        <text font-size="0.9em" x="50" y="80" fill="black">bit = 0</text>
+                    </svg>
+                    
+                       
+                    </p><br>
+                    
+                    <div class="columns is-centered" id="toolbar">
+                        <div class="column is-one-half">
+                        </div>
+                        <div class="column is-one-half">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="column is-7-desktop is-12-tablet is-12-mobile">
+            <div id="circuit-board">
+                <div id="working-area">
+
+                    <svg class="svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="130%"
+                        viewBox="0 0 1000 900 ">
+
+                        <path id="path1" fill="none" stroke="currentColor" stroke-width="3" 
+                        d="M 100,240 h 200 h 100 h 12" />
+
+                        <path id="path2" fill="none" stroke="currentColor" stroke-width="3" 
+                        d="M 100,280 h 200 h 100  h 12" />
+
+                        <path id="path3" fill="none" stroke="currentColor" stroke-width="3" 
+                        d="M 100,340 h 459 h 12" />
+
+                        <path id="path4" fill="none" stroke="currentColor" stroke-width="3" 
+                        d="M 459,260 h 35 v 40 h 65 h 12" />
+
+                        <path id="path5" fill="none" stroke="currentColor" stroke-width="3" 
+                        d="M 100,240 h 208 v 310 h 251 h 12" />
+
+                        <path id="path6" fill="none" stroke="currentColor" stroke-width="3" 
+                        d="M 100,280 h 104 v 310 h 355 h 12" />
+
+                        
+                        <path id="path7" fill="none" stroke="currentColor" stroke-width="3" 
+                        d="M 459,260 h 35 v 40 v 40 v 30 v 70 h 65 h 12" />
+
+                        <path id="path8" fill="none" stroke="currentColor" stroke-width="3" 
+                        d="M 100,340 h 300 v 70 v 40 v 30 h 159 h 12" />
+                            
+                        <path id="path9" fill="none" stroke="currentColor" stroke-width="3" 
+                        d="M 632 460 h 50 v 35 h 50 h 12" />
+
+                        <path id="path10" fill="none" stroke="currentColor" stroke-width="3" 
+                        d="M 632 570 h 50 v -35 h 50 h 12" />
+
+                        <path id="path11" fill="none" stroke="currentColor" stroke-width="3" 
+                        d="M 610 320 h 50 h 180" />
+
+                        <path id="path12" fill="none" stroke="currentColor" stroke-width="3" 
+                        d="M 790 515 h 50" />
+
+                        <g id="AND">
+                            <path id="path1AND" fill="#29e" stroke="currentColor" stroke-width="3"
+                                d="M 571 420 v 80 h 40 Q 651 460 611 420 h -40" />
+                        </g>
+
+                        <g id="AND2">
+                            <path id="path1AND" fill="#29e" stroke="currentColor" stroke-width="3"
+                                d="M 571 530 v 80 h 40 Q 651 570 611 530 h -40" />
+                        </g>
+
+                        <g id="XOR">
+                            <path id="path1XOR" stroke="currentColor" fill="#29e" stroke-width="3"
+                                d="M 400 220 Q 435 260 400 300 Q 436 260 400 220 M 405 220 Q 440 260 405 300 Q 510 260 405 220" />
+                        </g>
+
+                        <g id="XOR">
+                            <path id="path1XOR" stroke="currentColor" fill="#29e" stroke-width="3"
+                                d="M 559 280 Q 594 320 559 360 Q 595 320 559 280 M 564 280 Q 599 320 564 360 Q 669 320 564 280" />
+                        </g>
+
+                        <g id="XOR">
+                            <path id="path1XOR" stroke="currentColor" fill="#29e" stroke-width="3"
+                                d="M 732 475 Q 767 515 732 555 Q 768 515 732 475 M 737 475 Q 772 515 737 555 Q 842 515 737 475" />
+                        </g>
+                        <circle id="input1" cx="100" cy="240" r="15" onclick="input1()"
+                            style="fill:green;stroke:rgb(68, 68, 119);stroke-width:3;fill-opacity:1;stroke-opacity:1" />
+                        <circle id="input2" cx="100" cy="280" r="15" onclick="input2()"
+                            style="fill:green;stroke:rgb(68, 68, 119);stroke-width:3;fill-opacity:1;stroke-opacity:1" />
+                        <circle id="input3" cx="100" cy="340" r="15" onclick="input3()"
+                            style="fill:green;stroke:rgb(68, 68, 119);stroke-width:3;fill-opacity:1;stroke-opacity:1" />
+                        <circle id="output1" cx="840" cy="515" r="15"
+                            style="fill:green;stroke:rgb(68, 68, 119);stroke-width:3;fill-opacity:1;stroke-opacity:1" />
+                        <circle id="output2" cx="840" cy="320" r="15"
+                            style="fill:green;stroke:rgb(68, 68, 119);stroke-width:3;fill-opacity:1;stroke-opacity:1" />
+                        <text font-size="1em" x="70" y="245" fill="black">A</text>
+                        <text font-size="1em" x="70" y="285" fill="black">B</text>
+                        <text font-size="1em" x="50" y="345" fill="black">C in</text>
+                        <text font-size="1em" x="860" y="325" fill="black">S</text>
+                        <text font-size="1em" x="860" y="525" fill="black">C out</text>
+                        <text font-size="1em" x="423" y="260" fill="black">XOR</text>
+                        <text font-size="1em" x="580" y="320" fill="black">XOR</text>
+                        <text font-size="1em" x="755" y="523" fill="black">XOR</text>
+                        <text font-size="1em" x="580" y="465" fill="black">AND</text>
+                        <text font-size="1em" x="580" y="575" fill="black">AND</text>
+                    </svg>
+
+                </div>
+            </div>
+        </div>
+        <div class="column is-3-desktop is-12-tablet is-12-mobile">
+            <div class="v-datalist-container components-list">
+                <div class="v-datalist-title">Observations</div>
+                <div class="v-datalist-row">
+                    <div id="Observations">
+                    </div>
+                    <div id="result"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="menu">
+        <ul class="menu-options">
+            <li class="menu-option">Delete</li>
+            <li class="menu-option">Cancel</li>
+        </ul>
+    </div>
+
+</body>
+<script src="js/animation2.js"></script>
+
+</body>
+
+</html>

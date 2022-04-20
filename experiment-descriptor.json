@@ -43,14 +43,14 @@
     },
     {
       "target": "demo.html",
-      "source": "simulation/simulation.html",
+      "source": "simulation/demo.html",
       "label": "Demo",
       "unit-type": "task",
       "content-type": "simulation"
     },
     {
       "target": "practice.html",
-      "source": "simulation/index.html",
+      "source": "simulation/practice.html",
       "label": "Practice",
       "unit-type": "task",
       "content-type": "simulation"
