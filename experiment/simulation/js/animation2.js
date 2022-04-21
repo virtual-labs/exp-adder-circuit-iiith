@@ -1,18 +1,23 @@
 // Dimensions of working area
-let circuitBoard = document.getElementById("circuit-board");
-let sidePanels = document.getElementsByClassName("components-list");
+const circuitBoard = document.getElementById("circuit-board");
+const sidePanels = document.getElementsByClassName("v-datalist-container");
 // Distance of working area from top
-let circuitBoardTop = circuitBoard.offsetTop;
+const circuitBoardTop = circuitBoard.offsetTop;
 // Full height of window
-let windowHeight = window.innerHeight;
-let width = window.innerWidth;
+const windowHeight = window.innerHeight;
+const width = window.innerWidth;
 if (width < 1024) {
   circuitBoard.style.height = 600 + "px";
 } else {
   circuitBoard.style.height = windowHeight - circuitBoardTop - 20 + "px";
 }
 sidePanels[0].style.height = circuitBoard.style.height;
-sidePanels[1].style.height = circuitBoard.style.height;
+
+// Instruction box
+const instructionBox = document.getElementsByClassName("instructions-box")[0];
+instructionBox.addEventListener("click", (e) => {
+  instructionBox.classList.toggle("expand");
+});
 
 const svg = document.querySelector(".svg");
 const inputpath1 = document.querySelector("#inputpath1");
@@ -218,7 +223,7 @@ function setter(a, b) {
     }
 }
 function input1() {
-    if (Input1text.textContent != 0) {
+    if (Input1text.textContent != 0 && tl.progress() == 0) {
         TweenLite.to(Input1text, 0, { autoAlpha: 0 });
         Input1text.textContent = 0;
         svg.appendChild(Input1text);
@@ -234,7 +239,7 @@ function input1() {
         setter(Input1text.textContent, newCircle);
         setter(Input1text.textContent, newCircle4);
     }
-    else if (Input1text.textContent != 1) {    
+    else if (Input1text.textContent != 1 && tl.progress() == 0) {    
         TweenLite.to(Input1text, 0, { autoAlpha: 0 });
         Input1text.textContent = 1;
         svg.appendChild(Input1text);
@@ -253,7 +258,7 @@ function input1() {
 
 }
 function input2() {
-    if (Input2text.textContent != 0) {
+    if (Input2text.textContent != 0 && tl.progress() == 0) {
         TweenLite.to(Input2text, 0, { autoAlpha: 0 });
         Input2text.textContent = 0;
         svg.appendChild(Input2text);
@@ -269,7 +274,7 @@ function input2() {
         setter(Input2text.textContent, newCircle1);
         setter(Input2text.textContent, newCircle5);
     }
-    else if (Input2text.textContent != 1) {
+    else if (Input2text.textContent != 1 && tl.progress() == 0) {
         TweenLite.to(Input2text, 0, { autoAlpha: 0 });
         Input2text.textContent = 1;
         svg.appendChild(Input2text);
@@ -290,7 +295,7 @@ function input2() {
 }
 
 function input3() {
-    if (Input3text.textContent != 0) {
+    if (Input3text.textContent != 0 && tl.progress() == 0) {
         TweenLite.to(Input3text, 0, { autoAlpha: 0 });
         Input3text.textContent = 0;
         svg.appendChild(Input3text);
@@ -306,7 +311,7 @@ function input3() {
         setter(Input3text.textContent, newCircle2);
         setter(Input3text.textContent, newCircle7);
     }
-    else if (Input3text.textContent != 1) {
+    else if (Input3text.textContent != 1 && tl.progress() == 0) {
         TweenLite.to(Input3text, 0, { autoAlpha: 0 });
         Input3text.textContent = 1;
         svg.appendChild(Input3text);
@@ -329,7 +334,7 @@ function outputSetter() {
 }
 
 function observation() {
-    document.getElementById("Observations").innerHTML = "Simulation has finished. Press Restart the simulation.";
+    document.getElementById("Observations").innerHTML = "Simulation has finished. To reset the simulation, press Reset Simulation.";
 }
 let tl = gsap.timeline({ repeat: 0, repeatDelay: 0 });
 let speedCircuit = 1;

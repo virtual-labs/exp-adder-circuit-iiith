@@ -267,3 +267,19 @@ svg.wire path {
   color: rgb(228, 23, 23);
   font-weight: bold;
 }
+
+/* for dropping instruction box  */
+
+.instructions-box {
+  max-height: 70px;
+  overflow: hidden;
+  transition: all .5s ease;
+}
+
+.instructions-box.expand {
+  max-height: 400px;
+}
+
+.v-instruction-container {
+  justify-content: flex-start;
+}

@@ -1,18 +1,23 @@
 // Dimensions of working area
-let circuitBoard = document.getElementById("circuit-board");
-let sidePanels = document.getElementsByClassName("components-list");
+const circuitBoard = document.getElementById("circuit-board");
+const sidePanels = document.getElementsByClassName("v-datalist-container");
 // Distance of working area from top
-let circuitBoardTop = circuitBoard.offsetTop;
+const circuitBoardTop = circuitBoard.offsetTop;
 // Full height of window
-let windowHeight = window.innerHeight;
-let width = window.innerWidth;
+const windowHeight = window.innerHeight;
+const width = window.innerWidth;
 if (width < 1024) {
   circuitBoard.style.height = 600 + "px";
 } else {
   circuitBoard.style.height = windowHeight - circuitBoardTop - 20 + "px";
 }
 sidePanels[0].style.height = circuitBoard.style.height;
-sidePanels[1].style.height = circuitBoard.style.height;
+
+// Instruction box
+const instructionBox = document.getElementsByClassName("instructions-box")[0];
+instructionBox.addEventListener("click", (e) => {
+  instructionBox.classList.toggle("expand");
+});
 
 const svg = document.querySelector(".svg");
 const inputpath1 = document.querySelector("#inputpath1");
@@ -391,7 +396,7 @@ function setter(a, b) {
     }
 }
 function input1() {
-    if (textA0.textContent != 0) {
+    if (textA0.textContent != 0 && tl.progress() == 0) {
         TweenLite.to(textA0, 0, { autoAlpha: 0 });
         textA0.textContent = 0;
         svg.appendChild(textA0);
@@ -407,7 +412,7 @@ function input1() {
         TweenLite.to(textA0, 0, { autoAlpha: 1 });
         setter(textA0.textContent, newCircle);
     }
-    else if (textA0.textContent != 1) {    
+    else if (textA0.textContent != 1 && tl.progress() == 0) {    
         TweenLite.to(textA0, 0, { autoAlpha: 0 });
         textA0.textContent = 1;
         svg.appendChild(textA0);
@@ -425,7 +430,7 @@ function input1() {
 
 }
 function input3() {
-    if (textA1.textContent != 0) {
+    if (textA1.textContent != 0 && tl.progress() == 0) {
         TweenLite.to(textA1, 0, { autoAlpha: 0 });
         textA1.textContent = 0;
         svg.appendChild(textA1);
@@ -440,7 +445,7 @@ function input3() {
         TweenLite.to(textA1, 0, { autoAlpha: 1 });
         setter(textA1.textContent, newCircle2);
     }
-    else if (textA1.textContent != 1) {
+    else if (textA1.textContent != 1 && tl.progress() == 0) {
         TweenLite.to(textA1, 0, { autoAlpha: 0 });
         textA1.textContent = 1;
         svg.appendChild(textA1);
@@ -459,7 +464,7 @@ function input3() {
 
 function input5() {
     
-    if (textA2.textContent != 0) {
+    if (textA2.textContent != 0 && tl.progress() == 0) {
         TweenLite.to(textA2, 0, { autoAlpha: 0 });
         textA2.textContent = 0;
         svg.appendChild(textA2);
@@ -474,7 +479,7 @@ function input5() {
         TweenLite.to(textA2, 0, { autoAlpha: 1 });
         setter(textA2.textContent, newCircle4);
     }
-    else if (textA2.textContent != 1) {
+    else if (textA2.textContent != 1 && tl.progress() == 0) {
         TweenLite.to(textA2, 0, { autoAlpha: 0 });
         textA2.textContent = 1;
         svg.appendChild(textA2);
@@ -493,7 +498,7 @@ function input5() {
 
 function input7() {
     
-    if (textA3.textContent != 0) {
+    if (textA3.textContent != 0 && tl.progress() == 0) {
         TweenLite.to(textA3, 0, { autoAlpha: 0 });
         textA3.textContent = 0;
         svg.appendChild(textA3);
@@ -508,7 +513,7 @@ function input7() {
         TweenLite.to(textA3, 0, { autoAlpha: 1 });
         setter(textA3.textContent, newCircle6);
     }
-    else if (textA3.textContent != 1) {
+    else if (textA3.textContent != 1 && tl.progress() == 0) {
         TweenLite.to(textA3, 0, { autoAlpha: 0 });
         textA3.textContent = 1;
         svg.appendChild(textA3);
@@ -527,7 +532,7 @@ function input7() {
 
 function input2() {
     
-    if (textB0.textContent != 0) {
+    if (textB0.textContent != 0 && tl.progress() == 0) {
         TweenLite.to(textB0, 0, { autoAlpha: 0 });
         textB0.textContent = 0;
         svg.appendChild(textB0);
@@ -542,7 +547,7 @@ function input2() {
         TweenLite.to(textB0, 0, { autoAlpha: 1 });
         setter(textB0.textContent, newCircle1);
     }
-    else if (textB0.textContent != 1) {
+    else if (textB0.textContent != 1 && tl.progress() == 0) {
         TweenLite.to(textB0, 0, { autoAlpha: 0 });
         textB0.textContent = 1;
         svg.appendChild(textB0);
@@ -561,7 +566,7 @@ function input2() {
 
 function input4() {
     
-    if (textB1.textContent != 0) {
+    if (textB1.textContent != 0 && tl.progress() == 0) {
         TweenLite.to(textB1, 0, { autoAlpha: 0 });
         textB1.textContent = 0;
         svg.appendChild(textB1);
@@ -576,7 +581,7 @@ function input4() {
         TweenLite.to(textB1, 0, { autoAlpha: 1 });
         setter(textB1.textContent, newCircle3);
     }
-    else if (textB1.textContent != 1) {
+    else if (textB1.textContent != 1 && tl.progress() == 0) {
         TweenLite.to(textB1, 0, { autoAlpha: 0 });
         textB1.textContent = 1;
         svg.appendChild(textB1);
@@ -596,7 +601,7 @@ function input4() {
 
 function input6() {
     
-    if (textB2.textContent != 0) {
+    if (textB2.textContent != 0 && tl.progress() == 0) {
         TweenLite.to(textB2, 0, { autoAlpha: 0 });
         textB2.textContent = 0;
         svg.appendChild(textB2);
@@ -612,7 +617,7 @@ function input6() {
         TweenLite.to(textB2, 0, { autoAlpha: 1 });
         setter(textB2.textContent, newCircle5);
     }
-    else if (textB2.textContent != 1) {
+    else if (textB2.textContent != 1 && tl.progress() == 0) {
         TweenLite.to(textB2, 0, { autoAlpha: 0 });
         textB2.textContent = 1;
         svg.appendChild(textB2);
@@ -632,7 +637,7 @@ function input6() {
 
 function input8() {
     
-    if (textB3.textContent != 0) {
+    if (textB3.textContent != 0 && tl.progress() == 0) {
         TweenLite.to(textB3, 0, { autoAlpha: 0 });
         textB3.textContent = 0;
         svg.appendChild(textB3);
@@ -648,7 +653,7 @@ function input8() {
         TweenLite.to(textB3, 0, { autoAlpha: 1 });
         setter(textB3.textContent, newCircle7);
     }
-    else if (textB3.textContent != 1) {
+    else if (textB3.textContent != 1 && tl.progress() == 0) {
         TweenLite.to(textB3, 0, { autoAlpha: 0 });
         textB3.textContent = 1;
         svg.appendChild(textB3);
@@ -668,7 +673,7 @@ function input8() {
 
 function input9() {
     
-    if (textC0.textContent != 0) {
+    if (textC0.textContent != 0 && tl.progress() == 0) {
         TweenLite.to(textC0, 0, { autoAlpha: 0 });
         textC0.textContent = 0;
         svg.appendChild(textC0);
@@ -684,7 +689,7 @@ function input9() {
         TweenLite.to(textC0, 0, { autoAlpha: 1 });
         setter(textC0.textContent, newCircle8);
     }
-    else if (textC0.textContent != 1) {
+    else if (textC0.textContent != 1 && tl.progress() == 0) {
         TweenLite.to(textC0, 0, { autoAlpha: 0 });
         textC0.textContent = 1;
         svg.appendChild(textC0);
@@ -710,7 +715,7 @@ function outputSetter() {
 }
 
 function observation() {
-    document.getElementById("Observations").innerHTML = "Simulation has finished. Press Restart the simulation.";
+    document.getElementById("Observations").innerHTML = "Simulation has finished. To reset the simulation, press Reset Simulation.";
 }
 let tl = gsap.timeline({ repeat: 0, repeatDelay: 0 });
 let speed_circuit = 1;

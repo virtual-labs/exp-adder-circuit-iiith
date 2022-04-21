@@ -98,6 +98,7 @@ function changeTabs(e) {
   updateInstructions();
   updateToolbar();
   clearObservations();
+  resize();
 }
 
 window.changeTabs = changeTabs;
@@ -152,6 +153,13 @@ function clearObservations() {
   document.getElementById("result").innerHTML = "";
 }
 
+// Instruction box
+const instructionBox = document.getElementsByClassName("instructions-box")[0];
+instructionBox.addEventListener("click", (e) => {
+  instructionBox.classList.toggle("expand");
+});
+
+
 // Making webpage responsive
 
 // Dimensions of working area
@@ -166,3 +174,14 @@ if (width < 1024) {
 } else {
   circuitBoard.style.height = windowHeight - circuitBoardTop - 20 + "px";
 }
+
+function resize() {
+  const circuitBoard = document.getElementById("circuit-board");
+  const sidePanels = document.getElementsByClassName("v-datalist-container");
+
+  for (let i = 0; i < sidePanels.length; i++) {
+    sidePanels[i].style.height = circuitBoard.style.height;
+  }
+}
+
+resize();
