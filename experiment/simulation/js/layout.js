@@ -16,11 +16,7 @@ export const wireColours = [
   "#ff0000",
   "#00ff00",
   "#0000ff",
-<<<<<<< HEAD
   "#bf6be3",
-=======
-  "##bf6be3",
->>>>>>> 0288e00a3fe62dc8d8655fad21c8e273f9c0e5b5
   "#ff00ff",
   "#00ffff",
   "#ff8000",
