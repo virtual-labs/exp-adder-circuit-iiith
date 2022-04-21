@@ -11,6 +11,8 @@ if (width < 1024) {
 } else {
   circuitBoard.style.height = windowHeight - circuitBoardTop - 20 + "px";
 }
+sidePanels[0].style.height = circuitBoard.style.height;
+sidePanels[1].style.height = circuitBoard.style.height;
 
 const svg = document.querySelector(".svg");
 const inputpath1 = document.querySelector("#inputpath1");
