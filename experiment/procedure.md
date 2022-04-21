@@ -1,10 +1,8 @@
-1. First, make a 1-bit half-adder circuit and test it with different inputs. You should also try giving time-varying waves as inputs and anlyze the change in the outputs. Read the manual page carefully to learn how this can be done.
+1. Firstly learn everything from the 'Demo' section.
+2. Then, test your understanding about adder circuits in the 'Pretest' section.
+3. Then in the 'Practice' section in the task-1 "Half Adder", make a 1-bit half-adder circuit using logic gates and test it with different inputs. Read the manual page carefully to learn how that can be done.
+4. Then, in the task-2 "Full Adder", implement a 1-bit full-adder circuit using logic gates and test it with different inputs.
+5. Then, in the task-3 "Ripple Adder", implement a 4-bit ripple carry adder circuit using full adders.
+6. Now, test your understanding of the experiment in the 'Posttest' section.
 
-2. Next, design 1-bit full adder circuit and test it out similarly. Feel free to try other implementations of full-adder circuits.
-
-3. Save the full adder circuit. You can now load it as a block and connect them to make larger adders.
-
-4. Make a 4-bit adder by connecting four full adders. Study its output for different kinds of inputs.
-
-5. There is an import feature, which lets you construct building blocks. Click on import and then click on circuit board to see the imported block. For more details, refer import section in manual.
 
