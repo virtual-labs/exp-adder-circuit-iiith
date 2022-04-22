@@ -1,3 +1,4 @@
+'use strict'
 // Dimensions of working area
 const circuitBoard = document.getElementById("circuit-board");
 const sidePanels = document.getElementsByClassName("v-datalist-container");
@@ -18,8 +19,6 @@ const instructionBox = document.getElementsByClassName("instructions-box")[0];
 instructionBox.addEventListener("click", (e) => {
   instructionBox.classList.toggle("expand");
 });
-
-
 
 
 const svg = document.querySelector(".svg");
@@ -64,6 +63,8 @@ input2Text.textContent = 2;
 output1Text.textContent = 2;
 output2Text.textContent = 2;
 
+
+
 svg.appendChild(input1Dot);
 svg.appendChild(input1Dot2);
 svg.appendChild(input2Dot1);
@@ -92,10 +93,10 @@ svg.appendChild(input1Text);
 svg.appendChild(input2Text);
 svg.appendChild(output1Text);
 svg.appendChild(output2Text);
-const INPUT1 = document.getElementById("input1");
-const INPUT2 = document.getElementById("input2");
-const OUTPUT1 = document.getElementById("output1");
-const OUTPUT2 = document.getElementById("output2");
+const input1 = document.getElementById("input1");
+const input2 = document.getElementById("input2");
+const output1 = document.getElementById("output1");
+const output2 = document.getElementById("output2");
 
 function input1DotDisappear() {
     TweenLite.to(input1Dot, 0, { autoAlpha: 0 });
@@ -104,20 +105,20 @@ function free() {
     document.getElementById("Observations").innerHTML = "";
 }
 function and() {
-    if (input1Text.textContent == 1 && input2Text.textContent == 1) {
-        setter(1, dotFromAND);
+    if (input1Text.textContent === "1" && input2Text.textContent === "1") {
+        setter("1", dotFromAND);
     }
     else {
-        setter(0, dotFromAND);
+        setter("0", dotFromAND);
     }
 }
 
 function xor() {
-    if (input1Text.textContent ==  input2Text.textContent) {
-        setter(0, dotFromOR);
+    if ((input1Text.textContent === "0" && input2Text.textContent==="0") || (input1Text.textContent === "1" && input2Text.textContent==="1")) {
+        setter("0", dotFromOR);
     }
     else {
-        setter(1, dotFromOR);
+        setter("1", dotFromOR);
     }
 }
 function allDisappear() {
@@ -131,19 +132,19 @@ function allDisappear() {
     TweenLite.to(input2Text, 0, { autoAlpha: 0 });
     TweenLite.to(output1Text, 0, { autoAlpha: 0 });
     TweenLite.to(output2Text, 0, { autoAlpha: 0 });
-    gsap.set(INPUT1, {
+    gsap.set(input1, {
 
         fill: "#008000"
     });
-    gsap.set(INPUT2, {
+    gsap.set(input2, {
 
         fill: "#008000"
     });
-    gsap.set(OUTPUT1, {
+    gsap.set(output1, {
 
         fill: "#008000"
     });
-    gsap.set(OUTPUT2, {
+    gsap.set(output2, {
 
         fill: "#008000"
     });
@@ -160,15 +161,15 @@ function unset(a) {
     });
 }//output 1
 function setter(a, b) {
-    if (a == 1) {
+    if (a === "1") {
         unset(b);
     }
-    else if (a == 0) {
+    else if (a === "0") {
         set(b);
     }
 }
 function appendInput1() {
-    if (input1Text.textContent != 0 && tl.progress() == 0) {
+    if (input1Text.textContent !== "0") {
         TweenLite.to(input1Text, 0, { autoAlpha: 0 });
         input1Text.textContent = 0;
         svg.appendChild(input1Text);
@@ -176,7 +177,7 @@ function appendInput1() {
             x: 96,
             y: 164
         });
-        gsap.set(INPUT1, {
+        gsap.set(input1, {
             fill: "#eeeb22"
         });
         document.getElementById("Observations").innerHTML = "";
@@ -184,7 +185,7 @@ function appendInput1() {
         setter(input1Text.textContent, input1Dot);
         setter(input1Text.textContent, input2Dot1);
     }
-    else if (input1Text.textContent != 1 && tl.progress() == 0) {    
+    else if (input1Text.textContent !== "1") {    
         TweenLite.to(input1Text, 0, { autoAlpha: 0 });
         input1Text.textContent = 1;
         svg.appendChild(input1Text);
@@ -192,7 +193,7 @@ function appendInput1() {
             x: 96,
             y: 164
         });
-        gsap.set(INPUT1, {
+        gsap.set(input1, {
             fill: "#29e"
         });
         document.getElementById("Observations").innerHTML = "";
@@ -203,7 +204,7 @@ function appendInput1() {
 }
 function appendInput2() {
     
-    if (input2Text.textContent != 0 && tl.progress() == 0) {
+    if (input2Text.textContent !== "0") {
         TweenLite.to(input2Text, 0, { autoAlpha: 0 });
         input2Text.textContent = 0;
         svg.appendChild(input2Text);
@@ -211,7 +212,7 @@ function appendInput2() {
             x: 96,
             y: 604
         });
-        gsap.set(INPUT2, {
+        gsap.set(input2, {
             fill: "#eeeb22"
         });
         document.getElementById("Observations").innerHTML = "";
@@ -219,7 +220,7 @@ function appendInput2() {
         setter(input2Text.textContent, input1Dot2);
         setter(input2Text.textContent, input2Dot2);
     }
-    else if (input2Text.textContent != 1 && tl.progress() == 0) {
+    else if (input2Text.textContent !== "1") {
         TweenLite.to(input2Text, 0, { autoAlpha: 0 });
         input2Text.textContent = 1;
         svg.appendChild(input2Text);
@@ -227,7 +228,7 @@ function appendInput2() {
             x: 96,
             y: 604
         });
-        gsap.set(INPUT2, {
+        gsap.set(input2, {
             fill: "#29e"
         });
         document.getElementById("Observations").innerHTML = "";
@@ -238,73 +239,73 @@ function appendInput2() {
 
 }
 function outputSetter() {
-    setter(output1Text.textContent, OUTPUT1);
-    setter(output2Text.textContent, OUTPUT2);
+    setter(output1Text.textContent, output1);
+    setter(output2Text.textContent, output2);
 }
 
 function observation() {
-    document.getElementById("Observations").innerHTML = "Simulation has finished. To reset the simulation, press Reset Simulation.";
+    document.getElementById("Observations").innerHTML = "Simulation has finished. Press Restart the simulation.";
 }
 var tl = gsap.timeline({ repeat: 0, repeatDelay: 0 });
 
 var speed_circuit = 1;
-function SetSpeed(speed) {
-    if (speed == "1") {
-        if (input1Text.textContent != 2 && input2Text.textContent != 2 && tl.progress()!=1) {
+function setSpeed(speed) {
+    if (speed === "1") {
+        if (input1Text.textContent !== "2" && input2Text.textContent !== "2" && tl.progress()!==1) {
             // tl.resume();
             tl.timeScale(1);
         }
     }
-    else if (speed == "2") {
-        if (input1Text.textContent != 2 && input2Text.textContent != 2 && tl.progress()!=1) {
+    else if (speed === "2") {
+        if (input1Text.textContent !== "2" && input2Text.textContent !== "2" && tl.progress()!==1) {
             // tl.resume();
             tl.timeScale(2);
         }
     }
-    else if (speed == "4") {
-        if (input1Text.textContent != 2 && input2Text.textContent != 2 && tl.progress()!=1) {
+    else if (speed === "4") {
+        if (input1Text.textContent !== "2" && input2Text.textContent !== "2" && tl.progress()!==1) {
             // tl.resume();
             tl.timeScale(4);
         }
     }
-    if(tl.progress()==0){
+    if(tl.progress()===0){
         speed_circuit = speed;
     }
 
 }
 
-function StopCircuit() {
-    if (tl.time() != 0 && tl.progress() !=1) {
+function stopCircuit() {
+    if (tl.time() !== 0 && tl.progress() !==1) {
         document.getElementById("currentwork").innerHTML = "Start";
         tl.pause();
         document.getElementById("Observations").innerHTML = "Simulation has been stopped."
     }
-    else if(tl.progress() == 1){
+    else if(tl.progress() === 1){
         document.getElementById("Observations").innerHTML = "Please Restart the simulation"
     }
 }
-function WorkCircuit() {
+function workCircuit() {
     var a = document.getElementById("currentwork").innerHTML;
-    if (a == "Start") {
-        StartCircuit();
+    if (a === "Start") {
+        startCircuit();
     }
-    else if (a == "Stop") {
-        StopCircuit();
+    else if (a === "Stop") {
+        stopCircuit();
     }
 }
 
 
-function StartCircuit() {
-    if (input1Text.textContent != 2 && input2Text.textContent != 2 && tl.progress() != 1) {
+function startCircuit() {
+    if (input1Text.textContent !== "2" && input2Text.textContent !== "2" && tl.progress() !== 1) {
         document.getElementById("currentwork").innerHTML = "Stop";
         tl.play();
         tl.timeScale(speed_circuit);
         document.getElementById("Observations").innerHTML = "Simulation has started."
     }
-    else if (input1Text.textContent == 2 || input2Text.textContent == 2 ) {
+    else if (input1Text.textContent === "2" || input2Text.textContent === "2" ) {
         document.getElementById("Observations").innerHTML = "Please select the values"
     }
-    else if(tl.progress() == 1){
+    else if(tl.progress() === 1){
         document.getElementById("Observations").innerHTML = "Please Restart the simulation"  
     }
 }
@@ -354,19 +355,19 @@ function free() {
 }
 
 function outputHandler() {
-    if (input1Text.textContent == 1 && input2Text.textContent == 0) {
+    if (input1Text.textContent === "1" && input2Text.textContent === "0") {
         output1Text.textContent = 1;
         output2Text.textContent = 0;
     }
-    else if (input1Text.textContent == 0 && input2Text.textContent == 1) {
+    else if (input1Text.textContent === "0" && input2Text.textContent === "1") {
         output1Text.textContent = 1;
         output2Text.textContent = 0;
     }
-    else if (input1Text.textContent == 1 && input2Text.textContent == 1) {
+    else if (input1Text.textContent === "1" && input2Text.textContent === "1") {
         output1Text.textContent = 0;
         output2Text.textContent = 1;
     }
-    else if (input1Text.textContent == 0 && input2Text.textContent == 0) {
+    else if (input1Text.textContent === "0" && input2Text.textContent === "0") {
         output1Text.textContent = 0;
         output2Text.textContent = 0;
     }

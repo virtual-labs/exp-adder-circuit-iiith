@@ -163,12 +163,12 @@ instructionBox.addEventListener("click", (e) => {
 // Making webpage responsive
 
 // Dimensions of working area
-let circuitBoard = document.getElementById("circuit-board");
+const circuitBoard = document.getElementById("circuit-board");
 // Distance of working area from top
-let circuitBoardTop = circuitBoard.offsetTop;
+const circuitBoardTop = circuitBoard.offsetTop;
 // Full height of window
-let windowHeight = window.innerHeight;
-let width = window.innerWidth;
+const windowHeight = window.innerHeight;
+const width = window.innerWidth;
 if (width < 1024) {
   circuitBoard.style.height = 600 + "px";
 } else {
@@ -179,8 +179,10 @@ function resize() {
   const circuitBoard = document.getElementById("circuit-board");
   const sidePanels = document.getElementsByClassName("v-datalist-container");
 
-  for (let i = 0; i < sidePanels.length; i++) {
-    sidePanels[i].style.height = circuitBoard.style.height;
+  if (width >= 1024) {
+    for (let i = 0; i < sidePanels.length; i++) {
+      sidePanels[i].style.height = circuitBoard.style.height;
+    }
   }
 }
 

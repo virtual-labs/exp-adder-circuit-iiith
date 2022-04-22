@@ -35,8 +35,8 @@
       "target": "pretest.html"
     },
     {
-      "target": "demo.html",
-      "source": "simulation/demo.html",
+      "target": "demo-half-adder.html",
+      "source": "simulation/demo-half-adder.html",
       "label": "Demo",
       "unit-type": "task",
       "content-type": "simulation"
