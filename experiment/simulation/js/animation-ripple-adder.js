@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 // Dimensions of working area
 const circuitBoard = document.getElementById("circuit-board");
 const sidePanels = document.getElementsByClassName("v-datalist-container");
@@ -19,6 +19,7 @@ const instructionBox = document.getElementsByClassName("instructions-box")[0];
 instructionBox.addEventListener("click", (e) => {
   instructionBox.classList.toggle("expand");
 });
+
 const svg = document.querySelector(".svg");
 const inputpath1 = document.querySelector("#inputpath1");
 const svgns = "http://www.w3.org/2000/svg";
@@ -251,20 +252,25 @@ function free() {
     document.getElementById("Observations").innerHTML = "";
 }
 function outputS(a,b,c){
-    s=1;
+    let s="1";
     if(a===b){
-        s=0;
+        s="0";
     }
+    // console.log("s is "+s);
     s= (parseInt(s)+parseInt(c))%2;
-    return s;
+    
+    // console.log("c is "+c);
+    // console.log("fin s is "+s.toString());
+    return s.toString();
+
 }
 function outputC(a,b,c){
-    s=c;
-    if(a===1 && b===1 && c===0){
-        s=1;
+    let s=c;
+    if(a==="1" && b==="1" && c==="0"){
+        s="1";
     }
-    if(a===0 && b===0 && c===1){
-        s=0;
+    if(a==="0" && b==="0" && c==="1"){
+        s="0";
     }
     return s;
 }
