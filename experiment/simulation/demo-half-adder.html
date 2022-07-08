@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/virtual-labs/virtual-style@0.0.7-b/css/style.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/virtual-labs/virtual-style@0.0.8-b/css/style.min.css">
     <link rel="stylesheet" href="css/main.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/MotionPathPlugin.min.js"></script>
@@ -26,18 +26,18 @@
                     <ul>
                         <li class="is-active" id="Task1">
                             <a>
-                                Half adder
+                                Half Adder
                             </a>
                         </li>
-                        <li id="Task2" onclick="window.location.href = 'demo-ripple-adder.html';">
+                        <li id="Task2" onclick="window.location.href = 'demo-full-adder.html';">
                             <a>
-                                Full adder
+                                Full Adder
                             </a>
                         </li>
 
-                        <li id="Task3" onclick="window.location.href = 'demo-full-adder.html';">
+                        <li id="Task3" onclick="window.location.href = 'demo-ripple-adder.html';">
                             <a>
-                                Ripple carry adder
+                                Ripple Adder
                             </a>
                         </li>
                     </ul>
@@ -47,52 +47,30 @@
 
         <div class="columns is-centered">
             <div class="column">
-                <div class="v-instruction-container instructions-box">
-                    <div class="v-instruction-title" id="TaskTitle">Half adder</div>
-                    <div class="v-instruction-text" id="TaskDescription">
-                        Simulation of a half adder built using logic gates.
-                        <p></p>
-                    </div>
-                    <div>
-                        <p></p>
-                        <p>Start- Starts the simulation after the inputs are properly selected. Default speed is 1x.</p>
-                        <p>Select the speed through dropdown menu</p>
-                        <p>Reset - Resets the simulation</p>
-                        <p>
-                            <p></p>
-                            Click on the green input bits to set their values.
-                            <p></p>
-                            <p></p>
-                            <svg>
-                                <rect x="0" y="0" width="30" height="30"
-                                    style="fill:#29e;fill-opacity:1;stroke-opacity:1" />
-                                <text font-size="0.9em" x="50" y="20" fill="black">bit = 1</text>
-                                <rect x="0" y="60" width="30" height="30"
-                                    style="fill:#eeeb22;fill-opacity:1;stroke-opacity:1" />
-                                <text font-size="0.9em" x="50" y="80" fill="black">bit = 0</text>
-                            </svg>
-                        </p>
+                <div class="v-collapsible-instruction-container v-instruction-container">
+                    <div class="v-collapsible is-size-5">Instructions</div>
+                    <div class="v-content" style="text-align: left; padding-left: 10%; padding-right: 10%;">
+                        <ul style="list-style: disc;">
+                            <li><b>Start</b>- Starts the simulation after the inputs are properly selected. Default
+                                speed is 1x.</li>
+                            <li>Select the speed through dropdown menu</li>
+                            <li><b>Reset</b> - Resets the simulation</li>
+                            <li>Click on the green input bits to set their values.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="columns is-centered">
-        <div class="column is-one-quarter" style="margin:auto;text-align:center">
-        </div>
-        <div class="column" style="text-align: center;">
-            <div class="v-select">
-                <select autocomplete="off" name="speed" onchange="setSpeed(this.value)" id="speed">
-                    <option value="1" selected="selected">1x</option>
-                    <option value="2">2x</option>
-                    <option value="4">4x</option>
-                </select>
-            </div>
+        <div class="column">
+            <select class="speed-box" autocomplete="off" name="speed" onchange="setSpeed(this.value)" id="speed">
+                <option value="1" selected="selected">1x</option>
+                <option value="2">2x</option>
+                <option value="4">4x</option>
+            </select>
             <button class="v-button" id="currentwork" onclick="workCircuit()">Start</button>
-            <a href="demo-half-adder.html"><button class="v-button">Reset simulation</button></a>
-        </div>
-        <div class="column is-one-third">
-
+            <a href="demo-half-adder.html"><button class="v-button">Reset</button></a>
         </div>
     </div>
     <div class="columns is-centered is-flex is-flex-direction-row is-flex-wrap-wrap is-align-content-start">
@@ -158,14 +136,9 @@
             </div>
         </div>
     </div>
-    <div class="menu">
-        <ul class="menu-options">
-            <li class="menu-option">Delete</li>
-            <li class="menu-option">Cancel</li>
-        </ul>
-    </div>
 
+    <script src="https://cdn.jsdelivr.net/gh/virtual-labs/virtual-style@0.0.8-b/js/script.js"></script>
+    <script src="js/animation-half-adder.js"></script>
 </body>
-<script src="js/animation-half-adder.js"></script>
 
 </html>

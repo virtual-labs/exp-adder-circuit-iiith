@@ -103,19 +103,6 @@ function changeTabs(e) {
 
 window.changeTabs = changeTabs;
 
-function updateInstructions() {
-  if (window.currentTab === "task1") {
-    document.getElementById("TaskTitle").innerHTML = "Half Adder";
-    document.getElementById("TaskDescription").innerHTML = "Implement a 1-bit half adder using logic gates.";
-  } else if (window.currentTab === "task2") {
-    document.getElementById("TaskTitle").innerHTML = "Full Adder";
-    document.getElementById("TaskDescription").innerHTML = "Implement a 1-bit full adder using logic gates.";
-  } else if (window.currentTab === "task3") {
-    document.getElementById("TaskTitle").innerHTML = "Ripple Adder";
-    document.getElementById("TaskDescription").innerHTML = "Implement a 4-bit ripple carry adder using 4 full adders.";
-  }
-}
-
 // Toolbar
 
 function updateToolbar() {
@@ -153,11 +140,11 @@ function clearObservations() {
   document.getElementById("result").innerHTML = "";
 }
 
-// Instruction box
-const instructionBox = document.getElementsByClassName("instructions-box")[0];
-instructionBox.addEventListener("click", (e) => {
-  instructionBox.classList.toggle("expand");
-});
+// // Instruction box
+// const instructionBox = document.getElementsByClassName("instructions-box")[0];
+// instructionBox.addEventListener("click", (e) => {
+//   instructionBox.classList.toggle("expand");
+// });
 
 
 // Making webpage responsive

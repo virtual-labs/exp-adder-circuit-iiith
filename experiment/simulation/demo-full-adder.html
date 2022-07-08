@@ -6,12 +6,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/virtual-labs/virtual-style@0.0.7-b/css/style.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/virtual-labs/virtual-style@0.0.8-b/css/style.min.css">
     <link rel="stylesheet" href="css/main.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/MotionPathPlugin.min.js"></script>
     <title>
-        Ripple carry adder
+        Full adder
     </title>
 </head>
 
@@ -24,19 +24,20 @@
             <div class="column">
                 <div class="v-tabs">
                     <ul>
+
                         <li id="Task1" onclick="window.location.href = 'demo-half-adder.html';">
                             <a>
-                                Half adder
+                                Half Adder
                             </a>
                         </li>
-                        <li id="Task2" onclick="window.location.href = 'demo-ripple-adder.html';">
+                        <li class="is-active" id="Task2">
                             <a>
-                                Full adder
+                                Full Adder
                             </a>
                         </li>
-                        <li class="is-active" id="Task3">
+                        <li id="Task3" onclick="window.location.href = 'demo-ripple-adder.html';">
                             <a>
-                                Ripple carry adder
+                                Ripple Adder
                             </a>
                         </li>
                     </ul>
@@ -46,46 +47,30 @@
 
         <div class="columns is-centered">
             <div class="column">
-                <div class="v-instruction-container instructions-box">
-                    <div class="v-instruction-title" id="TaskTitle">Ripple carry adder</div>
-                    <div class="v-instruction-text" id="TaskDescription">
-                        Simulation of a 4-bit ripple carry adder built using full adders.
-                        <p></p>
-                    </div>
-                    <div>
-                        <p></p>
-                        <p>Start- Starts the simulation after the inputs are properly selected. Default speed is 1x.</p>
-                        <p>Select the speed through dropdown menu</p>
-                        <p>Reset - Resets the simulation</p>
-                        <p>
-                            <p></p>
-                            Click on the green input bits to set their values.
-                            <p></p>
-                            <p></p>
-                            <svg>
-                                <rect x="0" y="0" width="30" height="30" class="color-blue" />
-                                <text font-size="0.9em" x="50" y="20" fill="black">bit = 1</text>
-                                <rect x="0" y="60" width="30" height="30" class="color-yellow" />
-                                <text font-size="0.9em" x="50" y="80" fill="black">bit = 0</text>
-                            </svg>
-                        </p>
+                <div class="v-collapsible-instruction-container v-instruction-container">
+                    <div class="v-collapsible is-size-5">Instructions</div>
+                    <div class="v-content" style="text-align: left; padding-left: 10%; padding-right: 10%;">
+                        <ul style="list-style: disc;">
+                            <li><b>Start</b>- Starts the simulation after the inputs are properly selected. Default
+                                speed is 1x.</li>
+                            <li>Select the speed through dropdown menu</li>
+                            <li><b>Reset</b> - Resets the simulation</li>
+                            <li>Click on the green input bits to set their values.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
     <div class="columns is-centered">
-        <div class="column" >
-            <div class="v-select">
-                <select  autocomplete="off" name="speed" onchange="setSpeed(this.value)" id="speed">
-                  <option value="1" selected="selected">1x</option>
-                  <option value="2">2x</option>
-                  <option value="4">4x</option>
-                </select>
-            </div>
+        <div class="column">
+            <select class="speed-box" autocomplete="off" name="speed" onchange="setSpeed(this.value)" id="speed">
+                <option value="1" selected="selected">1x</option>
+                <option value="2">2x</option>
+                <option value="4">4x</option>
+            </select>
             <button class="v-button" id="currentwork" onclick="workCircuit()">Start</button>
-            <a href="demo-full-adder.html"><button class="v-button">Reset simulation</button></a>
+            <a href="demo-ripple-adder.html"><button class="v-button">Reset</button></a>
         </div>
     </div>
     <div class="columns is-centered is-flex is-flex-direction-row is-flex-wrap-wrap is-align-content-start">
@@ -96,106 +81,79 @@
                     <svg class="svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="140%"
                         viewBox="0 80 1000 800 ">
 
-                        <path id="path1" fill="none" stroke="currentColor" stroke-width="3" 
-                        d="M 150,240 v 100" />
+                        <path id="path1" fill="none" stroke="currentColor" stroke-width="3"
+                            d="M 100,240 h 200 h 100 h 12" />
 
-                        <path id="path2" fill="none" stroke="currentColor" stroke-width="3" 
-                        d="M 200,240 v 100" />
+                        <path id="path2" fill="none" stroke="currentColor" stroke-width="3"
+                            d="M 100,280 h 200 h 100  h 12" />
 
-                        <path id="path3" fill="none" stroke="currentColor" stroke-width="3" 
-                        d="M 350,240 v 100" />
+                        <path id="path3" fill="none" stroke="currentColor" stroke-width="3" d="M 100,340 h 459 h 12" />
 
-                        <path id="path4" fill="none" stroke="currentColor" stroke-width="3" 
-                        d="M 400,240 v 100" />
+                        <path id="path4" fill="none" stroke="currentColor" stroke-width="3"
+                            d="M 459,260 h 35 v 40 h 65 h 12" />
 
-                        <path id="path5" fill="none" stroke="currentColor" stroke-width="3" 
-                        d="M 550,240 v 100" />
+                        <path id="path5" fill="none" stroke="currentColor" stroke-width="3"
+                            d="M 100,240 h 208 v 310 h 251 h 12" />
 
-                        <path id="path6" fill="none" stroke="currentColor" stroke-width="3" 
-                        d="M 600,240 v 100" />
-
-                        <path id="path7" fill="none" stroke="currentColor" stroke-width="3" 
-                        d="M 750,240 v 100" />
-
-                        <path id="path8" fill="none" stroke="currentColor" stroke-width="3" 
-                        d="M 800,240 v 100" />
-
-                        <path id="path9" fill="none" stroke="currentColor" stroke-width="3" 
-                        d="M 25,390 h 100" />
-
-                        <path id="path10" fill="none" stroke="currentColor" stroke-width="3" 
-                        d="M 225,390 h 100" />
-
-                        <path id="path11" fill="none" stroke="currentColor" stroke-width="3" 
-                        d="M 425,390 h 100" />
-
-                        <path id="path12" fill="none" stroke="currentColor" stroke-width="3" 
-                        d="M 625,390 h 100" />
-
-                        <path id="path13" fill="none" stroke="currentColor" stroke-width="3" 
-                        d="M 825,390 h 100" />
-
-                        <path id="path14" fill="none" stroke="currentColor" stroke-width="3" 
-                        d="M 175,440 v 100" />
-                        <path id="path15" fill="none" stroke="currentColor" stroke-width="3" 
-                        d="M 375,440 v 100" />
-                        <path id="path16" fill="none" stroke="currentColor" stroke-width="3" 
-                        d="M 575,440 v 100" />
-                        <path id="path17" fill="none" stroke="currentColor" stroke-width="3" 
-                        d="M 775,440 v 100" />
+                        <path id="path6" fill="none" stroke="currentColor" stroke-width="3"
+                            d="M 100,280 h 104 v 310 h 355 h 12" />
 
 
-                        <rect id="adder1" x="125" y="340" width="100" height="100" class="color-blue" ><text font-size="1em" fill="black">1-bit full adder</text></rect>
-                        <rect id="adder2" x="325" y="340" width="100" height="100" class="color-blue" />
-                        <rect id="adder3" x="525" y="340" width="100" height="100" class="color-blue" />
-                        <rect id="adder4" x="725" y="340" width="100" height="100" class="color-blue" />
+                        <path id="path7" fill="none" stroke="currentColor" stroke-width="3"
+                            d="M 459,260 h 35 v 40 v 40 v 30 v 70 h 65 h 12" />
 
-                        <circle id="input1" cx="150" cy="240" r="15" onclick="input1()" class="color-green" />
-            
-                        <circle id="input2" cx="200" cy="240" r="15" onclick="input2()" class="color-green" />
-                    
-                        <circle id="input3" cx="350" cy="240" r="15" onclick="input3()" class="color-green" />
-            
-                        <circle id="input4" cx="400" cy="240" r="15" onclick="input4()" class="color-green" />
-                    
-                        <circle id="input5" cx="550" cy="240" r="15" onclick="input5()" class="color-green" />
-            
-                        <circle id="input6" cx="600" cy="240" r="15" onclick="input6()" class="color-green" />
-                    
-                        <circle id="input7" cx="750" cy="240" r="15" onclick="input7()" class="color-green" />
-            
-                        <circle id="input8" cx="800" cy="240" r="15" onclick="input8()" class="color-green" />
-                    
-                        <circle id="input9" cx="25" cy="390" r="15" onclick="input9()" class="color-green" />
-                    
-                        <circle id="output1" cx="925" cy="390" r="15" class="color-yellow" />
-                        <circle id="output2" cx="175" cy="540" r="15" class="color-yellow" />
-                        <circle id="output3" cx="375" cy="540" r="15" class="color-yellow" />
-                        <circle id="output4" cx="575" cy="540" r="15" class="color-yellow" />
-                        <circle id="output5" cx="775" cy="540" r="15" class="color-yellow" />
-                        <text font-size="1em" x="155" y="390" fill="black">1-bit</text>
-                        <text font-size="1em" x="140" y="410" fill="black">full adder</text>
-                        <text font-size="1em" x="355" y="390" fill="black">1-bit</text>
-                        <text font-size="1em" x="340" y="410" fill="black">full adder</text>
-                        <text font-size="1em" x="555" y="390" fill="black">1-bit</text>
-                        <text font-size="1em" x="540" y="410" fill="black">full adder</text>
-                        <text font-size="1em" x="755" y="390" fill="black">1-bit</text>
-                        <text font-size="1em" x="740" y="410" fill="black">full adder</text>
-                        <text font-size="1em" x="140" y="220" fill="black">A0</text>
-                        <text font-size="1em" x="340" y="220" fill="black">A1</text>
-                        <text font-size="1em" x="540" y="220" fill="black">A2</text>
-                        <text font-size="1em" x="740" y="220" fill="black">A3</text>
-                        <text font-size="1em" x="190" y="220" fill="black">B0</text>
-                        <text font-size="1em" x="390" y="220" fill="black">B1</text>
-                        <text font-size="1em" x="590" y="220" fill="black">B2</text>
-                        <text font-size="1em" x="790" y="220" fill="black">B3</text>
-                        <text font-size="1em" x="15" y="370" fill="black">C0</text>
-                        <text font-size="1em" x="915" y="370" fill="black">C4</text>
-                        <text font-size="1em" x="165" y="570" fill="black">S0</text>
-                        <text font-size="1em" x="365" y="570" fill="black">S1</text>
-                        <text font-size="1em" x="565" y="570" fill="black">S2</text>
-                        <text font-size="1em" x="765" y="570" fill="black">S3</text>
-                        
+                        <path id="path8" fill="none" stroke="currentColor" stroke-width="3"
+                            d="M 100,340 h 300 v 70 v 40 v 30 h 159 h 12" />
+
+                        <path id="path9" fill="none" stroke="currentColor" stroke-width="3"
+                            d="M 632 460 h 50 v 35 h 50 h 12" />
+
+                        <path id="path10" fill="none" stroke="currentColor" stroke-width="3"
+                            d="M 632 570 h 50 v -35 h 50 h 12" />
+
+                        <path id="path11" fill="none" stroke="currentColor" stroke-width="3" d="M 610 320 h 50 h 180" />
+
+                        <path id="path12" fill="none" stroke="currentColor" stroke-width="3" d="M 790 515 h 50" />
+
+                        <g id="AND">
+                            <path id="path1AND" fill="#29e" stroke="currentColor" stroke-width="3"
+                                d="M 571 420 v 80 h 40 Q 651 460 611 420 h -40" />
+                        </g>
+
+                        <g id="AND2">
+                            <path id="path1AND" fill="#29e" stroke="currentColor" stroke-width="3"
+                                d="M 571 530 v 80 h 40 Q 651 570 611 530 h -40" />
+                        </g>
+
+                        <g id="XOR">
+                            <path id="path1XOR" stroke="currentColor" fill="#29e" stroke-width="3"
+                                d="M 400 220 Q 435 260 400 300 Q 436 260 400 220 M 405 220 Q 440 260 405 300 Q 510 260 405 220" />
+                        </g>
+
+                        <g id="XOR">
+                            <path id="path1XOR" stroke="currentColor" fill="#29e" stroke-width="3"
+                                d="M 559 280 Q 594 320 559 360 Q 595 320 559 280 M 564 280 Q 599 320 564 360 Q 669 320 564 280" />
+                        </g>
+
+                        <g id="XOR">
+                            <path id="path1XOR" stroke="currentColor" fill="#29e" stroke-width="3"
+                                d="M 732 475 Q 767 515 732 555 Q 768 515 732 475 M 737 475 Q 772 515 737 555 Q 842 515 737 475" />
+                        </g>
+                        <circle id="input1" cx="100" cy="240" r="15" onclick="appendInput1()" class="color-green" />
+                        <circle id="input2" cx="100" cy="280" r="15" onclick="appendInput2()" class="color-green" />
+                        <circle id="input3" cx="100" cy="340" r="15" onclick="appendInput3()" class="color-green" />
+                        <circle id="output1" cx="840" cy="515" r="15" class="color-green" />
+                        <circle id="output2" cx="840" cy="320" r="15" class="color-green" />
+                        <text font-size="1em" x="70" y="245" fill="black">A</text>
+                        <text font-size="1em" x="70" y="285" fill="black">B</text>
+                        <text font-size="1em" x="50" y="345" fill="black">C in</text>
+                        <text font-size="1em" x="860" y="325" fill="black">S</text>
+                        <text font-size="1em" x="860" y="525" fill="black">C out</text>
+                        <text font-size="1em" x="423" y="260" fill="black">XOR</text>
+                        <text font-size="1em" x="580" y="320" fill="black">XOR</text>
+                        <text font-size="1em" x="755" y="523" fill="black">XOR</text>
+                        <text font-size="1em" x="580" y="465" fill="black">AND</text>
+                        <text font-size="1em" x="580" y="575" fill="black">AND</text>
                     </svg>
 
                 </div>
@@ -213,15 +171,10 @@
             </div>
         </div>
     </div>
-    <div class="menu">
-        <ul class="menu-options">
-            <li class="menu-option">Delete</li>
-            <li class="menu-option">Cancel</li>
-        </ul>
-    </div>
-    <script src="js/animation-ripple-adder.js"></script>
 
-</body>
+    <script src="https://cdn.jsdelivr.net/gh/virtual-labs/virtual-style@0.0.8-b/js/script.js"></script>
+    <script src="js/animation-full-adder.js"></script>
+
 </body>
 
 </html>
