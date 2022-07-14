@@ -69,8 +69,8 @@
                 <option value="2">2x</option>
                 <option value="4">4x</option>
             </select>
-            <button class="v-button" id="currentwork" onclick="workCircuit()">Start</button>
-            <a href="demo-full-adder.html"><button class="v-button">Reset</button></a>
+            <button class="v-button" id="play-or-pause" onclick="simulationStatus()">Start</button>
+            <button class="v-button" id="restart" onclick="restartCircuit()">Reset</button>
         </div>
     </div>
     <div class="columns is-centered is-flex is-flex-direction-row is-flex-wrap-wrap is-align-content-start">
@@ -135,29 +135,29 @@
                         <rect id="adder3" x="525" y="340" width="100" height="100" class="color-blue" />
                         <rect id="adder4" x="725" y="340" width="100" height="100" class="color-blue" />
 
-                        <circle id="input1" cx="150" cy="240" r="15" onclick="input1()" class="color-green" />
+                        <circle id="inputa0" cx="150" cy="240" r="15" onclick="appendInputA0()" class="color-green" />
             
-                        <circle id="input2" cx="200" cy="240" r="15" onclick="input2()" class="color-green" />
+                        <circle id="inputb0" cx="200" cy="240" r="15" onclick="appendInputB0()" class="color-green" />
                     
-                        <circle id="input3" cx="350" cy="240" r="15" onclick="input3()" class="color-green" />
+                        <circle id="inputa1" cx="350" cy="240" r="15" onclick="appendInputA1()" class="color-green" />
             
-                        <circle id="input4" cx="400" cy="240" r="15" onclick="input4()" class="color-green" />
+                        <circle id="inputb1" cx="400" cy="240" r="15" onclick="appendInputB1()" class="color-green" />
                     
-                        <circle id="input5" cx="550" cy="240" r="15" onclick="input5()" class="color-green" />
+                        <circle id="inputa2" cx="550" cy="240" r="15" onclick="appendInputA2()" class="color-green" />
             
-                        <circle id="input6" cx="600" cy="240" r="15" onclick="input6()" class="color-green" />
+                        <circle id="inputb2" cx="600" cy="240" r="15" onclick="appendInputB2()" class="color-green" />
                     
-                        <circle id="input7" cx="750" cy="240" r="15" onclick="input7()" class="color-green" />
+                        <circle id="inputa3" cx="750" cy="240" r="15" onclick="appendInputA3()" class="color-green" />
             
-                        <circle id="input8" cx="800" cy="240" r="15" onclick="input8()" class="color-green" />
+                        <circle id="inputb3" cx="800" cy="240" r="15" onclick="appendInputB3()" class="color-green" />
                     
-                        <circle id="input9" cx="25" cy="390" r="15" onclick="input9()" class="color-green" />
+                        <circle id="inputc0" cx="25" cy="390" r="15" onclick="appendInputC0()" class="color-green" />
                     
-                        <circle id="output1" cx="925" cy="390" r="15" class="color-yellow" />
-                        <circle id="output2" cx="175" cy="540" r="15" class="color-yellow" />
-                        <circle id="output3" cx="375" cy="540" r="15" class="color-yellow" />
-                        <circle id="output4" cx="575" cy="540" r="15" class="color-yellow" />
-                        <circle id="output5" cx="775" cy="540" r="15" class="color-yellow" />
+                        <circle id="outputc4" cx="925" cy="390" r="15" class="color-green" />
+                        <circle id="outputs0" cx="175" cy="540" r="15" class="color-green" />
+                        <circle id="outputs1" cx="375" cy="540" r="15" class="color-green" />
+                        <circle id="outputs2" cx="575" cy="540" r="15" class="color-green" />
+                        <circle id="outputs3" cx="775" cy="540" r="15" class="color-green" />
                         <text font-size="1em" x="155" y="390" fill="black">1-bit</text>
                         <text font-size="1em" x="140" y="410" fill="black">full adder</text>
                         <text font-size="1em" x="355" y="390" fill="black">1-bit</text>
@@ -186,20 +186,17 @@
                 </div>
             </div>
         </div>
-        <div class="column is-3-desktop is-12-tablet is-12-mobile">
+        <div class="column is-3-desktop is-4-tablet is-12-mobile">
             <div class="v-datalist-container components-list">
                 <div class="v-datalist-title">Observations</div>
                 <div class="v-datalist-row">
-                    <div id="Observations">
-                    </div>
-                    <div id="result"></div>
+                    <div id="observations"></div>
                 </div>
-
             </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/gh/virtual-labs/virtual-style@0.0.8-b/js/script.js"></script>
-    <script src="js/animation-ripple-adder.js"></script>
+    <script type="module" src="js/animation-ripple-adder.js"></script>
 </body>
 
 </html>

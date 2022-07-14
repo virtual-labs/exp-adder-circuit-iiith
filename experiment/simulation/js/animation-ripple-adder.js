@@ -1,4 +1,27 @@
-'use strict';
+import { setCoordinates,fillInputDots,fillColor,objectDisappear,objectAppear,setColor,unsetColor,calculateAnd,calculateXor,calculateFullAdder} from "./animation-utility.js";
+
+'use strict'
+
+window.appendInputA0 = appendInputA0;
+window.appendInputB0 = appendInputB0;
+window.appendInputA1 = appendInputA1;
+window.appendInputB1 = appendInputB1;
+window.appendInputA2 = appendInputA2;
+window.appendInputB2 = appendInputB2;
+window.appendInputA3 = appendInputA3;
+window.appendInputB3 = appendInputB3;
+window.appendInputC0 = appendInputC0;
+window.simulationStatus = simulationStatus;
+window.restartCircuit = restartCircuit;
+window.setSpeed=setSpeed;
+
+
+let C1 = '0';
+let C2 = '0';
+let C3 = '0';
+
+
+
 // Dimensions of working area
 const circuitBoard = document.getElementById("circuit-board");
 const sidePanels = document.getElementsByClassName("v-datalist-container");
@@ -7,865 +30,465 @@ const circuitBoardTop = circuitBoard.offsetTop;
 // Full height of window
 const windowHeight = window.innerHeight;
 const width = window.innerWidth;
-if (width < 1024) {
-  circuitBoard.style.height = 600 + "px";
-} else {
-  circuitBoard.style.height = windowHeight - circuitBoardTop - 20 + "px";
-}
-sidePanels[0].style.height = circuitBoard.style.height;
-
-
 
 const svg = document.querySelector(".svg");
-const inputpath1 = document.querySelector("#inputpath1");
 const svgns = "http://www.w3.org/2000/svg";
-gsap.registerPlugin(MotionPathPlugin);
 
-let newCircle = document.createElementNS(svgns, "circle");
-gsap.set(newCircle, {
-    attr: { cx: 150, cy: 240, r: 15, fill: "#FF0000" }
-});
-let newCircle1 = document.createElementNS(svgns, "circle");
-gsap.set(newCircle1, {
-    attr: { cx: 200, cy: 240, r: 15, fill: "#FF0000" }
-});
-let newCircle2 = document.createElementNS(svgns, "circle");
-gsap.set(newCircle2, {
-    attr: { cx: 350, cy: 240, r: 15, fill: "#FF0000" }
-});
-let newCircle3 = document.createElementNS(svgns, "circle");
-gsap.set(newCircle3, {
-    attr: { cx: 400, cy: 240, r: 15, fill: "#FF0000" }
-});
+const EMPTY="";
+// stroing the necessary div elements in const
+const status = document.getElementById("play-or-pause");
+const observ = document.getElementById("observations");
+const speed = document.getElementById("speed");
 
-let newCircle4 = document.createElementNS(svgns, "circle");
-gsap.set(newCircle4, {
-    attr: { cx: 550, cy: 240, r: 15, fill: "#FF0000" }
-});
-
-let newCircle5 = document.createElementNS(svgns, "circle");
-gsap.set(newCircle5, {
-    attr: { cx: 600, cy: 240, r: 15, fill: "#FF0000" }
-});
-
-let newCircle6 = document.createElementNS(svgns, "circle");
-gsap.set(newCircle6, {
-    attr: { cx: 750, cy: 240, r: 15, fill: "#FF0000" }
-});
-let newCircle7 = document.createElementNS(svgns, "circle");
-gsap.set(newCircle7, {
-    attr: { cx: 800, cy: 240, r: 15, fill: "#FF0000" }
-});
-let newCircle8 = document.createElementNS(svgns, "circle");
-gsap.set(newCircle8, {
-    attr: { cx: 25, cy: 390, r: 15, fill: "#FF0000" }
-});
-let newCircle9 = document.createElementNS(svgns, "circle");
-gsap.set(newCircle9, {
-    attr: { cx: 225, cy: 390, r: 15, fill: "#FF0000" }
-});
-
-let newCircle10 = document.createElementNS(svgns, "circle");
-gsap.set(newCircle10, {
-    attr: { cx: 425, cy: 390, r: 15, fill: "#FF0000" }
-});
-
-let newCircle11 = document.createElementNS(svgns, "circle");
-gsap.set(newCircle11, {
-    attr: { cx: 625, cy: 390, r: 15, fill: "#FF0000" }
-});
-
-let newCircle12 = document.createElementNS(svgns, "circle");
-gsap.set(newCircle12, {
-    attr: { cx: 825, cy: 390, r: 15, fill: "#FF0000" }
-});
-
-let newCircle13 = document.createElementNS(svgns, "circle");
-gsap.set(newCircle13, {
-    attr: { cx: 175, cy: 440, r: 15, fill: "#FF0000" }
-});
-
-let newCircle14 = document.createElementNS(svgns, "circle");
-gsap.set(newCircle14, {
-    attr: { cx: 375, cy: 440, r: 15, fill: "#FF0000" }
-});
-let newCircle15 = document.createElementNS(svgns, "circle");
-gsap.set(newCircle15, {
-    attr: { cx: 575, cy: 440, r: 15, fill: "#FF0000" }
-});
-let newCircle16 = document.createElementNS(svgns, "circle");
-gsap.set(newCircle16, {
-    attr: { cx: 775, cy: 440, r: 15, fill: "#FF0000" }
-});
+// global varaibles declared here
+const objects = [
+    document.getElementById("inputa0"),
+    document.getElementById("inputb0"),
+    document.getElementById("inputa1"),
+    document.getElementById("inputb1"),
+    document.getElementById("inputa2"),
+    document.getElementById("inputb2"),
+    document.getElementById("inputa3"),
+    document.getElementById("inputb3"),
+    document.getElementById("inputc0"),
+    document.getElementById("outputs0"),
+    document.getElementById("outputs1"),
+    document.getElementById("outputs2"),
+    document.getElementById("outputs3"),
+    document.getElementById("outputc4")
+];
+const textInput = [
+    document.createElementNS(svgns, "text"),
+    document.createElementNS(svgns, "text"),
+    document.createElementNS(svgns, "text"),
+    document.createElementNS(svgns, "text"),
+    document.createElementNS(svgns, "text"),
+    document.createElementNS(svgns, "text"),
+    document.createElementNS(svgns, "text"),
+    document.createElementNS(svgns, "text"),
+    document.createElementNS(svgns, "text")
+];
+const textOutput = [
+    document.createElementNS(svgns, "text"),
+    document.createElementNS(svgns, "text"),
+    document.createElementNS(svgns, "text"),
+    document.createElementNS(svgns, "text"),
+    document.createElementNS(svgns, "text")
+];
+const dots = [
+    document.createElementNS(svgns, "circle"),
+    document.createElementNS(svgns, "circle"),
+    document.createElementNS(svgns, "circle"),
+    document.createElementNS(svgns, "circle"),
+    document.createElementNS(svgns, "circle"),
+    document.createElementNS(svgns, "circle"),
+    document.createElementNS(svgns, "circle"),
+    document.createElementNS(svgns, "circle"),
+    document.createElementNS(svgns, "circle")
+];
+// First 2 dots emerge from input A0 and B0
+// Next 2 dots emerge from input A1 and B1
+// Next 2 dots emerge from input A2 and B2
+// Next 2 dots emerge from input A3 and B3
+// Last dot emerges from input C0
 
 
-let textA0 = document.createElementNS(svgns, "text");
-let textA1 = document.createElementNS(svgns, "text");
-let textA2 = document.createElementNS(svgns, "text");
-let textA3 = document.createElementNS(svgns, "text");
-let textB0 = document.createElementNS(svgns, "text");
-let textB1 = document.createElementNS(svgns, "text");
-let textB2 = document.createElementNS(svgns, "text");
-let textB3 = document.createElementNS(svgns, "text");
-let textC0 = document.createElementNS(svgns, "text");
-let textC1 = document.createElementNS(svgns, "text");
-let textC2 = document.createElementNS(svgns, "text");
-let textC3 = document.createElementNS(svgns, "text");
-let textC4 = document.createElementNS(svgns, "text");
-let textS0 = document.createElementNS(svgns, "text");
-let textS1 = document.createElementNS(svgns, "text");
-let textS2 = document.createElementNS(svgns, "text");
-let textS3 = document.createElementNS(svgns, "text");
+
+// decide help to decide the speed
+let decide = false;
+// circuitStarted is initialised to 0 which depicts that demo hasn't started whereas circuitStarted 1 depicts that the demo has started.
+let circuitStarted = false;
 
 
-textA0.textContent = 2;
-textA1.textContent = 2;
-textA2.textContent = 2;
-textA3.textContent = 2;
-textB0.textContent = 2;
-textB1.textContent = 2;
-textB2.textContent = 2;
-textB3.textContent = 2;
-textC0.textContent = 2;
-textC1.textContent = 2;
-textC2.textContent = 2;
-textC3.textContent = 2;
-textC4.textContent = 2;
-textS0.textContent = 2;
-textS1.textContent = 2;
-textS2.textContent = 2;
-textS3.textContent = 2;
-
-svg.appendChild(newCircle);
-svg.appendChild(newCircle1);
-svg.appendChild(newCircle2);
-svg.appendChild(newCircle3);
-svg.appendChild(newCircle4);
-svg.appendChild(newCircle5);
-svg.appendChild(newCircle6);
-svg.appendChild(newCircle7);
-svg.appendChild(newCircle8);
-svg.appendChild(newCircle9);
-svg.appendChild(newCircle10);
-svg.appendChild(newCircle11);
-svg.appendChild(newCircle12);
-svg.appendChild(newCircle13);
-svg.appendChild(newCircle14);
-svg.appendChild(newCircle15);
-svg.appendChild(newCircle16);
-
-gsap.set(textA0, {
-    x: 146,
-    y: 244,
-});
-gsap.set(textA1, {
-    x: 346,
-    y: 244,
-});
-gsap.set(textA2, {
-    x: 546,
-    y: 244,
-});
-gsap.set(textA3, {
-    x: 746,
-    y: 244,
-});
-gsap.set(textB0, {
-    x: 196,
-    y: 244,
-});
-gsap.set(textB1, {
-    x: 396,
-    y: 244,
-});
-gsap.set(textB2, {
-    x: 596,
-    y: 244,
-});
-gsap.set(textB3, {
-    x: 796,
-    y: 244,
-});
-gsap.set(textC0, {
-    x: 21,
-    y: 394,
-});
-
-gsap.set(textC4, {
-    x: 921,
-    y: 394,
-});
-
-
-gsap.set(textS0, {
-    x: 170,
-    y: 546,
-});
-gsap.set(textS1, {
-    x: 370,
-    y: 546,
-});
-gsap.set(textS2, {
-    x: 570,
-    y: 546,
-});
-gsap.set(textS3, {
-    x: 770,
-    y: 546,
-});
-
-svg.appendChild(textA0);
-svg.appendChild(textA1);
-svg.appendChild(textA2);
-svg.appendChild(textA3);
-svg.appendChild(textB0);
-svg.appendChild(textB1);
-svg.appendChild(textB2);
-svg.appendChild(textB3);
-svg.appendChild(textC0);
-svg.appendChild(textC4);
-svg.appendChild(textS0);
-svg.appendChild(textS1);
-svg.appendChild(textS2);
-svg.appendChild(textS3);
-
-const A0 = document.getElementById("input1");
-const A1 = document.getElementById("input3");
-const A2 = document.getElementById("input5");
-const A3 = document.getElementById("input7");
-const B0 = document.getElementById("input2");
-const B1 = document.getElementById("input4");
-const B2 = document.getElementById("input6");
-const B3 = document.getElementById("input8");
-const C0 = document.getElementById("input9");
-const C4 = document.getElementById("output1");
-const S0 = document.getElementById("output2");
-const S1 = document.getElementById("output3");
-const S2 = document.getElementById("output4");
-const S3 = document.getElementById("output5");
-
-function free() {
-    document.getElementById("Observations").innerHTML = "";
-}
-function outputS(a,b,c){
-    let s="1";
-    if(a===b){
-        s="0";
+// function to take care of width
+function demoWidth() {
+    if (width < 1024) {
+        circuitBoard.style.height = "600px";
+    } else {
+        circuitBoard.style.height = `${windowHeight - circuitBoardTop - 20}px`;
     }
-    // console.log("s is "+s);
-    s= (parseInt(s)+parseInt(c))%2;
-    
-    // console.log("c is "+c);
-    // console.log("fin s is "+s.toString());
-    return s.toString();
-
-}
-function outputC(a,b,c){
-    let s=c;
-    if(a==="1" && b==="1" && c==="0"){
-        s="1";
-    }
-    if(a==="0" && b==="0" && c==="1"){
-        s="0";
-    }
-    return s;
-}
-function outputHandle(){
-    textS0.textContent = outputS(textA0.textContent,textB0.textContent,textC0.textContent);
-    setter(textS0.textContent,newCircle13);
-    textC1.textContent = outputC(textA0.textContent,textB0.textContent,textC0.textContent);
-    setter(textC1.textContent,newCircle9);
-    textS1.textContent = outputS(textA1.textContent,textB1.textContent,textC1.textContent);
-    setter(textS1.textContent,newCircle14);
-    textC2.textContent = outputC(textA1.textContent,textB1.textContent,textC1.textContent);
-    setter(textC2.textContent,newCircle10);
-    textS2.textContent = outputS(textA2.textContent,textB2.textContent,textC2.textContent);
-    setter(textS2.textContent,newCircle15);
-    textC3.textContent = outputC(textA2.textContent,textB2.textContent,textC2.textContent);
-    setter(textC3.textContent,newCircle11);
-    textS3.textContent = outputS(textA3.textContent,textB3.textContent,textC3.textContent);
-    setter(textS3.textContent,newCircle16);
-    textC4.textContent = outputC(textA3.textContent,textB3.textContent,textC3.textContent);
-    setter(textC4.textContent,newCircle12);
+    sidePanels[0].style.height = circuitBoard.style.height;
 }
 
+// function to initialise the input text i.e. either 0/1 that gets displayed after user click on them
+function textIOInit() {
+    for( const text of textInput){
+        text.textContent = 2;
+    }
+}
+
+
+// function to mark the output coordinates
+function outputCoordinates() {
+    setCoordinates(170,546,textOutput[0]);
+    svg.append(textOutput[0]);
+    setCoordinates(370,546,textOutput[1]);
+    svg.append(textOutput[1]);
+    setCoordinates(570,546,textOutput[2]);
+    svg.append(textOutput[2]);
+    setCoordinates(770,546,textOutput[3]);
+    svg.append(textOutput[3]);
+    setCoordinates(921,394,textOutput[4]);
+    svg.append(textOutput[4]);
+}
+
+// function to mark the input dots
+function inputDots() {
+    for(const dot of dots){
+        fillInputDots(dot,20,550,15,"#FF0000");
+        svg.append(dot);
+    }
+}
+
+// function to disappear the input dots
+function inputDotDisappear() {
+    for(const dot of dots){
+        objectDisappear(dot);
+    }
+}
+
+// function to appear the input dots
+function inputDotVisible1() {
+    objectAppear(dots[0]);
+    objectAppear(dots[1]);
+    objectAppear(dots[8]);
+}
+function inputDotVisible2() {
+    objectAppear(dots[2]);
+    objectAppear(dots[3]);
+}
+function inputDotVisible3() {
+    objectAppear(dots[4]);
+    objectAppear(dots[5]);
+}
+function inputDotVisible4() {
+    objectAppear(dots[6]);
+    objectAppear(dots[7]);
+}
+
+// function to disappear the output text
+function outputDisappear() {
+    for(const text of textOutput){
+        objectDisappear(text);
+    }
+}
+// function to appear the output text
+function outputVisible() {
+    for(const text of textOutput){
+        objectAppear(text);
+    }
+}
+// function to diappear the input text
+function inputTextDisappear() {
+    for(const text of textInput){
+        objectDisappear(text);
+    }
+}
+
+function clearObservation() {
+    observ.innerHTML = EMPTY;
+}
 function allDisappear() {
-    TweenLite.to(newCircle, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle1, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle2, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle3, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle4, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle5, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle6, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle7, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle8, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle9, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle10, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle11, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle12, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle13, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle14, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle15, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle16, 0, { autoAlpha: 0 });
-    TweenLite.to(textA0, 0, { autoAlpha: 0 });
-    TweenLite.to(textA1, 0, { autoAlpha: 0 });
-    TweenLite.to(textA2, 0, { autoAlpha: 0 });
-    TweenLite.to(textA3, 0, { autoAlpha: 0 });
-    TweenLite.to(textB0, 0, { autoAlpha: 0 });
-    TweenLite.to(textB1, 0, { autoAlpha: 0 });
-    TweenLite.to(textB2, 0, { autoAlpha: 0 });
-    TweenLite.to(textB3, 0, { autoAlpha: 0 });
-    TweenLite.to(textC0, 0, { autoAlpha: 0 });
-    TweenLite.to(textC4, 0, { autoAlpha: 0 });
-    TweenLite.to(textS0, 0, { autoAlpha: 0 });
-    TweenLite.to(textS1, 0, { autoAlpha: 0 });
-    TweenLite.to(textS2, 0, { autoAlpha: 0 });
-    TweenLite.to(textS3, 0, { autoAlpha: 0 });
-
-    gsap.set(A0, {
-        fill: "#008000"
-    });
-
-    gsap.set(A1, {
-        fill: "#008000"
-    });
-
-    gsap.set(A2, {
-        fill: "#008000"
-    });
-
-    gsap.set(A3, {
-        fill: "#008000"
-    });
-
-    gsap.set(B0, {
-        fill: "#008000"
-    });
-
-    gsap.set(B1, {
-        fill: "#008000"
-    });
-
-    gsap.set(B2, {
-        fill: "#008000"
-    });
-
-    gsap.set(B3, {
-        fill: "#008000"
-    });
-
-    gsap.set(C0, {
-        fill: "#008000"
-    });
-
-    gsap.set(C4, {
-        fill: "#008000"
-    });
-
-    gsap.set(S0, {
-        fill: "#008000"
-    });
-
-    gsap.set(S1, {
-        fill: "#008000"
-    });
-
-    gsap.set(S2, {
-        fill: "#008000"
-    });
-
-    gsap.set(S3, {
-        fill: "#008000"
-    });
-    
-
-}
-function set(a) {
-    gsap.set(a, {
-        fill: "#eeeb22"
-    });
-}//output 0
-function unset(a) {
-    gsap.set(a, {
-        fill: "#29e"
-    });
-}//output 1
-function setter(a, b) {
-    if (a === "1") {
-        unset(b);
-    }
-    else if (a === "0") {
-        set(b);
-    }
-}
-function input1() {
-    if (textA0.textContent !== "0") {
-        TweenLite.to(textA0, 0, { autoAlpha: 0 });
-        textA0.textContent = 0;
-        svg.appendChild(textA0);
-        gsap.set(textA0, {
-            x: 146,
-            y: 244,
-
-        });
-        gsap.set(A0, {
-            fill: "#eeeb22"
-        });
-        document.getElementById("Observations").innerHTML = "";
-        TweenLite.to(textA0, 0, { autoAlpha: 1 });
-        setter(textA0.textContent, newCircle);
-    }
-    else if (textA0.textContent !== "1") {    
-        TweenLite.to(textA0, 0, { autoAlpha: 0 });
-        textA0.textContent = 1;
-        svg.appendChild(textA0);
-        gsap.set(textA0, {
-            x: 146,
-            y: 244,
-        });
-        gsap.set(A0, {
-            fill: "#29e"
-        });
-        document.getElementById("Observations").innerHTML = "";
-        TweenLite.to(textA0, 0, { autoAlpha: 1 });
-        setter(textA0.textContent, newCircle);
-    }
-
-}
-function input3() {
-    if (textA1.textContent !== "0") {
-        TweenLite.to(textA1, 0, { autoAlpha: 0 });
-        textA1.textContent = 0;
-        svg.appendChild(textA1);
-        gsap.set(textA1, {
-            x: 346,
-            y: 244,
-        });
-        gsap.set(A1, {
-            fill: "#eeeb22"
-        });
-        document.getElementById("Observations").innerHTML = "";
-        TweenLite.to(textA1, 0, { autoAlpha: 1 });
-        setter(textA1.textContent, newCircle2);
-    }
-    else if (textA1.textContent !== "1") {
-        TweenLite.to(textA1, 0, { autoAlpha: 0 });
-        textA1.textContent = 1;
-        svg.appendChild(textA1);
-        gsap.set(textA1, {
-            x: 346,
-            y: 244,
-        });
-        gsap.set(A1, {
-            fill: "#29e"
-        });
-        document.getElementById("Observations").innerHTML = "";
-        TweenLite.to(textA1, 0, { autoAlpha: 1 });
-        setter(textA1.textContent, newCircle2);
+    inputDotDisappear();
+    outputDisappear();
+    inputTextDisappear();
+    for(const object of objects){
+        fillColor(object,"#008000");
     }
 }
 
-function input5() {
-    
-    if (textA2.textContent !== "0") {
-        TweenLite.to(textA2, 0, { autoAlpha: 0 });
-        textA2.textContent = 0;
-        svg.appendChild(textA2);
-        gsap.set(textA2, {
-            x: 546,
-            y: 244,
-        });
-        gsap.set(A2, {
-            fill: "#eeeb22"
-        });
-        document.getElementById("Observations").innerHTML = "";
-        TweenLite.to(textA2, 0, { autoAlpha: 1 });
-        setter(textA2.textContent, newCircle4);
+function appendInputA0() {
+    if (textInput[0].textContent !== "0" && timeline.progress() === 0) {
+        changeto0(146,244,0,0);
     }
-    else if (textA2.textContent !== "1") {
-        TweenLite.to(textA2, 0, { autoAlpha: 0 });
-        textA2.textContent = 1;
-        svg.appendChild(textA2);
-        gsap.set(textA2, {
-            x: 546,
-            y: 244,
-        });
-        gsap.set(A2, {
-            fill: "#29e"
-        });
-        document.getElementById("Observations").innerHTML = "";
-        TweenLite.to(textA2, 0, { autoAlpha: 1 });
-        setter(textA2.textContent, newCircle4);
+    else if (textInput[0].textContent !== "1" && timeline.progress() === 0) {
+        changeto1(146,244,0,0);
+    }
+    setter(textInput[0].textContent,dots[0]);
+}
+function appendInputB0() {
+    if (textInput[1].textContent !== "0" && timeline.progress() === 0) {
+        changeto0(196,244,1,1);
+    }
+    else if (textInput[1].textContent !== "1" && timeline.progress() === 0) {
+        changeto1(196,244,1,1);
+    }
+    setter(textInput[1].textContent,dots[1]);
+}
+function appendInputA1() {
+    if (textInput[2].textContent !== "0" && timeline.progress() === 0) {
+        changeto0(346,244,2,2);
+    }
+    else if (textInput[2].textContent !== "1" && timeline.progress() === 0) {
+        changeto1(346,244,2,2);
+    }
+    setter(textInput[2].textContent,dots[2]);
+}
+function appendInputB1() {
+    if (textInput[3].textContent !== "0" && timeline.progress() === 0) {
+        changeto0(396,244,3,3);
+    }
+    else if (textInput[3].textContent !== "1" && timeline.progress() === 0) {
+        changeto1(396,244,3,3);
+    }
+    setter(textInput[3].textContent,dots[3]);
+}
+function appendInputA2() {
+    if (textInput[4].textContent !== "0" && timeline.progress() === 0) {
+        changeto0(546,244,4,4);
+    }
+    else if (textInput[4].textContent !== "1" && timeline.progress() === 0) {
+        changeto1(546,244,4,4);
+    }
+    setter(textInput[4].textContent,dots[4]);
+}
+function appendInputB2() {
+    if (textInput[5].textContent !== "0" && timeline.progress() === 0) {
+        changeto0(596,244,5,5);
+    }
+    else if (textInput[5].textContent !== "1" && timeline.progress() === 0) {
+        changeto1(596,244,5,5);
+    }
+    setter(textInput[5].textContent,dots[5]);
+}
+function appendInputA3() {
+    if (textInput[6].textContent !== "0" && timeline.progress() === 0) {
+        changeto0(746,244,6,6);
+    }
+    else if (textInput[6].textContent !== "1" && timeline.progress() === 0) {
+        changeto1(746,244,6,6);
+    }
+    setter(textInput[6].textContent,dots[6]);
+}
+function appendInputB3() {
+    if (textInput[7].textContent !== "0" && timeline.progress() === 0) {
+        changeto0(796,244,7,7);
+    }
+    else if (textInput[7].textContent !== "1" && timeline.progress() === 0) {
+        changeto1(796,244,7,7);
+    }
+    setter(textInput[7].textContent,dots[7]);
+}
+
+
+function appendInputC0() {
+    if (textInput[8].textContent !== "0" && timeline.progress() === 0) {
+        changeto0(21,394,8,8);
+    }
+    else if (textInput[8].textContent !== "1" && timeline.progress() === 0) {
+        changeto1(21,394,8,8);
+    }
+    setter(textInput[8].textContent,dots[8]);
+
+}
+
+function changeto1(coordinateX,coordinateY,object,textObject) {
+    textInput[textObject].textContent = 1;
+    svg.appendChild(textInput[textObject]);
+    setCoordinates(coordinateX,coordinateY,textInput[textObject]);
+    fillColor(objects[object],"#29e");
+    clearObservation();
+    objectAppear(textInput[textObject]);
+}
+
+function changeto0(coordinateX,coordinateY,object,textObject) {
+    textInput[textObject].textContent = 0;
+    svg.appendChild(textInput[textObject]);
+    setCoordinates(coordinateX,coordinateY,textInput[textObject]);
+    fillColor(objects[object],"#eeeb22");
+    clearObservation();
+    objectAppear(textInput[textObject]);
+}
+
+
+
+function stage1() {
+    objectDisappear(dots[1]);
+    const arr = calculateFullAdder(textInput[0].textContent,textInput[1].textContent,textInput[8].textContent); // [sum,carry]
+    setter(arr[0],dots[0]);
+    setter(arr[1],dots[8]);
+    C1 = arr[1];
+}
+function stage2() {
+    objectDisappear(dots[3]);
+    const arr = calculateFullAdder(textInput[2].textContent,textInput[3].textContent,C1); // [sum,carry]
+    setter(arr[0],dots[2]);
+    setter(arr[1],dots[8]);
+    C2 = arr[1];
+}
+function stage3() {
+    objectDisappear(dots[5]);
+    const arr = calculateFullAdder(textInput[4].textContent,textInput[5].textContent,C2); // [sum,carry]
+    setter(arr[0],dots[4]);
+    setter(arr[1],dots[8]);
+    C3 = arr[1];
+}
+function stage4() {
+    objectDisappear(dots[7]);
+    const arr = calculateFullAdder(textInput[6].textContent,textInput[7].textContent,C3); // [sum,carry]
+    setter(arr[0],dots[6]);
+    setter(arr[1],dots[8]);
+}
+
+// function partialDotAppear(){
+//     for(let i=0;i<2;i++){
+//         objectAppear(dots[i]);
+//     }
+// }
+
+
+
+function outputSetter1(){
+    objectDisappear(dots[0]);
+    const arr = calculateFullAdder(textInput[0].textContent,textInput[1].textContent,textInput[8].textContent); // [sum,carry]
+    textOutput[0].textContent = arr[0];
+    setter(textOutput[0].textContent,objects[9]);
+    objectAppear(textOutput[0]);
+}
+function outputSetter2(){
+    objectDisappear(dots[2]);
+    const arr = calculateFullAdder(textInput[2].textContent,textInput[3].textContent,C1); // [sum,carry]
+    textOutput[1].textContent = arr[0];
+    setter(textOutput[1].textContent,objects[10]);
+    objectAppear(textOutput[1]);
+}
+function outputSetter3(){
+    objectDisappear(dots[4]);
+    const arr = calculateFullAdder(textInput[4].textContent,textInput[5].textContent,C2); // [sum,carry]
+    textOutput[2].textContent = arr[0];
+    setter(textOutput[2].textContent,objects[11]);
+    objectAppear(textOutput[2]);
+}
+function outputSetter4(){
+    objectDisappear(dots[6]);
+    const arr = calculateFullAdder(textInput[6].textContent,textInput[7].textContent,C3); // [sum,carry]
+    textOutput[3].textContent = arr[0];
+    console.log(textOutput[3].textContent);
+    console.log(objects[12]);
+    setter(textOutput[3].textContent,objects[12]);
+    objectAppear(textOutput[3]);
+}
+function outputSetter5(){
+    objectDisappear(dots[8]);
+    const arr = calculateFullAdder(textInput[6].textContent,textInput[7].textContent,C3); // [sum,carry]
+    textOutput[4].textContent = arr[1];
+    setter(textOutput[4].textContent,objects[13]);
+    objectAppear(textOutput[4]);
+}
+
+function display() {
+    observ.innerHTML = "Simulation has finished. Press Restart to start again"
+}
+
+function reboot() {
+    for(const text of textInput){
+        text.textContent = 2;
     }
 }
 
-function input7() {
-    
-    if (textA3.textContent !== "0") {
-        TweenLite.to(textA3, 0, { autoAlpha: 0 });
-        textA3.textContent = 0;
-        svg.appendChild(textA3);
-        gsap.set(textA3, {
-            x: 746,
-            y: 244,
-        });
-        gsap.set(A3, {
-            fill: "#eeeb22"
-        });
-        document.getElementById("Observations").innerHTML = "";
-        TweenLite.to(textA3, 0, { autoAlpha: 1 });
-        setter(textA3.textContent, newCircle6);
+function setter(value, component) {
+    if (value === "1") {
+        unsetColor(component);
     }
-    else if (textA3.textContent !== "1") {
-        TweenLite.to(textA3, 0, { autoAlpha: 0 });
-        textA3.textContent = 1;
-        svg.appendChild(textA3);
-        gsap.set(textA3, {
-            x: 746,
-            y: 244,
-        });
-        gsap.set(A3, {
-            fill: "#29e"
-        });
-        document.getElementById("Observations").innerHTML = "";
-        TweenLite.to(textA3, 0, { autoAlpha: 1 });
-        setter(textA3.textContent, newCircle6);
+    else if (value === "0") {
+        setColor(component);
     }
 }
 
-function input2() {
-    
-    if (textB0.textContent !== "0") {
-        TweenLite.to(textB0, 0, { autoAlpha: 0 });
-        textB0.textContent = 0;
-        svg.appendChild(textB0);
-        gsap.set(textB0, {
-            x: 196,
-            y: 244
-        });
-        gsap.set(B0, {
-            fill: "#eeeb22"
-        });
-        document.getElementById("Observations").innerHTML = "";
-        TweenLite.to(textB0, 0, { autoAlpha: 1 });
-        setter(textB0.textContent, newCircle1);
-    }
-    else if (textB0.textContent !== "1") {
-        TweenLite.to(textB0, 0, { autoAlpha: 0 });
-        textB0.textContent = 1;
-        svg.appendChild(textB0);
-        gsap.set(textB0, {
-            x: 196,
-            y: 244
-        });
-        gsap.set(B0, {
-            fill: "#29e"
-        });
-        document.getElementById("Observations").innerHTML = "";
-        TweenLite.to(textB0, 0, { autoAlpha: 1 });
-        setter(textB0.textContent, newCircle1);
-    }
-}
-
-function input4() {
-    
-    if (textB1.textContent !== "0") {
-        TweenLite.to(textB1, 0, { autoAlpha: 0 });
-        textB1.textContent = 0;
-        svg.appendChild(textB1);
-        gsap.set(textB1, {
-            x: 396,
-            y: 244
-        });
-        gsap.set(B1, {
-            fill: "#eeeb22"
-        });
-        document.getElementById("Observations").innerHTML = "";
-        TweenLite.to(textB1, 0, { autoAlpha: 1 });
-        setter(textB1.textContent, newCircle3);
-    }
-    else if (textB1.textContent !== "1") {
-        TweenLite.to(textB1, 0, { autoAlpha: 0 });
-        textB1.textContent = 1;
-        svg.appendChild(textB1);
-        gsap.set(textB1, {
-            x: 396,
-            y: 244
-            
-        });
-        gsap.set(B1, {
-            fill: "#29e"
-        });
-        document.getElementById("Observations").innerHTML = "";
-        TweenLite.to(textB1, 0, { autoAlpha: 1 });
-        setter(textB1.textContent, newCircle3);
-    }
-}
-
-function input6() {
-    
-    if (textB2.textContent !== "0") {
-        TweenLite.to(textB2, 0, { autoAlpha: 0 });
-        textB2.textContent = 0;
-        svg.appendChild(textB2);
-        gsap.set(textB2, {
-            x: 596,
-            y: 244
-
-        });
-        gsap.set(B2, {
-            fill: "#eeeb22"
-        });
-        document.getElementById("Observations").innerHTML = "";
-        TweenLite.to(textB2, 0, { autoAlpha: 1 });
-        setter(textB2.textContent, newCircle5);
-    }
-    else if (textB2.textContent !== "1") {
-        TweenLite.to(textB2, 0, { autoAlpha: 0 });
-        textB2.textContent = 1;
-        svg.appendChild(textB2);
-        gsap.set(textB2, {
-            x:  596,
-            y: 244
-
-        });
-        gsap.set(B2, {
-            fill: "#29e"
-        });
-        document.getElementById("Observations").innerHTML = "";
-        TweenLite.to(textB2, 0, { autoAlpha: 1 });
-        setter(textB2.textContent, newCircle5);
-    }
-}
-
-function input8() {
-    
-    if (textB3.textContent !== "0") {
-        TweenLite.to(textB3, 0, { autoAlpha: 0 });
-        textB3.textContent = 0;
-        svg.appendChild(textB3);
-        gsap.set(textB3, {
-            x: 796,
-            y: 244
-
-        });
-        gsap.set(B3, {
-            fill: "#eeeb22"
-        });
-        document.getElementById("Observations").innerHTML = "";
-        TweenLite.to(textB3, 0, { autoAlpha: 1 });
-        setter(textB3.textContent, newCircle7);
-    }
-    else if (textB3.textContent !== "1") {
-        TweenLite.to(textB3, 0, { autoAlpha: 0 });
-        textB3.textContent = 1;
-        svg.appendChild(textB3);
-        gsap.set(textB3, {
-            x: 796,
-            y: 244
-
-        });
-        gsap.set(B3, {
-            fill: "#29e"
-        });
-        document.getElementById("Observations").innerHTML = "";
-        TweenLite.to(textB3, 0, { autoAlpha: 1 });
-        setter(textB3.textContent, newCircle7);
-    }
-}
-
-function input9() {
-    
-    if (textC0.textContent !== "0") {
-        TweenLite.to(textC0, 0, { autoAlpha: 0 });
-        textC0.textContent = 0;
-        svg.appendChild(textC0);
-        gsap.set(textC0, {
-            x: 21,
-            y: 394
-
-        });
-        gsap.set(C0, {
-            fill: "#eeeb22"
-        });
-        document.getElementById("Observations").innerHTML = "";
-        TweenLite.to(textC0, 0, { autoAlpha: 1 });
-        setter(textC0.textContent, newCircle8);
-    }
-    else if (textC0.textContent !== "1") {
-        TweenLite.to(textC0, 0, { autoAlpha: 0 });
-        textC0.textContent = 1;
-        svg.appendChild(textC0);
-        gsap.set(textC0, {
-            x: 21,
-            y: 394
-
-        });
-        gsap.set(C0, {
-            fill: "#29e"
-        });
-        document.getElementById("Observations").innerHTML = "";
-        TweenLite.to(textC0, 0, { autoAlpha: 1 });
-        setter(textC0.textContent, newCircle8);
-    }
-}
-function outputSetter() {
-    setter(textS0.textContent, S0);
-    setter(textS1.textContent, S1);
-    setter(textS2.textContent, S2);
-    setter(textS3.textContent, S3);
-    setter(textC4.textContent, C4);
-}
-
-function observation() {
-    document.getElementById("Observations").innerHTML = "Simulation has finished. Press Restart the simulation.";
-}
-let tl = gsap.timeline({ repeat: 0, repeatDelay: 0 });
-let speed_circuit = 1;
 function setSpeed(speed) {
-    if (speed === "1") {
-        if (textA0.textContent !== "2" && textB0.textContent !== "2" && textA1.textContent !== "2" && textB1.textContent !== "2" &&textA2.textContent !== "2" && textB2.textContent !== "2" && textA3.textContent !== "2" && textB3.textContent !== "2" &&  tl.progress()!==1) {
-            tl.timeScale(1);
-        }
+    if (circuitStarted) {
+        timeline.timeScale(parseInt(speed));
+        observ.innerHTML = `${speed}x speed`;
     }
-    else if (speed === "2") {
-        if (textA0.textContent !== "2" && textB0.textContent !== "2" && textA1.textContent !== "2" && textB1.textContent !== "2" &&textA2.textContent !== "2" && textB2.textContent !== "2" && textA3.textContent !== "2" && textB3.textContent !== "2" && tl.progress()!==1) {
-            tl.timeScale(2);
-        }
-    }
-    else if (speed === "4") {
-        if (textA0.textContent !== "2" && textB0.textContent !== "2" && textA1.textContent !== "2" && textB1.textContent !== "2" &&textA2.textContent !== "2" && textB2.textContent !== "2" && textA3.textContent !== "2" && textB3.textContent !== "2" && tl.progress()!==1) {
-            tl.timeScale(4);
-        }
-    }
-    if(tl.progress()===0){
-        speed_circuit = speed;
-    }
-
 }
 
+function restartCircuit() {
+    if (circuitStarted) {
+        circuitStarted = false;
+    }
+    timeline.seek(0);
+    timeline.pause();
+    allDisappear();
+    reboot();
+    clearObservation();
+    decide = false;
+    status.innerHTML = "Start";
+    observ.innerHTML = "Successfully restored";
+    speed.selectedIndex = 0;
+}
 
-function workCircuit() {
-    let a = document.getElementById("currentwork").innerHTML;
-    if (a === "Start") {
+function simulationStatus() {
+    if (!decide) {
         startCircuit();
     }
-    else if (a === "Stop") {
+    else if (decide) {
         stopCircuit();
     }
 }
 function stopCircuit() {
-    if (tl.time() !== 0 && tl.progress() !==1) {
-        tl.pause();
-        document.getElementById("currentwork").innerHTML = "Start";
-        document.getElementById("Observations").innerHTML = "Simulation has been stopped."
+    if (timeline.time() !== 0 && timeline.progress() !== 1) {
+        timeline.pause();
+        observ.innerHTML = "Simulation has been stopped.";
+        decide = false;
+        status.innerHTML = "Start";
+        speed.selectedIndex = 0;
     }
-    else if(tl.progress() === 1){
-        document.getElementById("Observations").innerHTML = "Please Restart the simulation"
+    else if (timeline.progress() === 1) {
+        observ.innerHTML = "Please Restart the simulation";
     }
 }
-
 function startCircuit() {
-    if (textA0.textContent !== "2" && textA1.textContent !== "2" && textA2.textContent!=="2" && textA3.textContent!=="2" && textB0.textContent!=="2" && textB1.textContent!=="2" && textB2.textContent!=="2" && textB3.textContent!=="2" && textC0.textContent!=="2" && tl.progress()!==1) {
-        tl.play();
-        document.getElementById("currentwork").innerHTML = "Stop";
-        tl.timeScale(speed_circuit);
-        document.getElementById("Observations").innerHTML = "Simulation has started."
+    for(const text of textInput){
+        if (text.textContent === "2") {
+            observ.innerHTML = "Please set the input values";
+            return;
+        }
     }
-    else if (textA0.textContent === "2" || textA1.textContent === "2" || textA2.textContent === "2" || textA3.textContent === "2" || textB0.textContent === "2" || textB1.textContent === "2" || textB2.textContent === "2" || textB3.textContent === "2" || textC0.textContent === "2" ) {
-        document.getElementById("Observations").innerHTML = "Please select the values"
+    if (timeline.progress() !== 1) {
+        if (!circuitStarted) {
+            circuitStarted = true;
+        }
+        timeline.play();
+        timeline.timeScale(1);
+        observ.innerHTML = "Simulation has started.";
+        decide = true;
+        status.innerHTML = "Pause";
+        speed.selectedIndex = 0;
     }
-    else if(tl.progress() === 1){
-        document.getElementById("Observations").innerHTML = "Please Restart the simulation"  
+    else if (timeline.progress() === 1) {
+        observ.innerHTML = "Please Restart the simulation";
     }
 }
 
 
-function free() {
-    document.getElementById("Observations").innerHTML = "";
-}
-function gate1ComponentsAppear() {
-    TweenLite.to(newCircle, 0, { autoAlpha: 1 });
-    TweenLite.to(newCircle1, 0, { autoAlpha: 1 });
-    TweenLite.to(newCircle8, 0, { autoAlpha: 1 });
-}
-function gate1ComponentsDisappear() {
-    TweenLite.to(newCircle, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle1, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle8, 0, { autoAlpha: 0 });
-}
-function gate2ComponentsAppear() {
-    TweenLite.to(newCircle2, 0, { autoAlpha: 1 });
-    TweenLite.to(newCircle3, 0, { autoAlpha: 1 });
-    TweenLite.to(newCircle9, 0, { autoAlpha: 1 });
-    TweenLite.to(newCircle13, 0, { autoAlpha: 1 });
-    
-}
-function gate2ComponentsDisappear() {
-    TweenLite.to(newCircle2, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle3, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle9, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle13, 0, { autoAlpha: 0 });
 
-}
-function gate3ComponentsAppear() {
-    TweenLite.to(textS0, 0, { autoAlpha: 1 });
-    TweenLite.to(newCircle4, 0, { autoAlpha: 1 });
-    TweenLite.to(newCircle5, 0, { autoAlpha: 1 });
-    TweenLite.to(newCircle10, 0, { autoAlpha: 1 });
-    TweenLite.to(newCircle14, 0, { autoAlpha: 1 });
+// all the execution begin here
+let timeline = gsap.timeline({ repeat: 0, repeatDelay: 0 });
+gsap.registerPlugin(MotionPathPlugin);
+demoWidth();
+// calling all the functions that are going to initialise 
+textIOInit();
+outputCoordinates();
+inputDots();
+outputDisappear();
 
-}
-function gate3ComponentsDisappear() {
-    TweenLite.to(newCircle4, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle5, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle10, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle14, 0, { autoAlpha: 0 });
+timeline.add(inputDotVisible1, 0);
+timeline.add(stage1, 2);
+timeline.add(inputDotVisible2, 2);
+timeline.add(outputSetter1, 4);
+timeline.add(stage2, 4);
+timeline.add(inputDotVisible3, 4);
+timeline.add(outputSetter2, 6);
+timeline.add(stage3, 6);
+timeline.add(inputDotVisible4, 6);
+timeline.add(outputSetter3, 8);
+timeline.add(stage4, 8);
+timeline.add(outputSetter4, 10);
+timeline.add(outputSetter5, 10);
+timeline.eventCallback("onComplete", outputVisible);
+timeline.eventCallback("onComplete", display);
 
-
-}
-function gate4ComponentsAppear() {
-    TweenLite.to(textS1, 0, { autoAlpha: 1 });
-    TweenLite.to(newCircle6, 0, { autoAlpha: 1 });
-    TweenLite.to(newCircle7, 0, { autoAlpha: 1 });
-    TweenLite.to(newCircle11, 0, { autoAlpha: 1 });
-    TweenLite.to(newCircle15, 0, { autoAlpha: 1 });
-}
-function gate4ComponentsDisappear() {
-    TweenLite.to(newCircle6, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle7, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle11, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle15, 0, { autoAlpha: 0 });
-}
-function gate5ComponentsAppear() {
-    TweenLite.to(textS2, 0, { autoAlpha: 1 });
-    TweenLite.to(newCircle12, 0, { autoAlpha: 1 });
-    TweenLite.to(newCircle16, 0, { autoAlpha: 1 });
-}
-function gate5ComponentsDisappear() {
-    TweenLite.to(newCircle12, 0, { autoAlpha: 0 });
-    TweenLite.to(newCircle16, 0, { autoAlpha: 0 });
-    TweenLite.to(textC4, 0, { autoAlpha: 1 });
-    TweenLite.to(textS3, 0, { autoAlpha: 1 });
-    
-}
-
-
-
-tl.add(gate1ComponentsAppear, 0);
-tl.add(gate1ComponentsDisappear, 2);
-tl.add(gate2ComponentsAppear, 2);
-tl.add(gate2ComponentsDisappear, 4);
-tl.add(gate3ComponentsAppear, 4);
-tl.add(gate3ComponentsDisappear, 6);
-tl.add(gate4ComponentsAppear, 6);
-tl.add(gate4ComponentsDisappear, 8);
-tl.add(gate5ComponentsAppear, 8);
-tl.add(gate5ComponentsDisappear, 10);
-tl.add(outputHandle, 0);
-tl.add(outputSetter, 10);
-tl.eventCallback("onComplete", observation);
-tl.to(newCircle, {
+timeline.to(dots[0], {
     motionPath: {
         path: "#path1",
         align: "#path1",
@@ -881,7 +504,7 @@ tl.to(newCircle, {
     paused: false,
 
 }, 0);
-tl.to(newCircle1, {
+timeline.to(dots[1], {
     motionPath: {
         path: "#path2",
         align: "#path2",
@@ -897,7 +520,7 @@ tl.to(newCircle1, {
     paused: false,
 
 }, 0);
-tl.to(newCircle2, {
+timeline.to(dots[2], {
     motionPath: {
         path: "#path3",
         align: "#path3",
@@ -906,14 +529,15 @@ tl.to(newCircle2, {
     },
 
     duration: 2,
+    delay: 2,
     repeat: 0,
     repeatDelay: 3,
     yoyo: true,
     ease: "none",
     paused: false,
 
-}, 2);
-tl.to(newCircle3, {
+}, 0);
+timeline.to(dots[3], {
     motionPath: {
         path: "#path4",
         align: "#path4",
@@ -922,30 +546,32 @@ tl.to(newCircle3, {
     },
 
     duration: 2,
+    delay: 2,
     repeat: 0,
     repeatDelay: 3,
     yoyo: true,
     ease: "none",
     paused: false,
 
-}, 2);
-tl.to(newCircle4, {
+}, 0);
+timeline.to(dots[4], {
     motionPath: {
         path: "#path5",
         align: "#path5",
         autoRotate: true,
         alignOrigin: [0.5, 0.5]
     },
-    
+
     duration: 2,
+    delay: 4,
     repeat: 0,
     repeatDelay: 3,
     yoyo: true,
     ease: "none",
     paused: false,
 
-}, 4);
-tl.to(newCircle5, {
+}, 0);
+timeline.to(dots[5], {
     motionPath: {
         path: "#path6",
         align: "#path6",
@@ -954,15 +580,15 @@ tl.to(newCircle5, {
     },
 
     duration: 2,
+    delay: 4,
     repeat: 0,
     repeatDelay: 3,
     yoyo: true,
     ease: "none",
     paused: false,
 
-}, 4);
-
-tl.to(newCircle6, {
+}, 0);
+timeline.to(dots[6], {
     motionPath: {
         path: "#path7",
         align: "#path7",
@@ -971,14 +597,15 @@ tl.to(newCircle6, {
     },
 
     duration: 2,
+    delay: 6,
     repeat: 0,
     repeatDelay: 3,
     yoyo: true,
     ease: "none",
     paused: false,
 
-}, 6);
-tl.to(newCircle7, {
+}, 0);
+timeline.to(dots[7], {
     motionPath: {
         path: "#path8",
         align: "#path8",
@@ -987,14 +614,15 @@ tl.to(newCircle7, {
     },
 
     duration: 2,
+    delay: 6,
     repeat: 0,
     repeatDelay: 3,
     yoyo: true,
     ease: "none",
     paused: false,
-}, 6);
 
-tl.to(newCircle8, {
+}, 0);
+timeline.to(dots[8], {
     motionPath: {
         path: "#path9",
         align: "#path9",
@@ -1008,9 +636,9 @@ tl.to(newCircle8, {
     yoyo: true,
     ease: "none",
     paused: false,
-}, 0);
 
-tl.to(newCircle9, {
+}, 0);
+timeline.to(dots[8], {
     motionPath: {
         path: "#path10",
         align: "#path10",
@@ -1019,14 +647,15 @@ tl.to(newCircle9, {
     },
 
     duration: 2,
+    delay: 2,
     repeat: 0,
     repeatDelay: 3,
     yoyo: true,
     ease: "none",
     paused: false,
-}, 2);
 
-tl.to(newCircle10, {
+}, 0);
+timeline.to(dots[8], {
     motionPath: {
         path: "#path11",
         align: "#path11",
@@ -1035,14 +664,15 @@ tl.to(newCircle10, {
     },
 
     duration: 2,
+    delay: 4,
     repeat: 0,
     repeatDelay: 3,
     yoyo: true,
     ease: "none",
     paused: false,
-}, 4);
 
-tl.to(newCircle11, {
+}, 0);
+timeline.to(dots[8], {
     motionPath: {
         path: "#path12",
         align: "#path12",
@@ -1051,14 +681,15 @@ tl.to(newCircle11, {
     },
 
     duration: 2,
+    delay: 6,
     repeat: 0,
     repeatDelay: 3,
     yoyo: true,
     ease: "none",
     paused: false,
-}, 6);
 
-tl.to(newCircle12, {
+}, 0);
+timeline.to(dots[8], {
     motionPath: {
         path: "#path13",
         align: "#path13",
@@ -1067,14 +698,15 @@ tl.to(newCircle12, {
     },
 
     duration: 2,
+    delay: 8,
     repeat: 0,
     repeatDelay: 3,
     yoyo: true,
     ease: "none",
     paused: false,
-}, 8);
 
-tl.to(newCircle13, {
+}, 0);
+timeline.to(dots[0], {
     motionPath: {
         path: "#path14",
         align: "#path14",
@@ -1083,14 +715,15 @@ tl.to(newCircle13, {
     },
 
     duration: 2,
+    delay: 2,
     repeat: 0,
     repeatDelay: 3,
     yoyo: true,
     ease: "none",
     paused: false,
-}, 2);
 
-tl.to(newCircle14, {
+}, 0);
+timeline.to(dots[2], {
     motionPath: {
         path: "#path15",
         align: "#path15",
@@ -1099,14 +732,15 @@ tl.to(newCircle14, {
     },
 
     duration: 2,
+    delay: 4,
     repeat: 0,
     repeatDelay: 3,
     yoyo: true,
     ease: "none",
     paused: false,
-}, 4);
 
-tl.to(newCircle15, {
+}, 0);
+timeline.to(dots[4], {
     motionPath: {
         path: "#path16",
         align: "#path16",
@@ -1115,29 +749,32 @@ tl.to(newCircle15, {
     },
 
     duration: 2,
+    delay: 6,
     repeat: 0,
     repeatDelay: 3,
     yoyo: true,
     ease: "none",
     paused: false,
-}, 6);
 
-tl.to(newCircle16, {
+}, 0);
+timeline.to(dots[6], {
     motionPath: {
         path: "#path17",
         align: "#path17",
         autoRotate: true,
         alignOrigin: [0.5, 0.5]
     },
-
+    
     duration: 2,
+    delay: 8,
     repeat: 0,
     repeatDelay: 3,
     yoyo: true,
     ease: "none",
     paused: false,
-}, 8);
+
+},0);
 
 
-tl.pause();
-allDisappear();
+timeline.pause();
+inputDotDisappear();

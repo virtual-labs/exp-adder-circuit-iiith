@@ -69,8 +69,8 @@
                 <option value="2">2x</option>
                 <option value="4">4x</option>
             </select>
-            <button class="v-button" id="currentwork" onclick="workCircuit()">Start</button>
-            <a href="demo-ripple-adder.html"><button class="v-button">Reset</button></a>
+            <button class="v-button" id="play-or-pause" onclick="simulationStatus()">Start</button>
+            <button class="v-button" id="restart" onclick="restartCircuit()">Reset</button>
         </div>
     </div>
     <div class="columns is-centered is-flex is-flex-direction-row is-flex-wrap-wrap is-align-content-start">
@@ -139,15 +139,15 @@
                             <path id="path1XOR" stroke="currentColor" fill="#29e" stroke-width="3"
                                 d="M 732 475 Q 767 515 732 555 Q 768 515 732 475 M 737 475 Q 772 515 737 555 Q 842 515 737 475" />
                         </g>
-                        <circle id="input1" cx="100" cy="240" r="15" onclick="appendInput1()" class="color-green" />
-                        <circle id="input2" cx="100" cy="280" r="15" onclick="appendInput2()" class="color-green" />
-                        <circle id="input3" cx="100" cy="340" r="15" onclick="appendInput3()" class="color-green" />
-                        <circle id="output1" cx="840" cy="515" r="15" class="color-green" />
-                        <circle id="output2" cx="840" cy="320" r="15" class="color-green" />
+                        <circle id="inputa" cx="100" cy="240" r="15" onclick="appendInputA()" class="color-green" />
+                        <circle id="inputb" cx="100" cy="280" r="15" onclick="appendInputB()" class="color-green" />
+                        <circle id="inputcin" cx="100" cy="340" r="15" onclick="appendInputCin()" class="color-green" />
+                        <circle id="outputcout" cx="840" cy="515" r="15" class="color-green" />
+                        <circle id="outputsum" cx="840" cy="320" r="15" class="color-green" />
                         <text font-size="1em" x="70" y="245" fill="black">A</text>
                         <text font-size="1em" x="70" y="285" fill="black">B</text>
                         <text font-size="1em" x="50" y="345" fill="black">C in</text>
-                        <text font-size="1em" x="860" y="325" fill="black">S</text>
+                        <text font-size="1em" x="860" y="325" fill="black">Sum</text>
                         <text font-size="1em" x="860" y="525" fill="black">C out</text>
                         <text font-size="1em" x="423" y="260" fill="black">XOR</text>
                         <text font-size="1em" x="580" y="320" fill="black">XOR</text>
@@ -159,21 +159,18 @@
                 </div>
             </div>
         </div>
-        <div class="column is-3-desktop is-12-tablet is-12-mobile">
+        <div class="column is-3-desktop is-4-tablet is-12-mobile">
             <div class="v-datalist-container components-list">
                 <div class="v-datalist-title">Observations</div>
                 <div class="v-datalist-row">
-                    <div id="Observations">
-                    </div>
-                    <div id="result"></div>
+                    <div id="observations"></div>
                 </div>
-
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/gh/virtual-labs/virtual-style@0.0.8-b/js/script.js"></script>
-    <script src="js/animation-full-adder.js"></script>
+    <script type="module" src="js/animation-full-adder.js"></script>
 
 </body>
 

@@ -95,13 +95,28 @@ function changeTabs(e) {
     initRippleAdder();
     window.simulate = simulateFA;
   }
-  updateInstructions();
   updateToolbar();
+  updateInstructions();
   clearObservations();
   resize();
 }
 
 window.changeTabs = changeTabs;
+
+// Instruction box
+const updateInstructions = () => {
+  const task = window.currentTab;
+  const instructionBox = document.getElementById("instruction-title");
+  let title = ""; 
+  if (task === "task1") {
+    title = `Instructions<br>Implement a 1-bit half adder using logic gates`;
+  } else if (task === "task2") {
+    title = `Instructions<br>Implement a 1-bit full adder using logic gates`;
+  } else if (task === "task3") {
+    title = `Instructions<br>Implement a 4-bit ripple carry adder using full adders`;
+  }
+  instructionBox.innerHTML = title;
+}
 
 // Toolbar
 

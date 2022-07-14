@@ -69,8 +69,8 @@
                 <option value="2">2x</option>
                 <option value="4">4x</option>
             </select>
-            <button class="v-button" id="currentwork" onclick="workCircuit()">Start</button>
-            <a href="demo-half-adder.html"><button class="v-button">Reset</button></a>
+            <button class="v-button" id="play-or-pause" onclick="simulationStatus()">Start</button>
+            <button class="v-button" id="restart" onclick="restartCircuit()">Reset</button>
         </div>
     </div>
     <div class="columns is-centered is-flex is-flex-direction-row is-flex-wrap-wrap is-align-content-start">
@@ -83,14 +83,13 @@
 
                         <path id="path1" fill="none" stroke="currentColor" stroke-width="3" d="M 100,160 h 413" />
 
-                        <path id="path2" fill="none" stroke="currentColor" stroke-width="3" d="M 100,600 h 400" />
-
+                        <path id="path2" fill="none" stroke="currentColor" stroke-width="3"
+                        d="M 100,160 h 200 v 420 h 200" />
+                        
                         <path id="path3" fill="none" stroke="currentColor" stroke-width="3"
-                            d="M 100,160 h 200 v 420 h 200" />
-
-                        <path id="path4" fill="none" stroke="currentColor" stroke-width="3"
-                            d="M 100,600 h 150 v -420 h 263" />
-
+                        d="M 100,600 h 150 v -420 h 263" />
+                        
+                        <path id="path4" fill="none" stroke="currentColor" stroke-width="3" d="M 100,600 h 400" />
                         <path id="path5" fill="none" stroke="currentColor" stroke-width="3" d="M 520,170 h 100" />
 
                         <path id="path6" fill="none" stroke="currentColor" stroke-width="3" d="M 520,590 h 100" />
@@ -105,16 +104,12 @@
                                 d="M 495 135 Q 530 170 495 205 Q 531 170 495 135 M 500 135 Q 535 170 500 205 Q 605 170 500 135" />
                         </g>
                         <!-- M 245 20 Q 295 70 245 120 Q 395 70 245 20 -->
-                        <circle id="input1" cx="100" cy="160" r="15" onclick="appendInput1()"
-                            style="fill:green;stroke:rgb(68, 68, 119);stroke-width:3;fill-opacity:1;stroke-opacity:1" />
-                        <circle id="input2" cx="100" cy="600" r="15" onclick="appendInput2()"
-                            style="fill:green;stroke:rgb(68, 68, 119);stroke-width:3;fill-opacity:1;stroke-opacity:1" />
-                        <circle id="output1" cx="620" cy="170" r="15"
-                            style="fill:yellow;stroke:rgb(68, 68, 119);stroke-width:3;fill-opacity:1;stroke-opacity:1" />
-                        <circle id="output2" cx="620" cy="590" r="15"
-                            style="fill:yellow;stroke:rgb(68, 68, 119);stroke-width:3;fill-opacity:1;stroke-opacity:1" />
-                        <text font-size="1em" x="80" y="140" fill="black">INPUT 1</text>
-                        <text font-size="1em" x="80" y="630" fill="black">INPUT 2</text>
+                        <circle id="inputa" cx="100" cy="160" r="15" onclick="appendInputA()" class="color-green" />
+                        <circle id="inputb" cx="100" cy="600" r="15" onclick="appendInputB()" class="color-green" />
+                        <circle id="outputsum" cx="620" cy="170" r="15" class="color-green" />
+                        <circle id="outputcout" cx="620" cy="590" r="15" class="color-green" />
+                        <text font-size="1em" x="80" y="140" fill="black">INPUT A</text>
+                        <text font-size="1em" x="80" y="630" fill="black">INPUT B</text>
                         <text font-size="1em" x="640" y="170" fill="black">SUM</text>
                         <text font-size="1em" x="640" y="590" fill="black">CARRY</text>
                         <text font-size="1em" x="519" y="178" fill="black">XOR</text>
@@ -124,21 +119,18 @@
                 </div>
             </div>
         </div>
-        <div class="column is-3-desktop is-12-tablet is-12-mobile">
+        <div class="column is-3-desktop is-4-tablet is-12-mobile">
             <div class="v-datalist-container components-list">
                 <div class="v-datalist-title">Observations</div>
                 <div class="v-datalist-row">
-                    <div id="Observations">
-                    </div>
-                    <div id="result"></div>
+                    <div id="observations"></div>
                 </div>
-
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/gh/virtual-labs/virtual-style@0.0.8-b/js/script.js"></script>
-    <script src="js/animation-half-adder.js"></script>
+    <script type="module" src="js/animation-half-adder.js"></script>
 </body>
 
 </html>
