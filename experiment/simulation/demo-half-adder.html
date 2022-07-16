@@ -81,39 +81,35 @@
                     <svg class="svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="140%"
                         viewBox="0 85 700 800 ">
 
-                        <path id="path1" fill="none" stroke="currentColor" stroke-width="3" d="M 100,160 h 413" />
+                        <path id="path1" class="wire-demo" d="M 100,160 h 413" />
 
-                        <path id="path2" fill="none" stroke="currentColor" stroke-width="3"
-                        d="M 100,160 h 200 v 420 h 200" />
+                        <path id="path2" class="wire-demo" d="M 100,160 h 200 v 420 h 200" />
                         
-                        <path id="path3" fill="none" stroke="currentColor" stroke-width="3"
-                        d="M 100,600 h 150 v -420 h 263" />
+                        <path id="path3" class="wire-demo" d="M 100,600 h 150 v -420 h 263" />
                         
-                        <path id="path4" fill="none" stroke="currentColor" stroke-width="3" d="M 100,600 h 400" />
-                        <path id="path5" fill="none" stroke="currentColor" stroke-width="3" d="M 520,170 h 100" />
+                        <path id="path4" class="wire-demo" d="M 100,600 h 400" />
+                        <path id="path5" class="wire-demo" d="M 520,170 h 100" />
 
-                        <path id="path6" fill="none" stroke="currentColor" stroke-width="3" d="M 520,590 h 100" />
+                        <path id="path6" class="wire-demo" d="M 520,590 h 100" />
 
-                        <g id="AND">
-                            <path id="path1AND" fill="#29e" stroke="currentColor" stroke-width="3"
-                                d="M 500 565 v 50 h 50 Q 575 590 550 565 h -50" />
+                        <g id="and">
+                            <path class="gate-demo" d="M 500 565 v 50 h 50 Q 575 590 550 565 h -50" />
                         </g>
 
-                        <g id="XOR">
-                            <path id="path1XOR" stroke="currentColor" fill="#29e" stroke-width="3"
-                                d="M 495 135 Q 530 170 495 205 Q 531 170 495 135 M 500 135 Q 535 170 500 205 Q 605 170 500 135" />
+                        <g id="xor">
+                            <path class="gate-demo" d="M 495 135 Q 530 170 495 205 Q 531 170 495 135 M 500 135 Q 535 170 500 205 Q 605 170 500 135" />
                         </g>
                         <!-- M 245 20 Q 295 70 245 120 Q 395 70 245 20 -->
                         <circle id="inputa" cx="100" cy="160" r="15" onclick="appendInputA()" class="color-green" />
                         <circle id="inputb" cx="100" cy="600" r="15" onclick="appendInputB()" class="color-green" />
                         <circle id="outputsum" cx="620" cy="170" r="15" class="color-green" />
                         <circle id="outputcout" cx="620" cy="590" r="15" class="color-green" />
-                        <text font-size="1em" x="80" y="140" fill="black">INPUT A</text>
-                        <text font-size="1em" x="80" y="630" fill="black">INPUT B</text>
-                        <text font-size="1em" x="640" y="170" fill="black">SUM</text>
-                        <text font-size="1em" x="640" y="590" fill="black">CARRY</text>
-                        <text font-size="1em" x="519" y="178" fill="black">XOR</text>
-                        <text font-size="1em" x="520" y="595" fill="black">AND</text>
+                        <text class="text-demo" x="70" y="165">A</text>
+                        <text class="text-demo" x="70" y="605">B</text>
+                        <text class="text-demo" x="640" y="170">SUM</text>
+                        <text class="text-demo" x="640" y="590">CARRY</text>
+                        <text class="text-demo" x="519" y="178">XOR</text>
+                        <text class="text-demo" x="520" y="595">AND</text>
                     </svg>
 
                 </div>

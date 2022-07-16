@@ -217,27 +217,41 @@ function setInput(event) {
 
 window.setInput = setInput;
 
+export function clearResult() {
+    const result = document.getElementById("result");
+    result.innerHTML = "";
+}
+
+export function printErrors(message,objectId) {
+    const result = document.getElementById('result');
+    result.innerHTML += message;
+    result.className = "failure-message";
+    if(objectId !== null)
+    {
+        objectId.classList.add("highlight")
+        setTimeout(function () {objectId.classList.remove("highlight")}, 5000);
+    }
+}
+
 // Check if the connections are correct
 export function checkConnections() {
-    let correctConnection = true;
     for (let gateId in gates) {
         const gate = gates[gateId];
+        const id = document.getElementById(gate.id);
         if (gate.inputPoints.length != gate.inputs.length) {
-            correctConnection = false;
+            printErrors("Highlighted component not connected properly\n",id);
+            return false;
         } else if (gate.isConnected === false && gate.isOutput === false) {
-            correctConnection = false;
+            printErrors("Highlighted component not connected properly\n",id);
+            return false;
         }
     }
-    if (correctConnection) {
-        return true;
-    } else {
-        alert("Connections are not correct");
-        return false;
-    }
+    return true;
 }
 
 // Simulate the circuit
 export function simulate() {
+    clearResult();
     if (!checkConnections()) {
         return;
     }
@@ -270,7 +284,8 @@ window.simulate = simulate;
 // Simulate the circuit for given gates; Used for testing the circuit for all possible inputss
 export function testSimulation(gates) {
     if (!checkConnections()) {
-        return;
+        document.getElementById("table-body").innerHTML = "";
+        return false;
     }
 
     // reset output in gate
@@ -286,10 +301,12 @@ export function testSimulation(gates) {
             getResult(gate);
         }
     }
+    return true;
 }
 
 // function to submit the desired circuit and get the final success or failure message
 export function submitCircuit() {
+    clearResult();
     document.getElementById("table-body").innerHTML = "";
     if (window.currentTab === "task1") {
         halfAdder("Input-0", "Input-1", "Output-3", "Output-2");

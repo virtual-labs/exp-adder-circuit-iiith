@@ -1,4 +1,4 @@
-import { gates, testSimulation } from "./gate.js";
+import { clearResult, gates, testSimulation } from "./gate.js";
 import { fullAdder, testSimulationFA } from "./fa.js";
 
 "use strict";
@@ -33,6 +33,7 @@ export function halfAdder(inputA, inputB, carryOut, sumOut) {
     let circuitIsCorrect = true;
 
     let dataTable = "";
+    clearResult();
 
     for (let i = 0; i < 4; i++) {
         //convert i to binary
@@ -45,14 +46,19 @@ export function halfAdder(inputA, inputB, carryOut, sumOut) {
         const calculatedCarry = computeAnd(input0.output, input1.output) ? 1 : 0;
 
         // simulate the circuit
-        testSimulation(gates_list);
+        if(!testSimulation(gates_list)){
+            return;
+        }
         const sum = gates_list[sumOut].output ? 1 : 0;
         const carry = gates_list[carryOut].output ? 1 : 0;
 
-        dataTable += `<tr><th>${binary[1]}</th><th>${binary[0]} </th><td> ${calculatedSum} </td><td> ${calculatedCarry} </td><td> ${sum} </td><td> ${carry} </td></tr>`;
-
+        
         if (sum != calculatedSum || carry != calculatedCarry) {
             circuitIsCorrect = false;
+            dataTable += `<tr class="bold-table"><th>${binary[1]}</th><th>${binary[0]} </th><td> ${calculatedSum} </td><td> ${calculatedCarry} </td><td class="failure-table"> ${sum} </td><td class="failure-table"> ${carry} </td></tr>`;
+        }
+        else {
+            dataTable += `<tr class="bold-table"><th>${binary[1]}</th><th>${binary[0]} </th><td> ${calculatedSum} </td><td> ${calculatedCarry} </td><td class="success-table"> ${sum} </td><td class="success-table"> ${carry} </td></tr>`;
         }
     }
 
@@ -91,7 +97,7 @@ export function fullAdderTest(inputA, inputB, carryInput, carryOut, sumOut) {
         const aXorb = computeXor(input0.output, input1.output);
 
         // calculated sum is ((a xor b) xor carry_in)
-        const calculatedSum = computeXor(aXorb, carryIn.output);
+        const calculatedSum = computeXor(aXorb, carryIn.output) ? 1 : 0;
 
         // calculated carry is a.b + (a xor b).carry_in
         const calculatedCarry = computeOr(
@@ -100,15 +106,21 @@ export function fullAdderTest(inputA, inputB, carryInput, carryOut, sumOut) {
         ) ? 1 : 0;
 
         // simulate the circuit
-        testSimulation(gates_list);
+        if(!testSimulation(gates_list)){
+            return;
+        }
         const sum = gates_list[sumOut].output ? 1 : 0;
         const carry = gates_list[carryOut].output ? 1 : 0;
 
-        dataTable += `<tr><th>${binary[2]}</th><th>${binary[1]}</th><th>${binary[0]} </th><td> ${calculatedSum} </td><td> ${calculatedCarry} </td><td> ${sum} </td><td> ${carry}</td></tr>`;
-
-
+        
+        
         if (sum != calculatedSum || carry != calculatedCarry) {
             circuitIsCorrect = false;
+            dataTable += `<tr class="bold-table"><th>${binary[2]}</th><th>${binary[1]}</th><th>${binary[0]} </th><td> ${calculatedSum} </td><td> ${calculatedCarry} </td><td class="failure-table"> ${sum} </td><td class="failure-table"> ${carry}</td></tr>`;
+        }
+        else
+        {
+            dataTable += `<tr class="bold-table"><th>${binary[2]}</th><th>${binary[1]}</th><th>${binary[0]} </th><td> ${calculatedSum} </td><td> ${calculatedCarry} </td><td class="success-table"> ${sum} </td><td class="success-table"> ${carry}</td></tr>`;
         }
     }
 
@@ -217,7 +229,9 @@ export function rippleAdderTest(
         );
 
         // simulate the circuit
-        testSimulationFA(fA, gates_list);
+        if(!testSimulationFA(fA, gates_list)){
+            return;
+        }
         const sumSout0 = gates_list[outputS0].output;
         const sumSout1 = gates_list[outputS1].output;
         const sumSout2 = gates_list[outputS2].output;

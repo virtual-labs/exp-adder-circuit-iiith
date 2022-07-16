@@ -1,6 +1,6 @@
 import { registerGate, jsPlumbInstance } from "./main.js";
 import { setPosition } from "./layout.js";
-import { gates } from "./gate.js";
+import { clearResult, gates, printErrors } from "./gate.js";
 import {
   computeAnd,
   computeOr,
@@ -180,58 +180,60 @@ export function getResultFA(fa) {
 
 // Checks if the connections are correct
 export function checkConnectionsFA() {
-  let correctConnection = true;
   for (let faID in fullAdder) {
     const gate = fullAdder[faID];
+    const id = document.getElementById(gate.id);
     if (gate.coutIsConnected === false) {
-      correctConnection = false;
-      break;
+      printErrors("Highlighted component not connected properly\n",id);
+      return false;
+
     }
     if (gate.sumIsConnected === false) {
-      correctConnection = false;
-      break;
+      printErrors("Highlighted component not connected properly\n",id);
+      return false;
+
     }
 
     // Check if all the inputs are connected
     if (gate.a0 == null || gate.a0.length === 0) {
-      correctConnection = false;
-      break;
+      printErrors("Highlighted component not connected properly\n",id);
+      return false;
+
     }
     if (gate.b0 == null || gate.b0.length === 0) {
-      correctConnection = false;
-      break;
+      printErrors("Highlighted component not connected properly\n",id);
+      return false;
+
     }
     if (gate.cin == null || gate.cin.length === 0) {
-      correctConnection = false;
-      break;
+      printErrors("Highlighted component not connected properly\n",id);
+      return false;
+
     }
   }
   for (let gateId in gates) {
     const gate = gates[gateId];
+    const id = document.getElementById(gate.id);
     if (gate.isInput) {
       if (gate.isConnected === false) {
-        correctConnection = false;
-        break;
+        printErrors("Highlighted component not connected properly\n",id);
+        return false;
       }
     }
     if (gate.isOutput) {
       if (gate.inputs.length === 0) {
-        correctConnection = false;
-        break;
+        printErrors("Highlighted component not connected properly\n",id);
+        return false;
       }
     }
   }
 
-  if (correctConnection) {
-    return true;
-  } else {
-    alert("Connections are not correct");
-    return false;
-  }
+  return true;
 }
 
 // Simulates the circuit
 export function simulateFA() {
+  clearResult();
   if (!checkConnectionsFA()) {
     return;
   }
@@ -270,7 +272,8 @@ export function simulateFA() {
 // Simulates the circuit for given fulladders and gates; Used for testing the circuit for all values
 export function testSimulationFA(fA, gates) {
   if (!checkConnectionsFA()) {
-    return;
+    document.getElementById("table-body").innerHTML = "";
+    return false;
   }
 
   // reset output in gate
@@ -294,6 +297,7 @@ export function testSimulationFA(fA, gates) {
   for (let key in finalOutputs) {
     gates[key].output = getOutputFA(finalOutputs[key][0], finalOutputs[key][1]);
   }
+  return true;
 }
 
 // Delete Full Adder
