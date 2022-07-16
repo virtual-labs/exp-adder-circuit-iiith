@@ -1,4 +1,4 @@
-import { setCoordinates,fillInputDots,fillColor,objectDisappear,objectAppear,setColor,unsetColor,calculateAnd,calculateXor,calculateFullAdder} from "./animation-utility.js";
+import { setCoordinates,fillInputDots,fillColor,objectDisappear,objectAppear,setColor,unsetColor,calculateFullAdder} from "./animation-utility.js";
 
 'use strict'
 
