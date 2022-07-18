@@ -1,4 +1,4 @@
-import { setCoordinates,fillInputDots,fillColor,objectDisappear,objectAppear,setColor,unsetColor,calculateFullAdder} from "./animation-utility.js";
+import { setCoordinates,fillInputDots,fillColor,objectDisappear,objectAppear,setter,calculateFullAdder} from "./animation-utility.js";
 
 'use strict'
 
@@ -363,8 +363,6 @@ function outputSetter4(){
     objectDisappear(dots[6]);
     const arr = calculateFullAdder(textInput[6].textContent,textInput[7].textContent,C3); // [sum,carry]
     textOutput[3].textContent = arr[0];
-    console.log(textOutput[3].textContent);
-    console.log(objects[12]);
     setter(textOutput[3].textContent,objects[12]);
     objectAppear(textOutput[3]);
 }
@@ -383,15 +381,6 @@ function display() {
 function reboot() {
     for(const text of textInput){
         text.textContent = 2;
-    }
-}
-
-function setter(value, component) {
-    if (value === "1") {
-        unsetColor(component);
-    }
-    else if (value === "0") {
-        setColor(component);
     }
 }
 
@@ -421,19 +410,19 @@ function simulationStatus() {
     if (!decide) {
         startCircuit();
     }
-    else if (decide) {
+    else {
         stopCircuit();
     }
 }
 function stopCircuit() {
-    if (timeline.time() !== 0 && timeline.progress() !== 1) {
+    if (timeline.progress() !== 1) {
         timeline.pause();
         observ.innerHTML = "Simulation has been stopped.";
         decide = false;
         status.innerHTML = "Start";
         speed.selectedIndex = 0;
     }
-    else if (timeline.progress() === 1) {
+    else {
         observ.innerHTML = "Please Restart the simulation";
     }
 }
@@ -455,7 +444,7 @@ function startCircuit() {
         status.innerHTML = "Pause";
         speed.selectedIndex = 0;
     }
-    else if (timeline.progress() === 1) {
+    else {
         observ.innerHTML = "Please Restart the simulation";
     }
 }

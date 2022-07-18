@@ -29,6 +29,15 @@ export function unsetColor(object) {
     fillColor(object, "#29e");
 }
 
+export function setter(value, component) {
+    if (value === "1") {
+        unsetColor(component);
+    }
+    else if (value === "0") {
+        setColor(component);
+    }
+}
+
 export function calculateFullAdder(a, b, cin) {
     let sum = parseInt(a) + parseInt(b) + parseInt(cin);
     switch (sum) {

@@ -76,24 +76,28 @@ function changeTabs(e) {
   document.getElementById(task).classList.add("is-active");
 
   // Half adder
-  if (task === "task1") {
-    unbindEvent();
-    connectGate();
-    refreshWorkingArea();
-    initHalfAdder();
-    window.simulate = simulate;
-  } else if (task === "task2") {
-    unbindEvent();
-    connectGate();
-    refreshWorkingArea();
-    initFullAdder();
-    window.simulate = simulate;
-  } else if (task === "task3") {
-    unbindEvent();
-    connectFA();
-    refreshWorkingArea();
-    initRippleAdder();
-    window.simulate = simulateFA;
+  switch (task) {
+    case "task1":
+      unbindEvent();
+      connectGate();
+      refreshWorkingArea();
+      initHalfAdder();
+      window.simulate = simulate;
+      break;
+    case "task2":
+      unbindEvent();
+      connectGate();
+      refreshWorkingArea();
+      initFullAdder();
+      window.simulate = simulate;
+      break;
+    case "task3":
+      unbindEvent();
+      connectFA();
+      refreshWorkingArea();
+      initRippleAdder();
+      window.simulate = simulateFA;
+      break; 
   }
   updateToolbar();
   updateInstructions();
@@ -154,13 +158,6 @@ function clearObservations() {
   document.getElementById("table-head").innerHTML = head;
   document.getElementById("result").innerHTML = "";
 }
-
-// // Instruction box
-// const instructionBox = document.getElementsByClassName("instructions-box")[0];
-// instructionBox.addEventListener("click", (e) => {
-//   instructionBox.classList.toggle("expand");
-// });
-
 
 // Making webpage responsive
 

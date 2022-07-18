@@ -184,29 +184,29 @@ export function checkConnectionsFA() {
     const gate = fullAdder[faID];
     const id = document.getElementById(gate.id);
     if (gate.coutIsConnected === false) {
-      printErrors("Highlighted component not connected properly\n",id);
+      printErrors("Cout of Full Adder not connected\n",id);
       return false;
 
     }
     if (gate.sumIsConnected === false) {
-      printErrors("Highlighted component not connected properly\n",id);
+      printErrors("Sum of Full Adder not connected\n",id);
       return false;
 
     }
 
     // Check if all the inputs are connected
     if (gate.a0 == null || gate.a0.length === 0) {
-      printErrors("Highlighted component not connected properly\n",id);
+      printErrors("A0 of Full Adder not connected\n",id);
       return false;
 
     }
     if (gate.b0 == null || gate.b0.length === 0) {
-      printErrors("Highlighted component not connected properly\n",id);
+      printErrors("B0 of Full Adder not connected\n",id);
       return false;
 
     }
     if (gate.cin == null || gate.cin.length === 0) {
-      printErrors("Highlighted component not connected properly\n",id);
+      printErrors("Cin of Full Adder not connected\n",id);
       return false;
 
     }
