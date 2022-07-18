@@ -4,5 +4,5 @@
 
 3. Design a 3 bit full subtractor using EX-OR, AND, OR and NOT gates. Given X, Y and Z, the circuit should output D (difference) and B (Borrow). D = X (ex-or) Y (ex-or) Z and B = X'.Y + Y.Z + X'.Z
 
-4. Can the Final OR gate in the Full Adder circuit (given in the theory section) be replaced by an EX-OR gate ? If yes why? If no Why not?
+4. Can the Final OR gate in the Full Adder circuit (given in the theory section) be replaced by an EX-OR gate ? If yes why? If no why not?
 
