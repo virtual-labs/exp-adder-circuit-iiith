@@ -30,31 +30,26 @@ export const wireColours = [
 // Contextmenu
 const menu = document.querySelector(".menu");
 const menuOption = document.querySelector(".menu-option");
-let menuVisible = false;
-
-const toggleMenu = (command) => {
-  menu.style.display = command === "show" ? "block" : "none";
-  menuVisible = !menuVisible;
-};
 
 export const setPosition = ({ top, left }) => {
   menu.style.left = `${left}px`;
   menu.style.top = `${top}px`;
-  toggleMenu("show");
+  menu.style.display = "block";
 };
 
-window.addEventListener("click", (e) => {
-  if (menuVisible) toggleMenu("hide");
+window.addEventListener("click", e => {
+  if (menu.style.display != "none")
+  {
+    menu.style.display = "none";
+  }
   window.selectedComponent = null;
   window.componentType = null;
 });
 
-menuOption.addEventListener("click", (e) => {
+menuOption.addEventListener("click", e => {
   if (e.target.innerHTML === "Delete") {
     if (window.componentType === "gate") {
       deleteElement(window.selectedComponent);
-    } else if (window.componentType === "fullAdder") {
-      deleteFA(window.selectedComponent);
     }
   }
   window.selectedComponent = null;
