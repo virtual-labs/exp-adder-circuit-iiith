@@ -36,7 +36,7 @@
             "correctAnswer": "b",
             "explanations": {
                 "a": "This set can be obtained at A = 0 and B = 0.",
-                "b": "\u20188\u2019 This set can not be obtainedat any value of A and B.",
+                "b": "This set can not be obtained at any value of A and B.",
                 "c": "This set can be obtained at A = 0 and B = 1.",
                 "d": "This set can be obtained at A = 1 and B = 1."
             },
