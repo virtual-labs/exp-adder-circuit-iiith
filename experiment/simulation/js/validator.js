@@ -32,9 +32,11 @@ export function halfAdder(inputA, inputB, carryOut, sumOut) {
     const input1 = gates_list[inputB];
     let circuitIsCorrect = true;
 
-    let dataTable = "";
-    clearResult();
+    let dataTable = "";  
 
+    let head = '<tr><th colspan="2">Inputs</th><th colspan="2">Expected Values</th><th colspan="2">Observed Values</th></tr><tr><th>A</th><th>B</th><th>Sum</th><th>Carry</th><th>Sum</th><th>Carry</th></tr>';    
+    document.getElementById("table-head").innerHTML = head;
+    
     for (let i = 0; i < 4; i++) {
         //convert i to binary
         let binary = i.toString(2).padStart(2, "0");
@@ -84,6 +86,8 @@ export function fullAdderTest(inputA, inputB, carryInput, carryOut, sumOut) {
     const carryIn = gates_list[carryInput];
     let circuitIsCorrect = true;
     let dataTable = "";
+    let head = '<tr><th colspan="3">Inputs</th><th colspan="2">Expected Values</th><th colspan="2">Observed Values</th></tr><tr><th>A</th><th>B</th><th>Cin</th><th>Sum</th><th>Carry</th><th>Sum</th><th>Carry</th></tr>';
+    document.getElementById("table-head").innerHTML = head;
 
     for (let i = 0; i < 8; i++) {
         // covert i to binary

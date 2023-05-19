@@ -2,7 +2,11 @@
 ### Subject Matter Experts
 | SNo. | Name | Email | Institute | ID |
 | :---: | :---: | :---: | :---: | :---: |
+<<<<<<< HEAD
 | 1 | name | email | institute | id |
+=======
+| 1 | - | - | - | - |
+>>>>>>> dev
 
 ### Developers
 | SNo. | Name | Email | Institute | ID |

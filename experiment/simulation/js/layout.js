@@ -138,19 +138,7 @@ function updateToolbar() {
 // Clear observations
 function clearObservations() {
   document.getElementById("table-body").innerHTML = "";
-  let head = "";
-
-  if (window.currentTab === "task1") {
-    head =
-      '<tr><th colspan="2">Inputs</th><th colspan="2">Expected Values</th><th colspan="2">Observed Values</th></tr><tr><th>A</th><th>B</th><th>Sum</th><th>Carry</th><th>Sum</th><th>Carry</th></tr>';
-  } else if (window.currentTab === "task2") {
-    head =
-      '<tr><th colspan="3">Inputs</th><th colspan="2">Expected Values</th><th colspan="2">Observed Values</th></tr><tr><th>A</th><th>B</th><th>Cin</th><th>Sum</th><th>Carry</th><th>Sum</th><th>Carry</th></tr>';
-  } else if (window.currentTab === "task3") {
-    head = "";
-  }
-
-  document.getElementById("table-head").innerHTML = head;
+  document.getElementById("table-head").innerHTML = "";
   document.getElementById("result").innerHTML = "";
 }
 
