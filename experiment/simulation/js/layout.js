@@ -48,8 +48,13 @@ window.addEventListener("click", e => {
 
 menuOption.addEventListener("click", e => {
   if (e.target.innerHTML === "Delete") {
+
     if (window.componentType === "gate") {
       deleteElement(window.selectedComponent);
+    }
+
+    else if(window.componentType === "fullAdder"){
+      deleteFA(window.selectedComponent);
     }
   }
   window.selectedComponent = null;
