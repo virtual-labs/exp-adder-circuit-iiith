@@ -29,7 +29,7 @@
 * Drag the second XOR gate and connect its inputs with CarryIn input bit and the output point of the first XOR gate. Connect its output point with Sum output bit. 
 * Drag the first AND gate and connect its inputs with CarryIn input bit and the output point of the first XOR gate. 
 * Drag the second AND gate and connect its inputs with A and B inputs.
-* Drag the first XOR gate and connect its inputs with output points of the two AND gates. Connect its output point with CarryOut output bit. 
+* Drag the third XOR gate and connect its inputs with output points of the two AND gates. Connect its output point with CarryOut output bit. 
 * Click on "Simulate" and observe the values of Sum and Carry for different input values of A,B and CarryIn.
 
 ## Observations - 

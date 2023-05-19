@@ -211,7 +211,7 @@ function outputSetter(){
 }
 
 function display() {
-    observ.innerHTML = "Simulation has finished. Press Restart to start again"
+    observ.innerHTML = "Simulation has finished. Please click on Reset and repeat the instructions given to start again."
 }
 
 function reboot() {
