@@ -26,14 +26,14 @@
             "difficulty": "intermediate"
         },
         {
-            "question": "3. XNOR gate is a combination of which of the following gates:",
+            "question": "3. XNOR cannot be a combination of which of the following gates:",
             "answers": {
                 "a": "XOR and NOT",
                 "b": "OR and NOT",
                 "c": "AND and NAND",
                 "d": "NAND and XOR"
             },
-            "correctAnswer": "d",
+            "correctAnswer": "c",
             "explanations": {},
             "difficulty": "beginner"
         },
