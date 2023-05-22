@@ -94,7 +94,15 @@ export const connectFA = function () {
       return false;
     } else if (start_uuid === "output" && end_uuid === "output") {
       return false;
-    } else {
+    } 
+    
+    if (toEndpoint.connections.length > 0) {
+      console.log(toEndpoint.connections.length);
+      // If it has a connection, do not establish a new connection
+      return false;
+    }
+    
+    else {
       jsPlumbInstance.connect({
         uuids: [fromEndpoint.uuid, toEndpoint.uuid],
         paintStyle: { stroke: wireColours[num_wires], strokeWidth: 4 },
