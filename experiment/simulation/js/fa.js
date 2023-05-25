@@ -337,4 +337,15 @@ export function deleteFA(id) {
 
     gates[key].inputs = [];
   }
+
+  for (let elem in gates) {
+    if (gates[elem].inputs.includes(fa)) {
+      gates[elem].removeInput(fa);
+    }
+    if(gates[elem].outputs.includes(fa)) {
+      gates[elem].removeOutput(fa);
+      if(gates[elem].isInput && gates[elem].outputs.length ==0)
+      gates[elem].setConnected(false);
+    }
+  }
 }
