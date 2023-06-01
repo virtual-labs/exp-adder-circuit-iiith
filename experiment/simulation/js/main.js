@@ -117,8 +117,10 @@ export const connectFA = function () {
           let pos = "";
           if (Object.keys(fromEndpoint.overlays)[0].includes("sum")) {
             pos = "Sum";
+            input.addSum(fajs.fullAdder[toEndpoint.elementId]);
           } else if (Object.keys(fromEndpoint.overlays)[0].includes("cout")) {
             pos = "Carry";
+            input.addCout(fajs.fullAdder[toEndpoint.elementId]);
           }
           input.setConnected(true, pos);
           if (Object.keys(toEndpoint.overlays)[0].includes("a")) {
@@ -133,8 +135,10 @@ export const connectFA = function () {
           let pos = "";
           if (Object.keys(toEndpoint.overlays)[0].includes("sum")) {
             pos = "Sum";
+            input.addSum(fajs.fullAdder[fromEndpoint.elementId]);
           } else if (Object.keys(toEndpoint.overlays)[0].includes("cout")) {
             pos = "Carry";
+            input.addCout(fajs.fullAdder[fromEndpoint.elementId]);
           }
           input.setConnected(true, pos);
           if (Object.keys(fromEndpoint.overlays)[0].includes("a")) {
@@ -180,8 +184,10 @@ export const connectFA = function () {
           let pos = "";
           if (Object.keys(fromEndpoint.overlays)[0].includes("sum")) {
             pos = "Sum";
+            input.addSum(output);
           } else if (Object.keys(fromEndpoint.overlays)[0].includes("cout")) {
             pos = "Carry";
+            input.addCout(output);
           }
           input.setConnected(true, pos);
           output.addInput(input);
@@ -194,8 +200,10 @@ export const connectFA = function () {
           let pos = "";
           if (Object.keys(toEndpoint.overlays)[0].includes("sum")) {
             pos = "Sum";
+            input.addSum(output);
           } else if (Object.keys(toEndpoint.overlays)[0].includes("carry")) {
             pos = "Carry";
+            input.addCout(output);
           }
           input.setConnected(true, pos);
           output.addInput(input);
