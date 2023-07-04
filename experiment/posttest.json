@@ -2,7 +2,7 @@
     "version": 2.0,
     "questions": [
         {
-            "question": "1. In a half adder, the output is high if the inputs are:",
+            "question": "1. In a half adder, the 'Carry' output is high if the inputs are:",
             "answers": {
                 "a": "1, 1",
                 "b": "0, 0",
@@ -14,7 +14,7 @@
             "difficulty": "intermediate"
         },
         {
-            "question": "2. In a ripple carry adder, which of the following is not the correct representation for the value of S:",
+            "question": "2. In a ripple carry adder, which of the following is not the correct representation of any of the intermediate outputs(output after every intermediate gate) or final outputs that are present at each stage of the adder:",
             "answers": {
                 "a": "A XOR B XOR Cin",
                 "b": "(A XOR B) AND Cin",
@@ -22,7 +22,12 @@
                 "d": "(A AND B) OR (Cin AND (A XOR B))"
             },
             "correctAnswer": "c",
-            "explanations": {},
+            "explanations": {
+                "a" : "The Sum outputs of the full adders at each stage in a ripple carry adder are calculated as: SUM = A XOR B XOR Cin",
+                "b" : "In each full adder of a ripple carry adder, ((A XOR B) AND Cin), (A AND B) are given as inputs to an OR Gate to get the Carry Output of that full adder.",
+                "c" : "None of the intermediary or final stages/gates in a ripple carry adder output this boolean expression.",
+                "d" : "In each full adder of a ripple carry adder, ((A XOR B) AND Cin), (A AND B) are given as inputs to an OR Gate to get the Carry Output of that full adder. So, CarryOut = (A AND B) OR (Cin AND (A XOR B)) for each full adder."
+            },
             "difficulty": "intermediate"
         },
         {
@@ -36,7 +41,7 @@
             "correctAnswer": "b",
             "explanations": {
                 "a": "This set can be obtained at A = 0 and B = 0.",
-                "b": "\u20188\u2019 This set can not be obtainedat any value of A and B.",
+                "b": "This set can not be obtained at any value of A and B.",
                 "c": "This set can be obtained at A = 0 and B = 1.",
                 "d": "This set can be obtained at A = 1 and B = 1."
             },

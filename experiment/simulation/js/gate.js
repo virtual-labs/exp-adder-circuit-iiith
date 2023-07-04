@@ -11,6 +11,7 @@ import {
     computeNand,
     computeNor
 } from "./validator.js";
+import { checkConnectionsFA } from "./fa.js";
 
 'use strict';
 export let gates = {}; // Dictionary of gates with their IDs as keys
@@ -33,6 +34,7 @@ export class Gate {
         this.inputPoints = [];
         this.outputPoints = [];
         this.inputs = []; // List of input gates
+        this.outputs=[]; //List of output gates
         this.output = null; // Output value
         this.isInput = false;
         this.isOutput = false;
@@ -47,13 +49,28 @@ export class Gate {
         this.inputs.push(gate);
     }
 
+    addOutput(gate) {
+        this.outputs.push(gate);
+    }
+
     // Removes input from the gate
     removeInput(gate) {
-        let index = this.inputs.indexOf(gate);
-        if (index > -1) {
-            this.inputs.splice(index, 1);
+        for (let i = this.inputs.length - 1; i >= 0; i--) {
+            if (this.inputs[i] === gate) {
+              this.inputs.splice(i, 1);
+                }
+            }
+    }
+
+    removeOutput(gate) {
+        // Find and remove all occurrences of gate
+        for (let i = this.outputs.length - 1; i >= 0; i--) {
+        if (this.outputs[i] === gate) {
+        this.outputs.splice(i, 1);
+            }
         }
     }
+    
     updatePosition(id) {
         this.positionY =
             window.scrollY + document.getElementById(id).getBoundingClientRect().top; // Y
@@ -218,8 +235,17 @@ function setInput(event) {
 window.setInput = setInput;
 
 export function clearResult() {
+    // clear result
     const result = document.getElementById("result");
     result.innerHTML = "";
+
+    // clear table-body
+    const table_elem = document.getElementById("table-body");
+    table_elem.innerHTML = "";
+
+    // clear table-head
+    const table_elem_head = document.getElementById("table-head");
+    table_elem_head.innerHTML = "";
 }
 
 export function printErrors(message,objectId) {
@@ -241,7 +267,7 @@ export function checkConnections() {
         if (gate.inputPoints.length != gate.inputs.length) {
             printErrors("Highlighted component not connected properly\n",id);
             return false;
-        } else if (gate.isConnected === false && gate.isOutput === false) {
+        } else if ((gate.isConnected === false || gate.outputs.length===0) && gate.isOutput === false) {
             printErrors("Highlighted component not connected properly\n",id);
             return false;
         }
@@ -277,6 +303,13 @@ export function simulate() {
             }
         }
     }
+
+    // Displays message confirming Simulation completion
+    let message = "Simulation has finished";
+    const result = document.getElementById('result');
+    result.innerHTML += message;
+    result.className = "success-message";
+    setTimeout(clearResult, 2000);
 }
 
 window.simulate = simulate;
@@ -308,11 +341,18 @@ export function testSimulation(gates) {
 export function submitCircuit() {
     clearResult();
     document.getElementById("table-body").innerHTML = "";
+  
     if (window.currentTab === "task1") {
+        if(!checkConnections())
+        return;
         halfAdder("Input-0", "Input-1", "Output-3", "Output-2");
     } else if (window.currentTab === "task2") {
+        if(!checkConnections())
+        return;
         fullAdderTest("Input-0", "Input-1", "Input-2", "Output-4", "Output-3");
     } else if (window.currentTab === "task3") {
+        if(!checkConnectionsFA())
+        return;
         rippleAdderTest(
             "Input-0",
             "Input-1",
@@ -330,6 +370,23 @@ export function submitCircuit() {
             "Output-11"
         );
     }
+    // Refresh the input bit values to default 1 and output bit values to default empty black circles after submitting
+    for (let gateId in gates) {
+        const gate = gates[gateId];
+        if (gate.isInput) {
+            gate.setOutput(true);
+            let element = document.getElementById(gate.id);
+            element.className = "high";
+            element.childNodes[0].innerHTML = "1";
+        }
+        if(gate.isOutput)
+        {
+            gate.setOutput(null);
+            let element = document.getElementById(gate.id);
+            element.className = "output";
+            element.childNodes[0].innerHTML = "";
+        }
+    }
 }
 window.submitCircuit = submitCircuit;
 
@@ -341,6 +398,11 @@ export function deleteElement(gateid) {
     for (let elem in gates) {
         if (gates[elem].inputs.includes(gate)) {
             gates[elem].removeInput(gate);
+        }
+        if(gates[elem].outputs.includes(gate)) {
+            gates[elem].removeOutput(gate);
+            if(gates[elem].isInput && gates[elem].outputs.length ==0)
+            gates[elem].setConnected(false);
         }
     }
     delete gates[gateid];

@@ -34,6 +34,8 @@ export class FullAdder {
     this.cin = [];
     this.sum = null;
     this.cout = null;
+    this.outCout = [];
+    this.outSum = [];
     this.inputPoints = [];
     this.outputPoints = [];
     this.coutIsConnected = false;
@@ -91,6 +93,14 @@ export class FullAdder {
     this.cout = cout;
   }
 
+  addCout(gate) {
+    this.outCout.push(gate);
+  }
+
+  addSum(gate) {
+    this.outSum.push(gate);
+  } 
+
   // adds input endpoints points to the list of input points
   addInputPoints(input) {
     this.inputPoints.push(input);
@@ -99,6 +109,24 @@ export class FullAdder {
   // Adds the output endpoints to the list of output points
   addOutputPoints(output) {
     this.outputPoints.push(output);
+  }
+
+  // Removes the selected gates from outCout and outSum
+  removeoutCout(gate) {
+   for (let i = this.outCout.length - 1; i >= 0; i--) {
+       if (this.outCout[i] === gate) {
+         this.outCout.splice(i, 1);
+       }
+       }
+}
+
+  removeoutSum(gate) {
+    // Find and remove all occurrences of gate
+  for (let i = this.outSum.length - 1; i >= 0; i--) {
+    if (this.outSum[i] === gate) {
+      this.outSum.splice(i, 1);
+    }
+  }
   }
 
   // Generates the output of the full adder
@@ -183,12 +211,12 @@ export function checkConnectionsFA() {
   for (let faID in fullAdder) {
     const gate = fullAdder[faID];
     const id = document.getElementById(gate.id);
-    if (gate.coutIsConnected === false) {
+    if (gate.coutIsConnected === false || gate.outCout.length === 0) {
       printErrors("Cout of Full Adder not connected\n",id);
       return false;
 
     }
-    if (gate.sumIsConnected === false) {
+    if (gate.sumIsConnected === false || gate.outSum.length === 0) {
       printErrors("Sum of Full Adder not connected\n",id);
       return false;
 
@@ -215,7 +243,7 @@ export function checkConnectionsFA() {
     const gate = gates[gateId];
     const id = document.getElementById(gate.id);
     if (gate.isInput) {
-      if (gate.isConnected === false) {
+      if (gate.isConnected === false || gate.outputs.length===0) {
         printErrors("Highlighted component not connected properly\n",id);
         return false;
       }
@@ -267,6 +295,14 @@ export function simulateFA() {
       element.childNodes[0].innerHTML = "0";
     }
   }
+
+  // Displays message confirming Simulation completion
+  let message = "Simulation has finished";
+  const result = document.getElementById('result');
+  result.innerHTML += message;
+  result.className = "success-message";
+  setTimeout(clearResult, 2000);
+  
 }
 
 // Simulates the circuit for given fulladders and gates; Used for testing the circuit for all values
@@ -320,6 +356,12 @@ export function deleteFA(id) {
     if (fullAdder[key].cin[0] === fa) {
       fullAdder[key].cin = null;
     }
+    if(fullAdder[key].outCout.includes(fa)){
+      fullAdder[key].removeoutCout(fa);
+    }
+    if(fullAdder[key].outSum.includes(fa)){
+      fullAdder[key].removeoutSum(fa);
+ }
   }
 
   for (let key in finalOutputs) {
@@ -328,5 +370,16 @@ export function deleteFA(id) {
     }
 
     gates[key].inputs = [];
+  }
+
+  for (let elem in gates) {
+    if (gates[elem].inputs.includes(fa)) {
+      gates[elem].removeInput(fa);
+    }
+    if(gates[elem].outputs.includes(fa)) {
+      gates[elem].removeOutput(fa);
+      if(gates[elem].isInput && gates[elem].outputs.length ==0)
+      gates[elem].setConnected(false);
+    }
   }
 }
