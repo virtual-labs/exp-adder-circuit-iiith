@@ -57,7 +57,7 @@
             },
             "correctAnswer": "a",
             "explanations": {},
-            "difficulty": "begineer"
+            "difficulty": "beginner"
         },
         {
             "question": "5. How many input lines are there in FULL ADDER circuit:",
@@ -69,7 +69,7 @@
             },
             "correctAnswer": "c",
             "explanations": {},
-            "difficulty": "begineer"
+            "difficulty": "beginner"
         }
     ]
 }
