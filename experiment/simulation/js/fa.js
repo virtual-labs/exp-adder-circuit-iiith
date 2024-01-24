@@ -1,6 +1,6 @@
 import { registerGate, jsPlumbInstance } from "./main.js";
 import { setPosition } from "./layout.js";
-import { clearResult, gates, printErrors } from "./gate.js";
+import { checkConnections, clearResult, gates, printErrors } from "./gate.js";
 import {
   computeAnd,
   computeOr,
@@ -20,6 +20,7 @@ export function clearFAs() {
 
 // {output-id: [gate,pos]}
 export const finalOutputs = {
+  "Output-2": [],
   "Output-5": [],
   "Output-8": [],
   "Output-11": [],
@@ -305,6 +306,87 @@ export function simulateFA() {
   
 }
 
+export function getResultAS(node){
+  // check if fa type is Gate object
+  if (node.constructor.name === "Gate") {
+    for (let i = 0; i < node.inputs.length; i++) {
+      if (node.inputs[i].output == null) {
+          getResultAS(node.inputs[i]);
+      }
+    } 
+    node.generateOutput();
+    return;
+  }
+  
+  let fa = node;
+
+  if (fa.cout != null && fa.sum != null) {
+    return;
+  }
+
+  if (getOutputFA(fa.a0[0], fa.a0[1]) == null) {
+    getResultAS(fa.a0[0]);
+  }
+  if (getOutputFA(fa.b0[0], fa.b0[1]) == null) {
+    getResultAS(fa.b0[0]);
+  }
+  if (getOutputFA(fa.cin[0], fa.cin[1]) == null) {
+    getResultAS(fa.cin[0]);
+  }
+
+  fa.generateOutput();
+
+  return;
+}
+
+// Simulates the adder-subtractor circuit
+export function simulateAS() {
+  clearResult();
+  if (!checkConnectionsFA() || !checkConnections()) {
+    return;
+  }
+
+  // reset output in gate
+
+  for (let faID in fullAdder) {
+    fullAdder[faID].cout = null;
+    fullAdder[faID].sum = null;
+  }
+
+  for (let gateId in gates) {
+    const gate = gates[gateId];
+    if (!gate.isInput) {
+      gates[gateId].output = null;
+    }
+  }
+
+  for (let gateId in gates) {
+    if (gates[gateId].isOutput) {
+      getResultAS(gates[gateId].inputs[0]);
+    }
+  }
+
+  for (let key in finalOutputs) {
+    let element = document.getElementById(key);
+    gates[key].output = getOutputFA(finalOutputs[key][0], finalOutputs[key][1]);
+    if (gates[key].output) {
+      element.className = "high";
+      element.childNodes[0].innerHTML = "1";
+    } else {
+      element.className = "low";
+      element.childNodes[0].innerHTML = "0";
+    }
+  }
+
+  // Displays message confirming Simulation completion
+  let message = "Simulation has finished";
+  const result = document.getElementById('result');
+  result.innerHTML += message;
+  result.className = "success-message";
+  setTimeout(clearResult, 2000);
+  
+}
+
 // Simulates the circuit for given fulladders and gates; Used for testing the circuit for all values
 export function testSimulationFA(fA, gates) {
   if (!checkConnectionsFA()) {
@@ -327,6 +409,36 @@ export function testSimulationFA(fA, gates) {
   for (let gateId in gates) {
     if (gates[gateId].isOutput) {
       getResultFA(gates[gateId].inputs[0]);
+    }
+  }
+
+  for (let key in finalOutputs) {
+    gates[key].output = getOutputFA(finalOutputs[key][0], finalOutputs[key][1]);
+  }
+  return true;
+}
+
+export function testSimulationAS(fA, gates) {
+  if (!checkConnectionsFA() || !checkConnections()) {
+    document.getElementById("table-body").innerHTML = "";
+    return false;
+  }
+
+  // reset output in gate
+  for (let faID in fA) {
+    fA[faID].cout = null;
+    fA[faID].sum = null;
+  }
+  for (let gateId in gates) {
+    const gate = gates[gateId];
+    if (!gate.isInput) {
+      gates[gateId].output = null;
+    }
+  }
+
+  for (let gateId in gates) {
+    if (gates[gateId].isOutput) {
+      getResultAS(gates[gateId].inputs[0]);
     }
   }
 
