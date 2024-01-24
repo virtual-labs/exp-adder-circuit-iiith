@@ -1,4 +1,4 @@
-import { simulateFA, deleteFA } from "./fa.js";
+import { simulateFA, deleteFA, simulateAS } from "./fa.js";
 import { simulate, deleteElement } from "./gate.js";
 import {
   connectGate,
@@ -7,6 +7,7 @@ import {
   initHalfAdder,
   initFullAdder,
   initRippleAdder,
+  initAdderSubtractor,
   refreshWorkingArea,
 } from "./main.js";
 
@@ -98,6 +99,13 @@ function changeTabs(e) {
       initRippleAdder();
       window.simulate = simulateFA;
       break; 
+    case "task4":
+      unbindEvent();
+      connectFA();
+      refreshWorkingArea();
+      initAdderSubtractor();
+      window.simulate = simulateAS;
+      break; 
   }
   updateToolbar();
   updateInstructions();
@@ -118,6 +126,8 @@ const updateInstructions = () => {
     title = `Instructions<br>Implement a 1-bit full adder using logic gates`;
   } else if (task === "task3") {
     title = `Instructions<br>Implement a 4-bit ripple carry adder using full adders`;
+  } else if (task === "task4") {
+    title = `Instructions<br>Implement a 4-bit Adder-Subtractor using full adders and XOR Gates<br>The circuit must behave as an Adder when CarryIn = 0 <br>The circuit must behave as a Subtractor when CarryIn = 1`;
   }
   instructionBox.innerHTML = title;
 }
@@ -135,6 +145,9 @@ function updateToolbar() {
   } else if (window.currentTab === "task3") {
     elem =
       '<div class="component-button fulladder" onclick="addFA(event)"></div>';
+  } else if (window.currentTab === "task4") {
+    elem =
+      '<div class="component-button xor" onclick="addGate(event)">XOR</div><div class="component-button fulladder" onclick="addFA(event)"></div>';
   }
 
   document.getElementById("toolbar").innerHTML = elem;
