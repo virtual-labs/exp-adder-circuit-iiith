@@ -2,14 +2,15 @@ import * as gatejs from "./gate.js";
 import * as fajs from "./fa.js";
 import { wireColours } from "./layout.js";
 
+
 "use strict";
 
 let num_wires = 0;
-
+let conn;
 // Gets the coordinates of the mouse
 document.getScroll = function () {
-  if (window.pageYOffset != undefined) {
-    return [pageXOffset, pageYOffset];
+  if (window.scrollX != undefined) {
+    return [scrollX, scrollY];
   } else {
     let sx,
       sy,
@@ -29,15 +30,17 @@ export const jsPlumbInstance = jsPlumbBrowserUI.newInstance({
   maxConnections: -1,
   endpoint: {
     type: "Dot",
-    options: { radius: 6 },
+    options: { radius: 5 },
   },
   dragOptions: {
     containment: "parentEnclosed",
     containmentPadding: 5,
   },
   connector: "Flowchart",
+  // connectorClass : ".jtk-connector",
   paintStyle: { strokeWidth: 4, stroke: "#888888" },
   connectionsDetachable: false,
+  containment: true,
 });
 
 // This is an event listener for establishing connections between gates
@@ -61,10 +64,11 @@ export const connectGate = function () {
       // If it already has a connection, do not establish a new connection
       return false;
     } else {
-      jsPlumbInstance.connect({
+      conn= jsPlumbInstance.connect({
         uuids: [fromEndpoint.uuid, toEndpoint.uuid],
         paintStyle: { stroke: wireColours[num_wires], strokeWidth: 4 },
       });
+      
       num_wires++;
       num_wires = num_wires % wireColours.length;
       if (start_uuid === "output") {
@@ -103,7 +107,7 @@ export const connectFA = function () {
       // If it already has a connection, do not establish a new connection
       return false;
     } else {
-      jsPlumbInstance.connect({
+     jsPlumbInstance.connect({
         uuids: [fromEndpoint.uuid, toEndpoint.uuid],
         paintStyle: { stroke: wireColours[num_wires], strokeWidth: 4 },
       });
@@ -677,6 +681,42 @@ export function refreshWorkingArea() {
 }
 
 // Initialise Task 1 experiment when the page loads
+const refresh = document.getElementById("refresh");
+
+refresh.addEventListener("click", function (event) {
+  jsPlumbInstance.reset();
+  window.numComponents = 0;
+
+  gatejs.clearGates();
+  fajs.clearFAs();
+
+  if (window.currentTab === "task1") {
+    initHalfAdder();
+  } else if (window.currentTab === "task2") {
+    initFullAdder();
+  } else if (window.currentTab === "task3") {
+    initRippleAdder();
+  } else if (window.currentTab === "task4") {
+    initAdderSubtractor();
+  }
+
+  console.log(window.currentTab);
+});
+// console.log(conn);
+document.addEventListener('contextmenu', function(event) {
+  // Prevent the default context menu from appearing
+  event.preventDefault();
+  
+  // Get all elements with class 'jtk-connector jtk-hover'
+  var elements = document.querySelectorAll(".jtk-connector.jtk-hover");
+  console.log("Elements to be deleted:", elements);
+
+  // Iterate over elements and remove them from the DOM
+  elements.forEach(function(element) {
+  
+    element.parentNode.removeChild(element);
+  });
+});
 window.currentTab = "task1";
 connectGate();
 refreshWorkingArea();
