@@ -713,6 +713,7 @@ document.addEventListener('contextmenu', function(event) {
 
   // Iterate over elements and remove them from the DOM
   elements.forEach(function(element) {
+  
     element.parentNode.removeChild(element);
   });
 });

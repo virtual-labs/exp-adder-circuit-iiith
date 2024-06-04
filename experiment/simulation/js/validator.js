@@ -394,6 +394,110 @@ export function adder_subtractorTest(
             break;
         }
     }
+    console.log("answer :", circuitIsCorrect);
+ if (circuitIsCorrect == false)
+
+    {
+        for (
+            let i = 0;
+            i < 512;
+            i++ // 512 = 2^9 basically calculates all the possible combinations for 9 inputs
+        ) {
+            // covert i to binary
+            let binary = i.toString(2).padStart(9, "0");
+            binary = binary.split("").reverse().join("");
+            console.log(binary);
+    
+            inputA0.setOutput(binary[8] === "1");
+            inputB0.setOutput(binary[7] === "1");
+            inputA1.setOutput(binary[6] === "1");
+            inputB1.setOutput(binary[5] === "1");
+            inputA2.setOutput(binary[4] === "1");
+            inputB2.setOutput(binary[3] === "1");
+            inputA3.setOutput(binary[2] === "1");
+            inputB3.setOutput(binary[1] === "1");
+            carryIn.setOutput(binary[0] === "1");
+            console.log(binary)
+            // FOR FIRST XOR GATE
+            const xor1 = computeXor(carryIn.output, inputA0.output);
+            console.log(xor1);
+            // FOR FIRST ADDER
+            const aXorb = computeXor(inputB0.output, xor1);
+            console.log(aXorb);
+            // calculated sum is ((a xor b) xor carry_in)
+            const sumS0 = computeXor(aXorb, carryIn.output);
+            console.log(sumS0);
+            // calculated carry is a.b + (a xor b).c
+            const carryC1 = computeOr(
+                computeAnd(inputB0.output, xor1),
+                computeAnd(aXorb, carryIn.output)
+            );
+    
+            
+            // FOR SECOND XOR GATE
+            const xor2 = computeXor(carryIn.output, inputA1.output);
+            // FOR SECOND ADDER
+            const aXorb2 = computeXor(inputB1.output, xor2);
+            // calculated sum is ((a xor b) xor carry_in)
+            const sumS1 = computeXor(aXorb2, carryC1);
+            // calculated carry is a.b + (a xor b).c
+            const carryC2 = computeOr(
+                computeAnd(inputB1.output, xor2),
+                computeAnd(aXorb2, carryC1)
+            );
+    
+            
+            // FOR THIRD XOR GATE
+            const xor3 = computeXor(carryIn.output, inputA2.output);
+            // FOR THIRD ADDER
+            const aXorb3 = computeXor(inputB2.output, xor3);
+            // calculated sum is ((a xor b) xor carry_in)
+            const sumS2 = computeXor(aXorb3, carryC2);
+            // calculated carry is a.b + (a xor b).c
+            const carryC3 = computeOr(
+                computeAnd(inputB2.output, xor3),
+                computeAnd(aXorb3, carryC2)
+            );
+    
+            
+            // FOR FOURTH XOR GATE
+            const xor4 = computeXor(carryIn.output, inputA3.output);
+            // FOR FOURTH ADDER
+            const aXorb4 = computeXor(inputB3.output, xor4);
+            // calculated sum is ((a xor b) xor carry_in)
+            const sumS3 = computeXor(aXorb4, carryC3);
+            // calculated carry is a.b + (a xor b).c
+            const carryCout = computeOr(
+                computeAnd(inputB3.output, xor4),
+                computeAnd(aXorb4, carryC3)
+            );
+    
+            // simulate the circuit
+            if(!testSimulationAS(fA, gates_list)){
+                return;
+            }
+            const sumSout0 = gates_list[outputS0].output;
+            const sumSout1 = gates_list[outputS1].output;
+            const sumSout2 = gates_list[outputS2].output;
+            const sumSout3 = gates_list[outputS3].output;
+            const carryOut = gates_list[outputCout].output;
+            console.log(sumS0, sumSout0);
+            console.log(sumS1, sumSout1);
+            console.log(sumS2, sumSout2);
+            console.log(sumS3, sumSout3);
+            console.log(carryCout, carryOut);
+            if (
+                sumS0 != sumSout0 ||
+                sumS1 != sumSout1 ||
+                sumS2 != sumSout2 ||
+                sumS3 != sumSout3 ||
+                carryCout != carryOut
+            ) {
+                circuitIsCorrect = false;
+                break;
+            }
+        }
+    }
 
     const result = document.getElementById("result");
 
