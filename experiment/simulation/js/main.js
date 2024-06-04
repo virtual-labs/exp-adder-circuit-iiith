@@ -40,7 +40,7 @@ export const jsPlumbInstance = jsPlumbBrowserUI.newInstance({
   // connectorClass : ".jtk-connector",
   paintStyle: { strokeWidth: 4, stroke: "#888888" },
   connectionsDetachable: false,
-
+  containment: true,
 });
 
 // This is an event listener for establishing connections between gates
