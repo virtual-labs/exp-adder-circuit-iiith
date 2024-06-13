@@ -1,7 +1,8 @@
 import * as gatejs from "./gate.js";
 import * as fajs from "./fa.js";
 import { wireColours } from "./layout.js";
-
+import {deleteElement } from "./gate.js";
+import {deleteFA} from "./fa.js"
 
 "use strict";
 
@@ -703,20 +704,65 @@ refresh.addEventListener("click", function (event) {
   console.log(window.currentTab);
 });
 // console.log(conn);
-document.addEventListener('contextmenu', function(event) {
-  // Prevent the default context menu from appearing
-  event.preventDefault();
-  
-  // Get all elements with class 'jtk-connector jtk-hover'
-  var elements = document.querySelectorAll(".jtk-connector.jtk-hover");
-  console.log("Elements to be deleted:", elements);
+const menu = document.querySelector(".menu");
+const menuOption = document.querySelector(".menu-option");
+let menuVisible = false;
 
-  // Iterate over elements and remove them from the DOM
-  elements.forEach(function(element) {
-  
-    element.parentNode.removeChild(element);
-  });
+console.log(menu);
+console.log(menuOption);
+console.log(menuVisible);
+
+const toggleMenu = (command) => {
+  menu.style.display = command === "show" ? "block" : "none";
+  menuVisible = command === "show";
+};
+console.log("toggle", toggleMenu);
+
+export const setPosition = ({ top, left }) => {
+  menu.style.left = `${left}px`;
+  menu.style.top = `${top}px`;
+  toggleMenu("show");
+};
+console.log("setPosition", setPosition);
+
+window.addEventListener("click", () => {
+  console.log("menu is ", menuVisible);
+  if (menuVisible) toggleMenu("hide");
+  window.selectedComponent = null;
+  window.componentType = null;
 });
+document.addEventListener('contextmenu', function(event) {
+  event.preventDefault(); // Prevent the default context menu from appearing
+  menu.style.display = "block";
+  menu.style.left = `${event.clientX}px`;
+  menu.style.top = `${event.clientY}px`;
+var elements = document.querySelectorAll(".jtk-connector.jtk-hover");
+menuOption.addEventListener("click", (e) => {
+  console.log("element deleted", elements);
+  if (e.target.innerHTML === "Delete") {
+    if (window.componentType === "gate") {
+      console.log("op1");
+      deleteElement(window.selectedComponent);
+    }
+    else if (window.componentType === "fullAdder")
+      {
+        deleteFA(window.selectedComponent);
+      } else {
+      console.log("op2");
+      elements.forEach(function(element) {
+        element.parentNode.removeChild(element);
+      });
+    }
+  }
+  // window.selectedComponent = null;
+  // window.componentType = null;
+  toggleMenu("hide"); // Hide menu after selection
+});
+
+
+  toggleMenu("show");
+});
+
 window.currentTab = "task1";
 connectGate();
 refreshWorkingArea();
