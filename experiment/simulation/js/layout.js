@@ -1,5 +1,5 @@
-import { simulateFA, deleteFA, simulateAS } from "./fa.js";
-import { simulate, deleteElement } from "./gate.js";
+import { simulateFA, simulateAS } from "./fa.js";
+import { simulate } from "./gate.js";
 import {
   connectGate,
   connectFA,
@@ -29,38 +29,6 @@ export const wireColours = [
 ];
 
 // Contextmenu
-const menu = document.querySelector(".menu");
-const menuOption = document.querySelector(".menu-option");
-
-export const setPosition = ({ top, left }) => {
-  menu.style.left = `${left}px`;
-  menu.style.top = `${top}px`;
-  menu.style.display = "block";
-};
-
-window.addEventListener("click", e => {
-  if (menu.style.display != "none")
-  {
-    menu.style.display = "none";
-  }
-  window.selectedComponent = null;
-  window.componentType = null;
-});
-
-menuOption.addEventListener("click", e => {
-  if (e.target.innerHTML === "Delete") {
-
-    if (window.componentType === "gate") {
-      deleteElement(window.selectedComponent);
-    }
-
-    else if(window.componentType === "fullAdder"){
-      deleteFA(window.selectedComponent);
-    }
-  }
-  window.selectedComponent = null;
-  window.componentType = null;
-});
 
 // Tabs
 

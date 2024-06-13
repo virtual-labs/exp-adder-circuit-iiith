@@ -48,6 +48,14 @@ A full adder adds two 1-bit binary numbers along with a carry brought in and pro
 
 Multiple full adders can be used to create adders of greater bit lengths. Each full adder uses the Cout of the previous adder as its Cin. This kind of adder is a ripple carry adder, since the carry bits "ripple" through the full adder stages. Note that the first (and only the first) full adder may be replaced by a half adder.
 
-
+**EQUATIONS**
+S0 = A0 ⊕  B0 ⊕ Cin
+C0 = A0B0 ⊕  B0Cin ⊕ CinA0
+S1 = A1 ⊕  B1 ⊕ C0
+C1 = A1B1 ⊕  B1C0 ⊕ C0A1
+S2 = A2 ⊕  B2 ⊕ C1
+C2 = A2B2 ⊕  B2C1 ⊕ C1A2
+S3 = A3 ⊕  B3 ⊕ C2
+C3 = A3B3 ⊕  B3C2 ⊕ C2A3
 
 **Refer to the text book Digital Design by Morris Mano to know more about these circuits.**
