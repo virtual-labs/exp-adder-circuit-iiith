@@ -4,9 +4,6 @@
 name: Deploy vktest
 on:
   workflow_dispatch:
-  branches:
-      - main
-      - testing
   
 jobs:
   build:
