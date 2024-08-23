@@ -1,15 +1,17 @@
 import * as gatejs from "./gate.js";
 import * as fajs from "./fa.js";
 import { wireColours } from "./layout.js";
+import {deleteElement } from "./gate.js";
+import {deleteFA} from "./fa.js"
 
 "use strict";
 
 let num_wires = 0;
-
+let conn;
 // Gets the coordinates of the mouse
 document.getScroll = function () {
-  if (window.pageYOffset != undefined) {
-    return [pageXOffset, pageYOffset];
+  if (window.scrollX != undefined) {
+    return [scrollX, scrollY];
   } else {
     let sx,
       sy,
@@ -29,15 +31,17 @@ export const jsPlumbInstance = jsPlumbBrowserUI.newInstance({
   maxConnections: -1,
   endpoint: {
     type: "Dot",
-    options: { radius: 6 },
+    options: { radius: 5 },
   },
   dragOptions: {
     containment: "parentEnclosed",
     containmentPadding: 5,
   },
   connector: "Flowchart",
+  // connectorClass : ".jtk-connector",
   paintStyle: { strokeWidth: 4, stroke: "#888888" },
   connectionsDetachable: false,
+  containment: true,
 });
 
 // This is an event listener for establishing connections between gates
@@ -61,10 +65,11 @@ export const connectGate = function () {
       // If it already has a connection, do not establish a new connection
       return false;
     } else {
-      jsPlumbInstance.connect({
+      conn= jsPlumbInstance.connect({
         uuids: [fromEndpoint.uuid, toEndpoint.uuid],
         paintStyle: { stroke: wireColours[num_wires], strokeWidth: 4 },
       });
+      
       num_wires++;
       num_wires = num_wires % wireColours.length;
       if (start_uuid === "output") {
@@ -82,7 +87,7 @@ export const connectGate = function () {
   });
 };
 
-// This is an event listener for establishing connections between Full adders and input output gates
+// This is an event listener for establishing connections between Full adders and gates
 export const connectFA = function () {
   jsPlumbInstance.bind("beforeDrop", function (data) {
     const fromEndpoint = data.connection.endpoints[0];
@@ -103,7 +108,7 @@ export const connectFA = function () {
       // If it already has a connection, do not establish a new connection
       return false;
     } else {
-      jsPlumbInstance.connect({
+     jsPlumbInstance.connect({
         uuids: [fromEndpoint.uuid, toEndpoint.uuid],
         paintStyle: { stroke: wireColours[num_wires], strokeWidth: 4 },
       });
@@ -111,6 +116,7 @@ export const connectFA = function () {
       num_wires = num_wires % wireColours.length;
       const start_type = fromEndpoint.elementId.split("-")[0];
       const end_type = toEndpoint.elementId.split("-")[0];
+      console.log(start_type, end_type);
       if (start_type === "FullAdder" && end_type === "FullAdder") {
         if (start_uuid === "output") {
           const input = fajs.fullAdder[fromEndpoint.elementId];
@@ -209,7 +215,62 @@ export const connectFA = function () {
           output.addInput(input);
           fajs.finalOutputs[fromEndpoint.elementId] = [input, pos];
         }
-      } else if (start_type === "Input" && end_type === "Output") {
+      } else if (start_type === "FullAdder" && end_type === "XOR") {
+        if (end_uuid === "output") {
+          const input = gatejs.gates[toEndpoint.elementId];
+          input.setConnected(true);
+          let pos = "";
+          if (Object.keys(fromEndpoint.overlays)[0].includes("a")) {
+            fajs.fullAdder[fromEndpoint.elementId].setA0([input, pos]);
+          } else if (Object.keys(fromEndpoint.overlays)[0].includes("b")) {
+            fajs.fullAdder[fromEndpoint.elementId].setB0([input, pos]);
+          } else if (Object.keys(fromEndpoint.overlays)[0].includes("cin")) {
+            fajs.fullAdder[fromEndpoint.elementId].setCin([input, pos]);
+          }
+          input.addOutput(fajs.fullAdder[fromEndpoint.elementId]);
+        }
+        else if (start_uuid === "output") {
+          const input = fajs.fullAdder[fromEndpoint.elementId];
+          const output = gatejs.gates[toEndpoint.elementId];
+          let pos = "";
+          if (Object.keys(fromEndpoint.overlays)[0].includes("sum")) {
+            pos = "Sum";
+            input.addSum(output);
+          } else if (Object.keys(fromEndpoint.overlays)[0].includes("cout")) {
+            pos = "Carry";
+            input.addCout(output);
+          }
+          input.setConnected(true, pos);
+          output.addInput(input);
+        }
+      } else if (start_type === "XOR" && end_type === "FullAdder") {
+        if (start_uuid === "output") {
+          const input = gatejs.gates[fromEndpoint.elementId];
+          input.setConnected(true);
+          let pos = "";
+          if (Object.keys(toEndpoint.overlays)[0].includes("a")) {
+            fajs.fullAdder[toEndpoint.elementId].setA0([input, pos]);
+          } else if (Object.keys(toEndpoint.overlays)[0].includes("b")) {
+            fajs.fullAdder[toEndpoint.elementId].setB0([input, pos]);
+          } else if (Object.keys(toEndpoint.overlays)[0].includes("cin")) {
+            fajs.fullAdder[toEndpoint.elementId].setCin([input, pos]);
+          }
+          input.addOutput(fajs.fullAdder[toEndpoint.elementId]);
+        } else if (start_uuid === "input") {
+          const input = fajs.fullAdder[toEndpoint.elementId];
+          const output = gatejs.gates[fromEndpoint.elementId];
+          let pos = "";
+          if (Object.keys(toEndpoint.overlays)[0].includes("sum")) {
+            pos = "Sum";
+            input.addSum(output);
+          } else if (Object.keys(toEndpoint.overlays)[0].includes("carry")) {
+            pos = "Carry";
+            input.addCout(output);
+          }
+          input.setConnected(true, pos);
+          output.addInput(input);
+        }
+      } else if ((start_type === "Input" || start_type==="XOR") && end_type === "Output") {
         if (start_uuid === "output") {
           const input = gatejs.gates[fromEndpoint.elementId];
           const output = gatejs.gates[toEndpoint.elementId];
@@ -218,7 +279,7 @@ export const connectFA = function () {
           fajs.finalOutputs[toEndpoint.elementId] = [input, ""];
           input.addOutput(output);
         }
-      } else if (start_type === "Output" && end_type === "Input") {
+      } else if (start_type === "Output" && (end_type === "Input"|| end_type==="XOR")) {
         if (start_uuid === "input") {
           const input = gatejs.gates[toEndpoint.elementId];
           const output = gatejs.gates[fromEndpoint.elementId];
@@ -226,6 +287,18 @@ export const connectFA = function () {
           output.addInput(input);
           fajs.finalOutputs[fromEndpoint.elementId] = [input, ""];
           input.addOutput(output);
+        }
+      } else {
+        if (start_uuid === "output") {
+          let input = gatejs.gates[fromEndpoint.elementId];
+          input.isConnected = true;
+          gatejs.gates[toEndpoint.elementId].addInput(input);
+          input.addOutput(gatejs.gates[toEndpoint.elementId]);
+        } else if (end_uuid === "output") {
+          let input = gatejs.gates[toEndpoint.elementId];
+          input.isConnected = true;
+          gatejs.gates[fromEndpoint.elementId].addInput(input);
+          input.addOutput(gatejs.gates[fromEndpoint.elementId]);
         }
       }
       // return true;
@@ -523,6 +596,82 @@ export function initRippleAdder() {
   }
 }
 
+export function initAdderSubtractor() {
+  const ids = [
+    "Input-0",
+    "Input-1",
+    "Output-2",
+    "Input-3",
+    "Input-4",
+    "Output-5",
+    "Input-6",
+    "Input-7",
+    "Output-8",
+    "Input-9",
+    "Input-10",
+    "Output-11",
+    "Output-12",
+    "Input-13",
+  ]; // [A0,B0,Sum0,A1,B1,Sum1,A2,B2,Sum2,A3,B3,Sum3,CarryOut, CarryIn]
+  const types = [
+    "Input",
+    "Input",
+    "Output",
+    "Input",
+    "Input",
+    "Output",
+    "Input",
+    "Input",
+    "Output",
+    "Input",
+    "Input",
+    "Output",
+    "Output",
+    "Input",
+  ];
+  const names = [
+    "A0",
+    "B0",
+    "Sum0",
+    "A1",
+    "B1",
+    "Sum1",
+    "A2",
+    "B2",
+    "Sum2",
+    "A3",
+    "B3",
+    "Sum3",
+    "CarryOut",
+    "CarryIn",
+  ];
+  const positions = [
+    { x: 640, y: 50 },
+    { x: 740, y: 50 },
+    { x: 800, y: 725 },
+    { x: 440, y: 50 },
+    { x: 540, y: 50 },
+    { x: 600, y: 725 },
+    { x: 240, y: 50 },
+    { x: 340, y: 50 },
+    { x: 400, y: 725 },
+    { x: 40, y: 50 },
+    { x: 140, y: 50 },
+    { x: 200, y: 725 },
+    { x: 40, y: 600 },
+    { x: 820, y: 150 },
+  ];
+  for (let i = 0; i < ids.length; i++) {
+    let gate = new gatejs.Gate(types[i]);
+    gate.setId(ids[i]);
+    gate.setName(names[i]);
+    const component = gate.generateComponent();
+    const parent = document.getElementById("working-area");
+    parent.insertAdjacentHTML("beforeend", component);
+    gate.registerComponent("working-area", positions[i].x, positions[i].y);
+  }
+}
+
 // Refresh the circuit board by removing all gates and components
 export function refreshWorkingArea() {
   jsPlumbInstance.reset();
@@ -533,6 +682,87 @@ export function refreshWorkingArea() {
 }
 
 // Initialise Task 1 experiment when the page loads
+const refresh = document.getElementById("refresh");
+
+refresh.addEventListener("click", function (event) {
+  jsPlumbInstance.reset();
+  window.numComponents = 0;
+
+  gatejs.clearGates();
+  fajs.clearFAs();
+
+  if (window.currentTab === "task1") {
+    initHalfAdder();
+  } else if (window.currentTab === "task2") {
+    initFullAdder();
+  } else if (window.currentTab === "task3") {
+    initRippleAdder();
+  } else if (window.currentTab === "task4") {
+    initAdderSubtractor();
+  }
+
+  console.log(window.currentTab);
+});
+// console.log(conn);
+const menu = document.querySelector(".menu");
+const menuOption = document.querySelector(".menu-option");
+let menuVisible = false;
+
+console.log(menu);
+console.log(menuOption);
+console.log(menuVisible);
+
+const toggleMenu = (command) => {
+  menu.style.display = command === "show" ? "block" : "none";
+  menuVisible = command === "show";
+};
+console.log("toggle", toggleMenu);
+
+export const setPosition = ({ top, left }) => {
+  menu.style.left = `${left}px`;
+  menu.style.top = `${top}px`;
+  toggleMenu("show");
+};
+console.log("setPosition", setPosition);
+
+window.addEventListener("click", () => {
+  console.log("menu is ", menuVisible);
+  if (menuVisible) toggleMenu("hide");
+  window.selectedComponent = null;
+  window.componentType = null;
+});
+document.addEventListener('contextmenu', function(event) {
+  event.preventDefault(); // Prevent the default context menu from appearing
+  menu.style.display = "block";
+  menu.style.left = `${event.clientX}px`;
+  menu.style.top = `${event.clientY}px`;
+var elements = document.querySelectorAll(".jtk-connector.jtk-hover");
+menuOption.addEventListener("click", (e) => {
+  console.log("element deleted", elements);
+  if (e.target.innerHTML === "Delete") {
+    if (window.componentType === "gate") {
+      console.log("op1");
+      deleteElement(window.selectedComponent);
+    }
+    else if (window.componentType === "fullAdder")
+      {
+        deleteFA(window.selectedComponent);
+      } else {
+      console.log("op2");
+      elements.forEach(function(element) {
+        element.parentNode.removeChild(element);
+      });
+    }
+  }
+  // window.selectedComponent = null;
+  // window.componentType = null;
+  toggleMenu("hide"); // Hide menu after selection
+});
+
+
+  toggleMenu("show");
+});
+
 window.currentTab = "task1";
 connectGate();
 refreshWorkingArea();
