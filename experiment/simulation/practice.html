@@ -9,6 +9,7 @@
 	<title>Adder Circuit: Practice</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/virtual-labs/virtual-style@0.0.8-b/css/style.min.css">
 	<link rel="stylesheet" href="css/main.css">
+	<!-- <script src="js/layout.js"></script> -->
 </head>
 
 <body>
@@ -33,6 +34,11 @@
 						<li id="task3" onclick="changeTabs(event)">
 							<a>
 								Ripple Adder 
+							</a>
+						</li>
+						<li id="task4" onclick="changeTabs(event)">
+							<a>
+								Adder-Subtractor
 							</a>
 						</li>
 					</ul>
@@ -98,6 +104,7 @@
 				<div class="v-datalist-row">
 					<button class="v-button" onclick="simulate()">Simulate</button>
 					<button class="v-button" onclick="submitCircuit()">Submit</button>
+					<button id="refresh" class="v-button" style="margin-top: 15px;">Reset</button>
 				</div>
 
 			</div>
@@ -107,9 +114,11 @@
 		<ul class="menu-options">
 			<li class="menu-option">Delete</li>
 			<li class="menu-option">Cancel</li>
+			
 		</ul>
 	</div>
 	<script src="js/jsplumb.bundle.js"></script>
+	
 	<script src="https://cdn.jsdelivr.net/gh/virtual-labs/virtual-style@0.0.8-b/js/script.js"></script>
 	<script type="module" src="js/main.js"></script>
 </body>

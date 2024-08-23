@@ -1,5 +1,5 @@
-import { simulateFA, deleteFA } from "./fa.js";
-import { simulate, deleteElement } from "./gate.js";
+import { simulateFA, simulateAS } from "./fa.js";
+import { simulate } from "./gate.js";
 import {
   connectGate,
   connectFA,
@@ -7,6 +7,7 @@ import {
   initHalfAdder,
   initFullAdder,
   initRippleAdder,
+  initAdderSubtractor,
   refreshWorkingArea,
 } from "./main.js";
 
@@ -28,38 +29,6 @@ export const wireColours = [
 ];
 
 // Contextmenu
-const menu = document.querySelector(".menu");
-const menuOption = document.querySelector(".menu-option");
-
-export const setPosition = ({ top, left }) => {
-  menu.style.left = `${left}px`;
-  menu.style.top = `${top}px`;
-  menu.style.display = "block";
-};
-
-window.addEventListener("click", e => {
-  if (menu.style.display != "none")
-  {
-    menu.style.display = "none";
-  }
-  window.selectedComponent = null;
-  window.componentType = null;
-});
-
-menuOption.addEventListener("click", e => {
-  if (e.target.innerHTML === "Delete") {
-
-    if (window.componentType === "gate") {
-      deleteElement(window.selectedComponent);
-    }
-
-    else if(window.componentType === "fullAdder"){
-      deleteFA(window.selectedComponent);
-    }
-  }
-  window.selectedComponent = null;
-  window.componentType = null;
-});
 
 // Tabs
 
@@ -98,6 +67,13 @@ function changeTabs(e) {
       initRippleAdder();
       window.simulate = simulateFA;
       break; 
+    case "task4":
+      unbindEvent();
+      connectFA();
+      refreshWorkingArea();
+      initAdderSubtractor();
+      window.simulate = simulateAS;
+      break; 
   }
   updateToolbar();
   updateInstructions();
@@ -118,6 +94,8 @@ const updateInstructions = () => {
     title = `Instructions<br>Implement a 1-bit full adder using logic gates`;
   } else if (task === "task3") {
     title = `Instructions<br>Implement a 4-bit ripple carry adder using full adders`;
+  } else if (task === "task4") {
+    title = `Instructions<br>Implement a 4-bit Adder-Subtractor using full adders and XOR Gates<br>The circuit must behave as an Adder when CarryIn = 0 <br>The circuit must behave as a Subtractor when CarryIn = 1`;
   }
   instructionBox.innerHTML = title;
 }
@@ -135,6 +113,9 @@ function updateToolbar() {
   } else if (window.currentTab === "task3") {
     elem =
       '<div class="component-button fulladder" onclick="addFA(event)"></div>';
+  } else if (window.currentTab === "task4") {
+    elem =
+      '<div class="component-button xor" onclick="addGate(event)">XOR</div><div class="component-button fulladder" onclick="addFA(event)"></div>';
   }
 
   document.getElementById("toolbar").innerHTML = elem;
