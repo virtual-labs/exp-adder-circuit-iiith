@@ -2,13 +2,15 @@
 
 <img src="images/half_adder.png">
 
-A half adder adds two 1-bit binary numbers A and B to generate a 1-bit SUM (S) and a 1-bit CARRY (C) as output. The carry is theoretically carried on to the next bit position. The final sum numerically equals **2×C + S**. The simplest half-adder design, shown in the picture, incorporates an XOR gate for S and an AND gate for C. Half adders cannot be composed to produce larger bit adders as they lack a carry-in input.
+A half adder adds two 1-bit binary numbers A and B to generate a 1-bit SUM (S) and a 1-bit CARRY (C) as output. The carry is theoretically carried on to the next bit position. The decimal equivalent of the sum of A and B numerically equals **2×C + S**. The simplest half-adder design, as shown in above figure, incorporates an XOR gate for S and an AND gate for C.
 
 The outputs S and C can be expressed as logical functions of input variables A and B as follows:
 
-**S** = **1** either if (**A = 0** and **B = 1**) or if (**A = 1** and **B = 0**) = **A XOR B**
+**S = A ⊕ B** (XOR gate)
 
-**C = 1** only if (**A = 1** and **B = 1**) = **A AND B**
+**C = A · B** (AND gate)
+
+Half adders cannot be composed to produce larger bit adders as they lack a carry-in input.
 
 **Truth Table**
 
@@ -23,15 +25,13 @@ The outputs S and C can be expressed as logical functions of input variables A a
 
 <img src="images/full_adder.png">
 
-A full adder adds two 1-bit binary numbers along with a carry brought in and produces a sum and carry out as outputs. A 1-bit full adder adds three 1-bit numbers, often written as A, B, and Cin, where A and B are the operands, and Cin is a bit carried in from a previous addition. The circuit produces a 2-bit output sum typically represented by the signals Cout and S, where the sum numerically equals **2×Cout + S**.
+A full adder adds two 1-bit binary numbers along with a carry generated from previous addition and produces a sum and carry as outputs. A 1-bit full adder adds three 1-bit numbers, often written as A, B, and Cin, where A and B are the operands, and Cin is a bit carried in from a previous addition. The decimal equivalent of the sum equals **2×Cout + S**.
 
 A full adder can be implemented using various circuit configurations including custom transistor-level designs or combinations of basic logic gates.
 
 **Logic Equations:**
 
-**S = A XOR B XOR Cin**
-
-**Cout = (A AND B) OR (Cin AND (A XOR B))**
+**S = A ⊕ B ⊕ Cin**, **Cout = A · B + Cin · (A ⊕ B)**
 
 **Truth Table**
 
