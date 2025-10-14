@@ -1,6 +1,6 @@
 The aim of this experiment is to understand and implement different types of adder circuits used in digital systems.
 
-#### What you will learn:
+### What you will learn:
 
 Through this interactive experiment, you will:
 
@@ -12,4 +12,4 @@ Through this interactive experiment, you will:
 
 ### Why are adders important?
 
-Adders are fundamental building blocks in digital systems. They are essential components not only in arithmetic logic units (ALUs) but also throughout processors, such as to calculate addresses, table indices, and performing various computational tasks. Understanding adder circuits will give you insight into how computers perform one of their most basic operations - addition.
+Adders are fundamental building blocks in digital systems. They are essential components not only in arithmetic logic units (ALUs), but also throughout processors, such as to calculate addresses, table indices, and perform various computational tasks. Understanding adder circuits will give you insight into how computers perform one of their most basic operations: addition.
