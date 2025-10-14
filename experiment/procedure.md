@@ -2,7 +2,7 @@
 
 #### Circuit Diagram
 
-<img src="images/half_adder.png" alt="Half Adder Circuit Diagram" style="width: 100%; max-width: 400px; margin: 10px 0;">
+<img src="images/half_adder.png" alt="Half Adder Circuit Diagram">
 
 _Figure 1: Half Adder circuit diagram showing XOR gate for Sum output and AND gate for Carry output. Reference: Theory section_
 
@@ -64,13 +64,50 @@ _Figure 3: 4-bit Ripple Carry Adder circuit diagram showing 4 full adders connec
 
 #### Circuit Connections
 
-1. Drag the first Full Adder and connect its A0 and B0 input points with A0 and B0 input bits. Connect its Cin input point with the CarryIn input bit and Sum output point with the Sum0 output bit.
-2. Drag the second Full Adder and connect its A0 and B0 input points with A1 and B1 input bits. Connect its Cin input point with the Cout output point of the first Full Adder and Sum output point with the Sum1 output bit.
-3. Drag the third Full Adder and connect its A0 and B0 input points with A2 and B2 input bits. Connect its Cin input point with the Cout output point of the second Full Adder and Sum output point with the Sum2 output bit.
-4. Drag the fourth Full Adder and connect its A0 and B0 input points with A3 and B3 input bits. Connect its Cin input point with the Cout output point of the third Full Adder and Sum output point with the Sum3 output bit.
+1. Drag the first Full Adder and connect its A₀ and B₀ input points with A₀ and B₀ input bits. Connect its Cin input point with the CarryIn input bit and Sum output point with the Sum₀ output bit.
+2. Drag the second Full Adder and connect its A₀ and B₀ input points with A₁ and B₁ input bits. Connect its Cin input point with the Cout output point of the first Full Adder and Sum output point with the Sum₁ output bit.
+3. Drag the third Full Adder and connect its A₀ and B₀ input points with A₂ and B₂ input bits. Connect its Cin input point with the Cout output point of the second Full Adder and Sum output point with the Sum₂ output bit.
+4. Drag the fourth Full Adder and connect its A₀ and B₀ input points with A₃ and B₃ input bits. Connect its Cin input point with the Cout output point of the third Full Adder and Sum output point with the Sum₃ output bit.
 5. Connect the CarryOut output bit with the Cout output point of the fourth Full Adder and click on "Simulate".
 
 #### Observations
 
-- The binary sum of two 4-bit numbers A3A2A1A0 and B3B2B1B0, along with carry CarryIn, is observed as Sum3Sum2Sum1Sum0 with carry CarryOut.
+- The binary sum of two 4-bit numbers A₃A₂A₁A₀ and B₃B₂B₁B₀, along with carry CarryIn, is observed as Sum₃Sum₂Sum₁Sum₀ with carry CarryOut.
+- If the circuit has been made as described above, a "Success" message will be displayed upon clicking "Submit".
+
+### 4-bit Adder-Subtractor
+
+#### Circuit Diagram
+
+<img src="images/adder_subtractor.png" alt="4-bit Adder-Subtractor Circuit Diagram" style="width: 100%; max-width: 600px; margin: 10px 0;">
+
+_Figure 4: 4-bit Adder-Subtractor circuit diagram showing 4 full adders with XOR gates for 2's complement operation controlled by mode input M. Reference: Theory section_
+
+#### Components Required
+
+- 4 1-bit Full Adders
+- 4 XOR gates (for 2's complement conversion)
+- 1 Mode control input (M)
+
+#### Circuit Connections
+
+1. Connect the Mode control input M to the Cin of the first Full Adder (this provides the +1 for 2's complement).
+2. For each bit position i (where i = 0, 1, 2, 3):
+   - Connect Aᵢ input directly to the Aᵢ input of the i-th Full Adder.
+   - Connect Bᵢ input to one input of the i-th XOR gate.
+   - Connect Mode control M to the other input of the i-th XOR gate.
+   - Connect the output of the i-th XOR gate to the Bᵢ input of the i-th Full Adder.
+3. Connect the carry output of each Full Adder to the carry input of the next Full Adder (same as ripple carry adder).
+4. Connect the Sum outputs of each Full Adder to the corresponding Sum output bits (Sum₀, Sum₁, Sum₂, Sum₃).
+5. Connect the final carry output to the CarryOut/Overflow output.
+6. Set Mode control M:
+   - M = 0 for addition operation (A + B)
+   - M = 1 for subtraction operation (A - B)
+7. Click on "Simulate" and observe the results for different input values and mode settings.
+
+#### Observations
+
+- When M = 0 (Addition mode): The circuit performs normal binary addition A + B, producing Sum₃Sum₂Sum₁Sum₀ and CarryOut.
+- When M = 1 (Subtraction mode): The circuit performs subtraction A - B by computing A + (2's complement of B), producing Difference₃Difference₂Difference₁Difference₀ and Borrow indication.
+- The XOR gates conditionally invert the B inputs when M = 1, and the Mode input provides the +1 needed for 2's complement conversion.
 - If the circuit has been made as described above, a "Success" message will be displayed upon clicking "Submit".
