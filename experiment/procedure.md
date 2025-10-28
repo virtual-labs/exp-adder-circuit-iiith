@@ -72,7 +72,7 @@ _Figure 3: 4-bit Ripple Carry Adder circuit diagram showing 4 full adders connec
 
 #### Observations
 
-- The binary sum of two 4-bit numbers A₃A₂A₁A₀ and B₃B₂B₁B₀, along with carry CarryIn, is observed as Sum₃Sum₂Sum₁Sum₀ with carry CarryOut.
+- The binary sum of two 4-bit numbers A₃A₂A₁A₀ and B₃B₂B₁B₀, along with carry CarryIn, is observed as Sum₃ Sum₂ Sum₁ Sum₀ with carry CarryOut.
 - If the circuit has been made as described above, a "Success" message will be displayed upon clicking "Submit".
 
 ### 4-bit Adder-Subtractor
@@ -107,7 +107,7 @@ _Figure 4: 4-bit Adder-Subtractor circuit diagram showing 4 full adders with XOR
 
 #### Observations
 
-- When M = 0 (Addition mode): The circuit performs normal binary addition A + B, producing Sum₃Sum₂Sum₁Sum₀ and CarryOut.
-- When M = 1 (Subtraction mode): The circuit performs subtraction A - B by computing A + (2's complement of B), producing Difference₃Difference₂Difference₁Difference₀ and Borrow indication.
+- When M = 0 (Addition mode): The circuit performs normal binary addition A + B, producing Sum₃ Sum₂ Sum₁ Sum₀ and CarryOut.
+- When M = 1 (Subtraction mode): The circuit performs subtraction A - B by computing A + (2's complement of B), producing Difference₃ Difference₂ Difference₁ Difference₀ and overflow indication.
 - The XOR gates conditionally invert the B inputs when M = 1, and the Mode input provides the +1 needed for 2's complement conversion.
 - If the circuit has been made as described above, a "Success" message will be displayed upon clicking "Submit".
