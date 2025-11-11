@@ -1,6 +1,5 @@
 ## Introduction
 
-
 <b>Discipline | <b>Fill your discipline name here
 :--|:--|
 <b> Lab | <b> Fill your lab name here

@@ -1,9 +1,10 @@
 import { registerGate, jsPlumbInstance } from "./main.js";
-import { setPosition } from "./layout.js";
+import { setPosition } from "./main.js";
 import {
     halfAdder,
     fullAdderTest,
     rippleAdderTest,
+    adder_subtractorTest,
     computeAnd,
     computeOr,
     computeXor,
@@ -354,6 +355,25 @@ export function submitCircuit() {
         if(!checkConnectionsFA())
         return;
         rippleAdderTest(
+            "Input-0",
+            "Input-1",
+            "Input-3",
+            "Input-4",
+            "Input-6",
+            "Input-7",
+            "Input-9",
+            "Input-10",
+            "Input-13",
+            "Output-12",
+            "Output-2",
+            "Output-5",
+            "Output-8",
+            "Output-11"
+        );
+    } else if (window.currentTab === "task4") {
+        if(!checkConnectionsFA() || !checkConnections())
+        return;
+        adder_subtractorTest(
             "Input-0",
             "Input-1",
             "Input-3",
