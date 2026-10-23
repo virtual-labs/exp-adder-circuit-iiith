@@ -14,8 +14,9 @@
   stroke-width: 6 !important;
   cursor: pointer;
 }
+/* endpoints stay above wires (including hovered wires) so that more wires can be drawn from an endpoint */
 .jtk-endpoint {
-  z-index: 5;
+  z-index: 12;
 }
 .jtk-overlay {
   z-index: 6;
@@ -410,6 +411,24 @@ svg.wire path {
 }
 
 /* observation table */
+
+/* keep every column of the truth table visible inside the observations panel */
+.v-table-wrap {
+  overflow-x: auto;
+}
+
+.v-table-wrap .table th,
+.v-table-wrap .table td {
+  padding: 0.25em 0.35em;
+  font-size: 0.85rem;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.v-table-wrap .table .success-table,
+.v-table-wrap .table .failure-table {
+  font-size: 0.85rem;
+}
 
 .success-table {
   font-size: 1rem;
