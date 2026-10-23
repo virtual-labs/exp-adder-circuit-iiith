@@ -1,0 +1,90 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "1. Which of the following gates gives logic 1 output if its two binary inputs are complementary:",
+      "answers": {
+        "a": "XOR",
+        "b": "NOT",
+        "c": "AND",
+        "d": "NOR"
+      },
+      "correctAnswer": "a",
+      "explanations": {
+        "a": "Correct. XOR gate outputs 1 when inputs are different (complementary). This is the key property used in adder circuits.",
+        "b": "Incorrect. NOT gate has only one input, not two.",
+        "c": "Incorrect. AND gate outputs 1 only when both inputs are 1.",
+        "d": "Incorrect. NOR gate outputs 1 only when both inputs are 0."
+      },
+      "difficulty": "beginner"
+    },
+    {
+      "question": "2. Which of the following is correct decimal representation of 10001:",
+      "answers": {
+        "a": "9",
+        "b": "8",
+        "c": "18",
+        "d": "17"
+      },
+      "correctAnswer": "d",
+      "explanations": {
+        "d": "Correct. 10001₂ = 1×2⁴ + 0×2³ + 0×2² + 0×2¹ + 1×2⁰ = 16 + 0 + 0 + 0 + 1 = 17₁₀",
+        "a": "Incorrect. Incorrect calculation of binary to decimal conversion.",
+        "b": "Incorrect. Incorrect calculation of binary to decimal conversion.",
+        "c": "Incorrect. Incorrect calculation of binary to decimal conversion."
+      },
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "3. In a ripple carry adder, what is the main disadvantage that limits its speed:",
+      "answers": {
+        "a": "High power consumption",
+        "b": "Carry propagation delay",
+        "c": "Large circuit area",
+        "d": "Complex design"
+      },
+      "correctAnswer": "b",
+      "explanations": {
+        "b": "Correct. The carry signal must propagate through all stages sequentially, creating a delay that increases with the number of bits.",
+        "a": "Incorrect. Power consumption is not the main speed limiting factor.",
+        "c": "Incorrect. Circuit area does not directly affect speed.",
+        "d": "Incorrect. The design is actually relatively simple."
+      },
+      "difficulty": "advanced"
+    },
+    {
+      "question": "4. Two binary inputs of logic HIGH state (logic 1), when added, results in:",
+      "answers": {
+        "a": "Sum = 1, Carry = 0",
+        "b": "Sum = 2, Carry = 0",
+        "c": "Sum = 1, Carry = 1",
+        "d": "Sum = 0, Carry = 1"
+      },
+      "correctAnswer": "d",
+      "explanations": {
+        "d": "Correct. 1 + 1 = 10 in binary, which means Sum = 0 and Carry = 1. This is fundamental to adder operation.",
+        "a": "Incorrect. This would be the result of 1 + 0 or 0 + 1.",
+        "b": "Incorrect. This is decimal representation, not binary logic levels.",
+        "c": "Incorrect. Both sum and carry cannot be 1 simultaneously for single-bit addition."
+      },
+      "difficulty": "beginner"
+    },
+    {
+      "question": "5. In a half adder, when both input bits A and B are logic 1, what are the sum and carry outputs respectively:",
+      "answers": {
+        "a": "Sum = 1, Carry = 0",
+        "b": "Sum = 1, Carry = 1",
+        "c": "Sum = 0, Carry = 1",
+        "d": "Sum = 0, Carry = 0"
+      },
+      "correctAnswer": "c",
+      "explanations": {
+        "c": "Correct. In a half adder: Sum = A XOR B = 1 XOR 1 = 0, Carry = A AND B = 1 AND 1 = 1",
+        "a": "Incorrect. This would occur when only one input is 1.",
+        "b": "Incorrect. Sum cannot be 1 when both inputs are 1 in XOR operation.",
+        "d": "Incorrect. This would occur when both inputs are 0."
+      },
+      "difficulty": "intermediate"
+    }
+  ]
+}
