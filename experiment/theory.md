@@ -17,7 +17,7 @@ The outputs S and C can be expressed as logical functions of input variables A a
 - Simple design using only XOR and AND gates
 - Adds two 1-bit numbers
 - Produces sum and carry outputs
-- Cannot be cascaded due to lack of carry-in input
+- Has no carry-in input, so it cannot add a carry coming from a lower bit position; on its own it can only be used for the least significant bit of a multi-bit adder
 - Foundation for more complex adder circuits
 
 #### Truth Table
@@ -61,12 +61,12 @@ A full adder adds two 1-bit binary numbers along with a carry generated from the
 | A   | B   | Cin | Cout | S   |
 | --- | --- | --- | ---- | --- |
 | 0   | 0   | 0   | 0    | 0   |
-| 1   | 0   | 0   | 0    | 1   |
-| 0   | 1   | 0   | 0    | 1   |
-| 1   | 1   | 0   | 1    | 0   |
 | 0   | 0   | 1   | 0    | 1   |
-| 1   | 0   | 1   | 1    | 0   |
+| 0   | 1   | 0   | 0    | 1   |
 | 0   | 1   | 1   | 1    | 0   |
+| 1   | 0   | 0   | 0    | 1   |
+| 1   | 0   | 1   | 1    | 0   |
+| 1   | 1   | 0   | 1    | 0   |
 | 1   | 1   | 1   | 1    | 1   |
 
 #### Applications
@@ -81,7 +81,7 @@ A full adder adds two 1-bit binary numbers along with a carry generated from the
 
 <img src="images/ripple_carry_adder.png">
 
-Multiple full adders can be used to create adders of greater bit lengths. Each full adder uses the Cout of the previous adder as its Cin. This kind of adder is called a ripple carry adder, since the carry bits "ripple" through the full adder stages from right to left (LSB to MSB). Note that the first (and only the first) full adder may be replaced by a half adder.
+Multiple full adders can be used to create adders of greater bit lengths. Each full adder uses the Cout of the previous adder as its Cin. This kind of adder is called a ripple carry adder, since the carry bits "ripple" through the full adder stages from the LSB to the MSB. In the figure, the carry into the first stage is C₀ (the carry-in, Cin) and the carry out of the last stage is C₄ (the carry-out, Cout). If the carry-in C₀ is always 0, the first (and only the first) full adder may be replaced by a half adder.
 
 #### Understanding Circuit Layout vs. Computational Flow
 
@@ -93,40 +93,42 @@ Multiple full adders can be used to create adders of greater bit lengths. Each f
 - Any carry generated must propagate leftward to the next higher bit position
 - The carry "ripples" from LSB→MSB (right to left in traditional notation)
 
-**Simulation Demo Layout**: In our interactive simulation, the circuit is arranged with LSB (A₀,B₀) on the left and MSB (A₃,B₃) on the right to clearly visualize this computational flow from left to right on screen. This helps students understand the sequential nature of carry propagation.
+**Layout in the Simulation**: The figure above and the Practice circuit board follow the written notation, with the LSB (A₀, B₀) on the right and the MSB (A₃, B₃) on the left, so the carry moves from right to left. The Demo draws the stages the other way round, with the LSB on the left and the MSB on the right, so that the carry can be followed from left to right on screen. The circuit is the same in both cases: the carry always moves from the LSB stage to the MSB stage.
 
 #### Logic Equations
 
-For a 4-bit ripple carry adder, each bit position has its own sum and carry equations. The key concept is that each stage depends on the carry output from the previous stage. The addition process flows from right to left (LSB to MSB):
+For a 4-bit ripple carry adder, each bit position has its own sum and carry equations. Stage i adds Aᵢ, Bᵢ and the carry Cᵢ coming into it, and produces the sum bit Sᵢ and the carry Cᵢ₊₁ going into the next stage. The carry into stage 0 is C₀ = Cin.
 
-**Bit 0 (LSB - Rightmost):**
+**Bit 0 (LSB):**
 
-- S₀ = A₀ ⊕ B₀ ⊕ Cin
-- C₀ = A₀B₀ + B₀Cin + CinA₀
+- S₀ = A₀ ⊕ B₀ ⊕ C₀
+- C₁ = A₀B₀ + B₀C₀ + C₀A₀
 
 **Bit 1:**
 
-- S₁ = A₁ ⊕ B₁ ⊕ C₀
-- C₁ = A₁B₁ + B₁C₀ + C₀A₁
+- S₁ = A₁ ⊕ B₁ ⊕ C₁
+- C₂ = A₁B₁ + B₁C₁ + C₁A₁
 
 **Bit 2:**
 
-- S₂ = A₂ ⊕ B₂ ⊕ C₁
-- C₂ = A₂B₂ + B₂C₁ + C₁A₂
+- S₂ = A₂ ⊕ B₂ ⊕ C₂
+- C₃ = A₂B₂ + B₂C₂ + C₂A₂
 
-**Bit 3 (MSB - Leftmost):**
+**Bit 3 (MSB):**
 
-- S₃ = A₃ ⊕ B₃ ⊕ C₂
-- C₃ = A₃B₃ + B₃C₂ + C₂A₃
+- S₃ = A₃ ⊕ B₃ ⊕ C₃
+- C₄ = A₃B₃ + B₃C₃ + C₃A₃
+
+The result is C₄S₃S₂S₁S₀, that is, A₃A₂A₁A₀ + B₃B₂B₁B₀ + C₀ = 16·C₄ + 8·S₃ + 4·S₂ + 2·S₁ + S₀.
 
 #### Key Features
 
-- Each sum bit (S) uses XOR of the two input bits and the carry from the previous stage
-- Each carry bit (C) is generated when any two of the three inputs (A, B, Cin) are 1
-- The carry "ripples" from right to left (LSB to MSB), which is why it is called a ripple carry adder
-- Addition starts from the rightmost bit (LSB) and propagates leftward to the MSB
-- The final carry C₃ represents an overflow if we are working with 4-bit numbers
-- Simple design but slower due to carry propagation delay
+- Each sum bit (S) is the XOR of the two input bits and the carry from the previous stage
+- Each carry bit (C) is 1 when at least two of the three inputs of a stage (Aᵢ, Bᵢ, Cᵢ) are 1
+- The carry "ripples" from the LSB stage to the MSB stage, which is why it is called a ripple carry adder
+- A stage can produce its final outputs only after the carry from the previous stage has arrived
+- For unsigned 4-bit numbers, the final carry C₄ = 1 means that the sum does not fit in 4 bits (overflow)
+- Simple design but slower due to carry propagation delay: the delay grows linearly with the number of bits
 
 #### Applications
 
@@ -152,14 +154,20 @@ The 2's complement of a binary number is obtained by:
 1. Finding the 1's complement (inverting all bits)
 2. Adding 1 to the result
 
+In the figure, the mode control input M is labelled K. In the Practice task, the CarryIn input bit is used as the mode control M.
+
 #### Logic Equations
 
-For each bit position i:
+Using the same carry numbering as the ripple carry adder (Cᵢ is the carry into stage i), for each bit position i = 0, 1, 2, 3:
 
 - **Modified B input**: B'ᵢ = Bᵢ ⊕ M
-- **Sum/Difference**: Sᵢ = Aᵢ ⊕ B'ᵢ ⊕ Cᵢ₋₁
-- **Carry**: Cᵢ = AᵢB'ᵢ + Cᵢ₋₁(Aᵢ ⊕ B'ᵢ)
+- **Sum/Difference**: Sᵢ = Aᵢ ⊕ B'ᵢ ⊕ Cᵢ
+- **Carry**: Cᵢ₊₁ = AᵢB'ᵢ + Cᵢ(Aᵢ ⊕ B'ᵢ)
 - **Initial Carry**: C₀ = M
+
+Note that the figure labels the carries between the stages as C0, C1 and C2, counting the carry out of stage 0 as C0. In the equations above, these are C₁, C₂ and C₃.
+
+For unsigned numbers in subtraction mode, the final carry C₄ = 1 means A ≥ B and S₃S₂S₁S₀ is A − B. C₄ = 0 means A < B; the result is then negative and S₃S₂S₁S₀ is its 2's complement.
 
 #### Key Features
 
