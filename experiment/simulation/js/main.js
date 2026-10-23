@@ -62,6 +62,81 @@ jsPlumbInstance.bind("connection", function (info) {
   }
 });
 
+// Removes a single occurrence of item from list
+function removeOne(list, item) {
+  const index = list.indexOf(item);
+  if (index !== -1) {
+    list.splice(index, 1);
+  }
+}
+
+// Returns the id of the label overlay of an endpoint (a0, b0, cin, sum or cout for full adders)
+function endpointLabel(endpoint) {
+  const keys = Object.keys(endpoint.overlays || {});
+  return keys.length > 0 ? keys[0] : "";
+}
+
+// Removes the link between the components of two endpoints from the circuit model
+function removeLink(epA, epB) {
+  if (!epA || !epB || !epA.uuid || !epB.uuid) {
+    return;
+  }
+  let outEp = epA;
+  let inEp = epB;
+  if (epA.uuid.startsWith("input")) {
+    outEp = epB;
+    inEp = epA;
+  }
+  if (!outEp.uuid.startsWith("output") || !inEp.uuid.startsWith("input")) {
+    return;
+  }
+  const driver = gatejs.gates[outEp.elementId] || fajs.fullAdder[outEp.elementId];
+  const sink = gatejs.gates[inEp.elementId] || fajs.fullAdder[inEp.elementId];
+  if (!driver || !sink) {
+    return;
+  }
+
+  if (driver instanceof fajs.FullAdder) {
+    if (endpointLabel(outEp).includes("sum")) {
+      removeOne(driver.outSum, sink);
+      if (driver.outSum.length === 0) {
+        driver.setConnected(false, "Sum");
+      }
+    } else {
+      removeOne(driver.outCout, sink);
+      if (driver.outCout.length === 0) {
+        driver.setConnected(false, "Carry");
+      }
+    }
+  } else {
+    removeOne(driver.outputs, sink);
+    if (driver.outputs.length === 0) {
+      driver.setConnected(false);
+    }
+  }
+
+  if (sink instanceof fajs.FullAdder) {
+    const label = endpointLabel(inEp);
+    if (label.includes("a")) {
+      sink.setA0([]);
+    } else if (label.includes("b")) {
+      sink.setB0([]);
+    } else if (label.includes("cin")) {
+      sink.setCin([]);
+    }
+  } else {
+    removeOne(sink.inputs, driver);
+    if (sink.isOutput && fajs.finalOutputs[sink.id]) {
+      fajs.finalOutputs[sink.id] = [];
+    }
+  }
+}
+
+// Keep the circuit model in sync when a wire is deleted
+jsPlumbInstance.bind("connection:detach", function (info) {
+  removeLink(info.sourceEndpoint, info.targetEndpoint);
+});
+
 // This is an event listener for establishing connections between gates
 export const connectGate = function () {
   jsPlumbInstance.bind("beforeDrop", function (data) {
@@ -231,7 +306,7 @@ export const connectFA = function () {
           if (Object.keys(toEndpoint.overlays)[0].includes("sum")) {
             pos = "Sum";
             input.addSum(output);
-          } else if (Object.keys(toEndpoint.overlays)[0].includes("carry")) {
+          } else if (Object.keys(toEndpoint.overlays)[0].includes("cout")) {
             pos = "Carry";
             input.addCout(output);
           }
@@ -286,7 +361,7 @@ export const connectFA = function () {
           if (Object.keys(toEndpoint.overlays)[0].includes("sum")) {
             pos = "Sum";
             input.addSum(output);
-          } else if (Object.keys(toEndpoint.overlays)[0].includes("carry")) {
+          } else if (Object.keys(toEndpoint.overlays)[0].includes("cout")) {
             pos = "Carry";
             input.addCout(output);
           }

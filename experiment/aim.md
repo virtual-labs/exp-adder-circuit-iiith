@@ -1,15 +1,8 @@
-The aim of this experiment is to understand and implement different types of adder circuits used in digital systems.
+To design, build and verify binary adder circuits using logic gates and full adder blocks:
 
-### What you will learn:
+- a 1-bit **half adder** using an XOR gate and an AND gate,
+- a 1-bit **full adder** using XOR, AND and OR gates,
+- a 4-bit **ripple carry adder** by cascading four 1-bit full adders, and
+- a 4-bit **adder-subtractor** by combining four full adders with XOR gates to perform subtraction using the 2's complement method,
 
-Through this interactive experiment, you will:
-
-- **Understand the fundamentals** of binary addition in digital circuits
-- **Design and analyze** half adder circuits for single-bit addition
-- **Construct full adder circuits** that handle carry inputs for multi-bit operations
-- **Build ripple carry adders** to perform addition of multi-bit binary numbers
-- **Explore real-world applications** of adders in processors and digital systems
-
-### Why are adders important?
-
-Adders are fundamental building blocks in digital systems. They are essential components not only in arithmetic logic units (ALUs), but also throughout processors, such as to calculate addresses, table indices, and perform various computational tasks. Understanding adder circuits will give you insight into how computers perform one of their most basic operations: addition.
+and to verify the working of each circuit by simulating it and comparing its outputs with the expected truth table.

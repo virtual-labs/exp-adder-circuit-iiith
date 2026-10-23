@@ -140,11 +140,26 @@ function allDisappear() {
     }
 }
 
+// returns true if the inputs can be changed; a finished simulation is rewound so that new inputs can be tried
+function inputsEditable() {
+    if (timeline.progress() === 1) {
+        rewind();
+    }
+    if (timeline.progress() !== 0) {
+        observ.innerHTML = "Inputs cannot be changed while the simulation is running. Please click on Reset to change them.";
+        return false;
+    }
+    return true;
+}
+
 function appendInputA() {
-    if (textInput[0].textContent !== "0" && timeline.progress() === 0) {
+    if (!inputsEditable()) {
+        return;
+    }
+    if (textInput[0].textContent !== "0") {
         changeto0(96,164,0,0);
     }
-    else if (textInput[0].textContent !== "1" && timeline.progress() === 0) {
+    else {
         changeto1(96,164,0,0);
     }
     for(let i=0;i<2;i++){
@@ -152,14 +167,26 @@ function appendInputA() {
     }
 }
 function appendInputB() {
-    if (textInput[1].textContent !== "0" && timeline.progress() === 0) {
+    if (!inputsEditable()) {
+        return;
+    }
+    if (textInput[1].textContent !== "0") {
         changeto0(96,604,1,1);
     }
-    else if (textInput[1].textContent !== "1" && timeline.progress() === 0) {
+    else {
         changeto1(96,604,1,1);
     }
     for(let i=2;i<4;i++){
         setter(textInput[1].textContent,dots[i]);
+    }
+}
+
+// sets both the inputs to 0 so that the simulation can be started right away
+function initInputs() {
+    changeto0(96,164,0,0);
+    changeto0(96,604,1,1);
+    for(let i=0;i<4;i++){
+        setter("0",dots[i]);
     }
 }
 
@@ -211,18 +238,29 @@ function outputSetter(){
 }
 
 function display() {
-    observ.innerHTML = "Simulation has finished. Please click on Reset and repeat the instructions given to start again."
+    decide = false;
+    status.innerHTML = "Start";
+    observ.innerHTML = `Simulation has finished.<br>Sum = ${textOutput[0].textContent}, Carry = ${textOutput[1].textContent}<br>Click on an input to change it and then click on Start to simulate again.`;
 }
 
-function reboot() {
-    for(const text of textInput){
-        text.textContent = 2;
+// takes the timeline back to the beginning while keeping the selected input values
+function rewind() {
+    timeline.seek(0);
+    timeline.pause();
+    inputDotDisappear();
+    for(let i=0;i<4;i++){
+        setter(textInput[i < 2 ? 0 : 1].textContent,dots[i]);
     }
+    outputDisappear();
+    fillColor(objects[2],"#008000");
+    fillColor(objects[3],"#008000");
+    decide = false;
+    status.innerHTML = "Start";
 }
 
 function setSpeed(speed) {
+    timeline.timeScale(parseInt(speed));
     if (circuitStarted) {
-        timeline.timeScale(parseInt(speed));
         observ.innerHTML = `${speed}x speed`;
     }
 }
@@ -234,12 +272,12 @@ function restartCircuit() {
     timeline.seek(0);
     timeline.pause();
     allDisappear();
-    reboot();
-    clearObservation();
+    initInputs();
     decide = false;
     status.innerHTML = "Start";
     observ.innerHTML = "Successfully restored";
     speed.selectedIndex = 0;
+    timeline.timeScale(1);
 }
 
 function simulationStatus() {
@@ -256,7 +294,6 @@ function stopCircuit() {
         observ.innerHTML = "Simulation has been Paused. Please click on the 'Start' button to Resume.";
         decide = false;
         status.innerHTML = "Start";
-        speed.selectedIndex = 0;
     }
     else {
         observ.innerHTML = "Please Restart the simulation";
@@ -269,16 +306,18 @@ function startCircuit() {
             return;
         }
     }
+    if (timeline.progress() === 1) {
+        rewind();
+    }
     if (timeline.progress() !== 1) {
         if (!circuitStarted) {
             circuitStarted = true;
         }
         timeline.play();
-        timeline.timeScale(1);
+        timeline.timeScale(parseInt(speed.value));
         observ.innerHTML = "Simulation has started.";
         decide = true;
         status.innerHTML = "Pause";
-        speed.selectedIndex = 0;
     }
     else {
         observ.innerHTML = "Please Restart the simulation";
@@ -303,7 +342,6 @@ timeline.add(partialDotDisappear, 10);
 timeline.add(partialDotAppear, 12);
 timeline.add(outputSetter,20);
 timeline.add(outputVisible,21);
-timeline.eventCallback("onComplete", outputVisible);
 timeline.eventCallback("onComplete", display);
 
 timeline.to(dots[0], {
@@ -407,3 +445,4 @@ timeline.to(dots[1], {
 
 timeline.pause();
 inputDotDisappear();
+initInputs();

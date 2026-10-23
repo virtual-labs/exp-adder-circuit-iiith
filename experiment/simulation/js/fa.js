@@ -1,6 +1,6 @@
 import { registerGate, jsPlumbInstance } from "./main.js";
 import { setPosition } from "./main.js";
-import { checkConnections, clearResult, gates, printErrors } from "./gate.js";
+import { checkConnections, clearMessage, gates, printErrors, showTimedMessage } from "./gate.js";
 import {
   computeAnd,
   computeOr,
@@ -262,7 +262,7 @@ export function checkConnectionsFA() {
 
 // Simulates the circuit
 export function simulateFA() {
-  clearResult();
+  clearMessage();
   if (!checkConnectionsFA()) {
     return;
   }
@@ -298,12 +298,7 @@ export function simulateFA() {
   }
 
   // Displays message confirming Simulation completion
-  let message = "Simulation has finished";
-  const result = document.getElementById('result');
-  result.innerHTML += message;
-  result.className = "success-message";
-  setTimeout(clearResult, 2000);
-  
+  showTimedMessage("Simulation has finished");
 }
 
 export function getResultAS(node){
@@ -341,7 +336,7 @@ export function getResultAS(node){
 
 // Simulates the adder-subtractor circuit
 export function simulateAS() {
-  clearResult();
+  clearMessage();
   if (!checkConnectionsFA() || !checkConnections()) {
     return;
   }
@@ -379,12 +374,7 @@ export function simulateAS() {
   }
 
   // Displays message confirming Simulation completion
-  let message = "Simulation has finished";
-  const result = document.getElementById('result');
-  result.innerHTML += message;
-  result.className = "success-message";
-  setTimeout(clearResult, 2000);
-  
+  showTimedMessage("Simulation has finished");
 }
 
 // Simulates the circuit for given fulladders and gates; Used for testing the circuit for all values
@@ -478,10 +468,8 @@ export function deleteFA(id) {
 
   for (let key in finalOutputs) {
     if (finalOutputs[key][0] === fa) {
-      delete finalOutputs[key];
+      finalOutputs[key] = [];
     }
-
-    gates[key].inputs = [];
   }
 
   for (let elem in gates) {
